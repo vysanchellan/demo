@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
-  Flame, Shield, ChevronRight, AlertTriangle, CheckCircle2,
-  XCircle, FileWarning, Building2, Users, Activity, TrendingUp,
-  Eye, Trash2, Search, ArrowUpRight, Lock
+  Shield, AlertTriangle, CheckCircle2,
+  FileWarning, Activity,
+  Eye, Trash2, Search, Lock
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -130,18 +130,6 @@ export default function AdminPage() {
     <div className="min-h-screen bg-[#08090B] relative">
       <div className="absolute inset-0 bg-mesh-soft pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-6 py-12">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-8">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF5E3A] to-[#FF8A65] flex items-center justify-center">
-              <Flame className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-black" style={{ fontFamily: 'var(--font-display)' }}>BURNOUT</span>
-          </Link>
-          <ChevronRight className="w-4 h-4 text-zinc-600" />
-          <span className="text-zinc-400">Admin</span>
-        </div>
-
         <motion.div
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
           className="flex items-center justify-between mb-10"

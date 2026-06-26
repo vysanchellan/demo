@@ -5,11 +5,12 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Flame, LayoutDashboard, FileWarning, Building2, Brain,
+  LayoutDashboard, FileWarning, Building2, Brain,
   Heart, BarChart3, Settings, LogOut, Menu, X, ChevronRight,
   Sparkles, Shield
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Logo from '@/components/public/Logo'
 
 const NAV_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
@@ -80,9 +81,7 @@ export default function DashboardSidebar() {
       >
         <div className="flex items-center justify-between p-4 border-b border-white/5 shrink-0">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 shrink-0 rounded-xl bg-gradient-to-br from-[#FF5E3A] to-[#FF8A65] flex items-center justify-center shadow-[0_4px_20px_rgba(255,94,58,0.35)]">
-              <Flame className="w-5 h-5 text-white" />
-            </div>
+            <Logo size={36} glow />
             {!collapsed && (
               <motion.span
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}

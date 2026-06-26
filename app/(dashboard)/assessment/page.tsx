@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { Flame, Brain, ArrowRight, ArrowLeft, CheckCircle2, RotateCcw } from 'lucide-react'
+import { Brain, ArrowRight, ArrowLeft, CheckCircle2, RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { getBurnoutColor, getBurnoutLevel } from '@/lib/utils'
 
@@ -158,20 +158,10 @@ export default function AssessmentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-6 py-12 relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+    <div className="min-h-screen bg-[#08090B] flex items-center justify-center px-6 py-12 relative overflow-hidden">
+      <div className="absolute inset-0 bg-mesh-soft" />
 
       <div className="relative z-10 w-full max-w-2xl">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-8">
-          <Link href="/">
-            <div className="flex items-center gap-2">
-              <Flame className="w-6 h-6 text-[#FF3B30]" />
-              <span className="font-black" style={{ fontFamily: 'var(--font-display)' }}>BURNOUT</span>
-            </div>
-          </Link>
-        </div>
-
         {/* Progress */}
         <div className="mb-8">
           <div className="flex items-center justify-between text-sm text-[#9A9A9A] mb-2">

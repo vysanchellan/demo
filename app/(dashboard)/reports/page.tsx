@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
-  Flame, Search, AlertTriangle, ChevronRight, ThumbsUp,
-  Filter, ArrowUpDown, Clock, Building2, MapPin
+  Search, AlertTriangle, ThumbsUp,
+  Clock, Building2, MapPin
 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -34,20 +34,10 @@ export default function ReportsPage() {
   )
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] py-12 px-6 relative">
-      <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+    <div className="min-h-screen bg-[#08090B] py-12 px-6 relative">
+      <div className="absolute inset-0 bg-mesh-soft" />
 
       <div className="relative z-10 max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-10">
-          <Link href="/" className="flex items-center gap-2">
-            <Flame className="w-6 h-6 text-[#FF3B30]" />
-            <span className="font-black" style={{ fontFamily: 'var(--font-display)' }}>BURNOUT</span>
-          </Link>
-          <ChevronRight className="w-4 h-4 text-[#9A9A9A]" />
-          <span className="text-[#9A9A9A]">Reports Feed</span>
-        </div>
-
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center justify-between mb-6">
             <div>

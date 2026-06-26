@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
-  Flame, ChevronRight, Sparkles, Activity, Target, Brain,
+  ChevronRight, Sparkles, Activity, Target, Brain,
   TrendingUp, AlertTriangle, ArrowRight, RefreshCcw, Building2,
   Clock, Users, Award, Heart, CheckCircle2
 } from 'lucide-react'
@@ -93,18 +93,6 @@ export default function PredictPage() {
     <div className="min-h-screen bg-[#08090B] text-zinc-100 relative">
       <div className="absolute inset-0 bg-mesh-soft pointer-events-none" />
       <div className="relative max-w-5xl mx-auto px-6 py-12">
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-3 mb-10">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#FF5E3A] to-[#FF8A65] flex items-center justify-center">
-              <Flame className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-black" style={{ fontFamily: 'var(--font-display)' }}>BURNOUT</span>
-          </Link>
-          <ChevronRight className="w-4 h-4 text-zinc-600" />
-          <span className="text-zinc-400">Risk Predictor</span>
-        </div>
-
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
           <Badge className="mb-5 bg-[#FBBF24]/10 text-[#FBBF24] border-[#FBBF24]/30 font-mono">

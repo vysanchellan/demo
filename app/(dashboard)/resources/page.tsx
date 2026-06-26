@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
-  Flame, Heart, Phone, Globe, MessageSquare, BookOpen,
-  Users, ExternalLink, ChevronRight, Star
+  Heart, Phone, Globe, MessageSquare, BookOpen,
+  Users, ExternalLink
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -72,28 +72,18 @@ export default function ResourcesPage() {
   const filtered = RESOURCES.filter(r => filter === 'All' || r.type === filter)
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] py-12 px-6 relative">
-      <div className="absolute inset-0 bg-dot-pattern opacity-20" />
+    <div className="min-h-screen bg-[#08090B] py-12 px-6 relative">
+      <div className="absolute inset-0 bg-mesh-soft" />
 
       <div className="relative z-10 max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-10">
-          <Link href="/" className="flex items-center gap-2">
-            <Flame className="w-6 h-6 text-[#FF3B30]" />
-            <span className="font-black" style={{ fontFamily: 'var(--font-display)' }}>BURNOUT</span>
-          </Link>
-          <ChevronRight className="w-4 h-4 text-[#9A9A9A]" />
-          <span className="text-[#9A9A9A]">Resources</span>
-        </div>
-
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center gap-3 mb-4">
-            <Heart className="w-8 h-8 text-[#FF3B30]" />
+            <Heart className="w-8 h-8 text-[#FF5E3A]" />
           </div>
-          <h1 className="text-5xl font-black mb-3" style={{ fontFamily: 'var(--font-display)' }}>
-            HELP IS <span className="gradient-text">REAL.</span>
+          <h1 className="text-5xl font-black mb-3 tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            Help is <span className="text-gradient-ember">real.</span>
           </h1>
-          <p className="text-[#9A9A9A] mb-10 text-lg max-w-xl">
+          <p className="text-zinc-400 mb-10 text-lg max-w-xl">
             Curated crisis lines, apps, therapists, and communities.
             You don&apos;t have to burn alone.
           </p>

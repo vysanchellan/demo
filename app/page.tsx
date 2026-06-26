@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import AuroraBackground from '@/components/public/AuroraBackground'
 import Navbar from '@/components/public/Navbar'
+import Logo from '@/components/public/Logo'
 import {
   AreaChart, Area, BarChart, Bar, RadarChart, Radar,
   PolarGrid, PolarAngleAxis, PolarRadiusAxis,
@@ -406,14 +407,33 @@ export default function LandingPage() {
       <Navbar />
 
       {/* ─── HERO ─── */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20">
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <AuroraBackground />
-        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF5E3A]/30 to-transparent animate-scan pointer-events-none" aria-hidden="true" />
+
+        {/* Background image with overlay — adds depth */}
+        <div className="absolute inset-0 opacity-[0.18]" aria-hidden="true">
+          <Image
+            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1920&h=1080&fit=crop"
+            alt=""
+            fill priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#08090B] via-[#08090B]/70 to-[#08090B]" />
+        </div>
+
+        {/* Layered radial glows for stronger lighting */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[700px] pointer-events-none" aria-hidden="true"
+          style={{ background: 'radial-gradient(ellipse, rgba(255,94,58,0.22) 0%, transparent 60%)' }} />
+        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full pointer-events-none animate-glow-pulse" aria-hidden="true"
+          style={{ background: 'radial-gradient(circle, rgba(255,138,101,0.15) 0%, transparent 60%)' }} />
+
+        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF5E3A]/40 to-transparent animate-scan pointer-events-none" aria-hidden="true" />
 
         <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 px-6 max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-sm text-xs text-zinc-300 mb-8"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-xl text-xs text-zinc-200 mb-8 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
           >
             <span className="relative flex w-2 h-2">
               <span className="absolute inset-0 rounded-full bg-[#FF5E3A] animate-ping opacity-75" />
@@ -426,17 +446,26 @@ export default function LandingPage() {
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-6xl md:text-8xl lg:text-[9rem] font-black leading-[0.95] tracking-tight mb-6"
+            className="text-6xl md:text-8xl lg:text-[10rem] font-black leading-[0.92] tracking-[-0.04em] mb-6 drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            <span className="text-gradient-soft">The workplace</span>
-            <br />
-            <span className="text-gradient-ember">won&apos;t name itself.</span>
+            <span
+              className="block bg-clip-text text-transparent"
+              style={{ backgroundImage: 'linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 40%, #71717A 100%)' }}
+            >
+              The workplace
+            </span>
+            <span
+              className="block bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(255,94,58,0.35)]"
+              style={{ backgroundImage: 'linear-gradient(135deg, #FF5E3A 0%, #FF8A65 45%, #FBBF24 100%)' }}
+            >
+              won&apos;t name itself.
+            </span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-            className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-10"
+            className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed mb-10"
           >
             An open, anonymous, encrypted platform for workers to expose toxic employers,
             measure their burnout, and find the data they need to leave.
@@ -861,8 +890,8 @@ export default function LandingPage() {
           initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="relative max-w-3xl mx-auto text-center p-12 rounded-3xl border-gradient border border-white/8 bg-[#0F1012]/80 backdrop-blur-xl"
         >
-          <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full bg-gradient-to-br from-[#FF5E3A] to-[#FF8A65] flex items-center justify-center shadow-[0_20px_60px_rgba(255,94,58,0.5)] animate-float-medium">
-            <Flame className="w-10 h-10 text-white" />
+          <div className="absolute -top-12 left-1/2 -translate-x-1/2 animate-float-medium">
+            <Logo size={80} glow />
           </div>
           <div className="pt-10">
             <h2 className="text-5xl md:text-6xl font-black mb-6 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
@@ -897,9 +926,7 @@ export default function LandingPage() {
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
             <div className="md:col-span-2">
               <Link href="/" className="flex items-center gap-2.5 mb-4">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5E3A] to-[#FF8A65] flex items-center justify-center">
-                  <Flame className="w-5 h-5 text-white" />
-                </div>
+                <Logo size={36} />
                 <span className="text-lg font-black" style={{ fontFamily: 'var(--font-display)' }}>
                   BURN<span className="text-[#FF5E3A]">OUT</span>
                 </span>

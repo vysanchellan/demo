@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
-  Flame, FileWarning, Building2, MapPin, Users, AlertTriangle,
-  Shield, CheckCircle2, ChevronRight
+  FileWarning, Shield, CheckCircle2, ChevronRight
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -51,7 +50,7 @@ export default function ReportPage() {
 
   if (done) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-6">
+      <div className="min-h-screen bg-[#08090B] flex items-center justify-center px-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -90,18 +89,13 @@ export default function ReportPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] py-12 px-6 relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+    <div className="min-h-screen bg-[#08090B] py-12 px-6 relative overflow-hidden">
+      <div className="absolute inset-0 bg-mesh-soft" />
 
       <div className="relative z-10 max-w-2xl mx-auto">
-        {/* Header */}
         <div className="flex items-center gap-3 mb-10">
-          <Link href="/" className="flex items-center gap-2">
-            <Flame className="w-6 h-6 text-[#FF3B30]" />
-            <span className="font-black" style={{ fontFamily: 'var(--font-display)' }}>BURNOUT</span>
-          </Link>
-          <ChevronRight className="w-4 h-4 text-[#9A9A9A]" />
-          <span className="text-[#9A9A9A]">File Report</span>
+          <FileWarning className="w-6 h-6 text-[#FF5E3A]" />
+          <h1 className="text-3xl font-black tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>File Report</h1>
         </div>
 
         {/* Anon banner */}

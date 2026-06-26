@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Flame, Menu, X, ArrowUpRight, Sparkles } from 'lucide-react'
+import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import Logo from '@/components/public/Logo'
 
 const NAV = [
   { label: 'Reports', href: '/reports' },
@@ -42,10 +43,7 @@ export default function Navbar() {
       >
         <div className="flex items-center justify-between px-4 py-2.5">
           <Link href="/" className="flex items-center gap-2.5 group" aria-label="BURNOUT home">
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#FF5E3A] to-[#FF8A65] flex items-center justify-center shadow-[0_4px_20px_rgba(255,94,58,0.4)] group-hover:scale-110 transition-transform">
-              <Flame className="w-5 h-5 text-white" strokeWidth={2.5} />
-              <span className="absolute inset-0 rounded-xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
+            <Logo size={36} glow className="group-hover:scale-110 transition-transform" />
             <span className="text-lg font-black tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
               BURN<span className="text-[#FF5E3A]">OUT</span>
             </span>
