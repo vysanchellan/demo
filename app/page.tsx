@@ -20,6 +20,7 @@ import AuroraBackground from '@/components/public/AuroraBackground'
 import HeroCanvas from '@/components/public/HeroCanvas'
 import Navbar from '@/components/public/Navbar'
 import Logo from '@/components/public/Logo'
+import IntroExperience from '@/components/public/IntroExperience'
 import {
   AreaChart, Area, BarChart, Bar, RadarChart, Radar,
   PolarGrid, PolarAngleAxis, PolarRadiusAxis,
@@ -29,9 +30,9 @@ import {
 // ─────────── Data ───────────
 const STATS = [
   { value: 77, suffix: '%', label: 'workers experiencing burnout', sub: '+18% since 2023', icon: Flame, color: '#00E599' },
-  { value: 63, suffix: '%', label: 'employers ignoring complaints', sub: 'WHO 2025 report', icon: EyeOff, color: '#5EEAD4' },
-  { value: 322, prefix: '$', suffix: 'B', label: 'global productivity lost yearly', sub: 'Gallup workplace study', icon: TrendingDown, color: '#2E8BFF' },
-  { value: 51200, suffix: '+', label: 'workers protected via BURNOUT', sub: 'Live, growing daily', icon: Users, color: '#00D4FF' },
+  { value: 63, suffix: '%', label: 'employers ignoring complaints', sub: 'WHO 2025 report', icon: EyeOff, color: '#00E599' },
+  { value: 322, prefix: '$', suffix: 'B', label: 'global productivity lost yearly', sub: 'Gallup workplace study', icon: TrendingDown, color: '#00E599' },
+  { value: 51200, suffix: '+', label: 'workers protected via BURNOUT', sub: 'Live, growing daily', icon: Users, color: '#00E599' },
 ]
 
 const FEATURES_BENTO = [
@@ -43,17 +44,17 @@ const FEATURES_BENTO = [
   {
     title: 'Clinical Burnout Assessment',
     desc: 'Maslach Burnout Inventory-aligned scoring across 3 dimensions.',
-    icon: Brain, color: '#2E8BFF', span: '', tag: 'Validated Method',
+    icon: Brain, color: '#00E599', span: '', tag: 'Validated Method',
   },
   {
     title: 'Real-Time Company Intelligence',
     desc: 'Aggregated toxicity scores across 2,340+ companies. Filter, search, compare.',
-    icon: Building2, color: '#00D4FF', span: '', tag: 'Live Data',
+    icon: Building2, color: '#00E599', span: '', tag: 'Live Data',
   },
   {
     title: 'AI Risk Predictor',
     desc: 'Input your industry, role, and signals — get a personalised burnout probability with similar-case benchmarks.',
-    icon: Sparkles, color: '#5EEAD4', span: 'lg:col-span-2', tag: 'New',
+    icon: Sparkles, color: '#00E599', span: 'lg:col-span-2', tag: 'New',
   },
 ]
 
@@ -179,7 +180,7 @@ function RiskPredictor() {
     (hours - 35) * 1.4 + signals.length * 8 + 22 * (INDUSTRY_MULT[industry] ?? 1)
   ))
   const riskLevel = risk >= 75 ? 'CRITICAL' : risk >= 55 ? 'HIGH' : risk >= 35 ? 'MEDIUM' : 'LOW'
-  const riskColor = risk >= 75 ? '#00E599' : risk >= 55 ? '#5EEAD4' : risk >= 35 ? '#00D4FF' : '#3B82F6'
+  const riskColor = risk >= 75 ? '#00E599' : risk >= 55 ? '#00E599' : risk >= 35 ? '#00E599' : '#00C885'
 
   const radarData = [
     { axis: 'Exhaustion', value: Math.min(100, hours * 1.6 + (signals.includes('overwork') ? 20 : 0)) },
@@ -296,7 +297,7 @@ function RiskPredictor() {
               animate={{ width: `${risk}%` }}
               transition={{ duration: 0.6 }}
               className="h-full rounded-full"
-              style={{ background: `linear-gradient(90deg, #5EEAD4, ${riskColor})` }}
+              style={{ background: `linear-gradient(90deg, #00E599, ${riskColor})` }}
             />
           </div>
         </div>
@@ -331,10 +332,10 @@ function TestimonialCard({ t }: { t: typeof TESTIMONIALS[number] }) {
             <span className="text-xs text-zinc-500">/100</span>
           </div>
         </div>
-        <div className="p-3 rounded-xl bg-[#00D4FF]/10 border border-[#00D4FF]/20">
+        <div className="p-3 rounded-xl bg-[#00E599]/10 border border-[#00E599]/20">
           <div className="text-[10px] uppercase tracking-wider text-zinc-400 mb-1">After 90 days</div>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-black tabular-nums" style={{ color: '#00D4FF', fontFamily: 'var(--font-display)' }}>{t.burnoutAfter}</span>
+            <span className="text-2xl font-black tabular-nums" style={{ color: '#00E599', fontFamily: 'var(--font-display)' }}>{t.burnoutAfter}</span>
             <span className="text-xs text-zinc-500">/100</span>
           </div>
         </div>
@@ -405,6 +406,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#050708] text-zinc-100 overflow-x-hidden">
+      <IntroExperience />
       <Navbar />
 
       {/* ─── HERO ─── */}
@@ -430,23 +432,27 @@ export default function LandingPage() {
               <span className="relative rounded-full w-2 h-2 bg-[#00E599]" />
             </span>
             <span className="font-medium">14,891 reports this month</span>
-            <span className="text-zinc-500">·</span>
-            <span className="text-[#00D4FF]">2,340 companies tracked</span>
+            <span className="text-zinc-600">·</span>
+            <span className="text-zinc-400">2,340 companies tracked</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-6xl md:text-8xl lg:text-[10.5rem] font-black leading-[0.9] tracking-[-0.045em] mb-6 drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+            className="text-6xl md:text-8xl lg:text-[9rem] font-semibold leading-[0.92] tracking-[-0.04em] mb-6"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             <span
               className="block bg-clip-text text-transparent"
-              style={{ backgroundImage: 'linear-gradient(180deg, #FFFFFF 0%, #F2F6F5 38%, #6E6877 100%)' }}
+              style={{ backgroundImage: 'linear-gradient(180deg, #F2F6F5 0%, #C8D0CD 55%, #5B6562 100%)' }}
             >
-              The workplace
+              The workplace won&apos;t
             </span>
-            <span className="block text-gradient-animated drop-shadow-[0_0_50px_rgba(0,229,153,0.4)]">
-              won&apos;t name itself.
+            <span className="block">
+              <span style={{ fontFamily: 'var(--font-serif)' }} className="italic font-normal text-[#00E599]">name</span>
+              <span
+                className="bg-clip-text text-transparent"
+                style={{ backgroundImage: 'linear-gradient(180deg, #F2F6F5 0%, #C8D0CD 55%, #5B6562 100%)' }}
+              > itself.</span>
             </span>
           </motion.h1>
 
@@ -463,14 +469,14 @@ export default function LandingPage() {
             className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16"
           >
             <Link href="/auth/signup">
-              <Button size="lg" className="bg-gradient-to-r from-[#00E599] to-[#14E5C8] hover:from-[#00C885] hover:to-[#00C885] text-white border-0 shadow-[0_8px_32px_rgba(0,229,153,0.45)] text-base px-7 py-6 gap-2 group transition-all hover:scale-105 hover:shadow-[0_12px_44px_rgba(0,229,153,0.6)]">
+              <Button size="lg" className="bg-gradient-to-r from-[#00E599] to-[#00E599] hover:from-[#00C885] hover:to-[#00C885] text-white border-0 shadow-[0_8px_32px_rgba(0,229,153,0.45)] text-base px-7 py-6 gap-2 group transition-all hover:scale-105 hover:shadow-[0_12px_44px_rgba(0,229,153,0.6)]">
                 <FileWarning className="w-5 h-5" />
                 File a Report
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Button>
             </Link>
             <Link href="/assessment">
-              <Button size="lg" variant="outline" className="border-white/15 hover:border-[#2E8BFF]/50 text-white hover:bg-[#2E8BFF]/[0.08] text-base px-7 py-6 gap-2 group backdrop-blur-sm">
+              <Button size="lg" variant="outline" className="border-white/15 hover:border-[#00E599]/50 text-white hover:bg-[#00E599]/[0.08] text-base px-7 py-6 gap-2 group backdrop-blur-sm">
                 <Brain className="w-5 h-5" />
                 Free Burnout Test
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -484,9 +490,9 @@ export default function LandingPage() {
             className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-zinc-400"
           >
             <div className="flex items-center gap-1.5"><LockKeyhole className="w-3.5 h-3.5 text-[#00E599]" /> AES-256 encrypted</div>
-            <div className="flex items-center gap-1.5"><EyeOff className="w-3.5 h-3.5 text-[#2E8BFF]" /> Zero IP logging</div>
-            <div className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#00D4FF]" /> POPIA compliant</div>
-            <div className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-[#5EEAD4]" /> 4.9/5 (3,201 reviews)</div>
+            <div className="flex items-center gap-1.5"><EyeOff className="w-3.5 h-3.5 text-[#00E599]" /> Zero IP logging</div>
+            <div className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#00E599]" /> POPIA compliant</div>
+            <div className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-[#00E599]" /> 4.9/5 (3,201 reviews)</div>
           </motion.div>
         </motion.div>
 
@@ -540,7 +546,7 @@ export default function LandingPage() {
               <div key={i} className="mx-6 flex items-center gap-3 whitespace-nowrap text-sm">
                 <span className="text-zinc-300 font-medium">{t.name}</span>
                 <span className="font-mono text-zinc-100 font-bold tabular-nums">{t.score}</span>
-                <span className={`font-mono text-xs flex items-center gap-0.5 ${isPositive ? 'text-[#00E599]' : 'text-[#00D4FF]'}`}>
+                <span className={`font-mono text-xs flex items-center gap-0.5 ${isPositive ? 'text-[#00E599]' : 'text-[#00E599]'}`}>
                   {isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                   {t.change}
                 </span>
@@ -607,7 +613,7 @@ export default function LandingPage() {
             <motion.div
               initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
             >
-              <Badge className="mb-5 bg-[#5EEAD4]/10 text-[#5EEAD4] border-[#5EEAD4]/30 font-mono">
+              <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
                 <Sparkles className="w-3 h-3 mr-1.5" />
                 AI-POWERED
               </Badge>
@@ -651,13 +657,13 @@ export default function LandingPage() {
               className="lg:sticky lg:top-32"
             >
               <div className="relative p-7 rounded-3xl border-gradient border border-white/8 bg-[#0A0D0F]/80 backdrop-blur-md shadow-2xl">
-                <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-gradient-to-br from-[#00E599] to-[#14E5C8] flex items-center justify-center shadow-[0_8px_30px_rgba(255,94,58,0.5)]">
+                <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-gradient-to-br from-[#00E599] to-[#00E599] flex items-center justify-center shadow-[0_8px_30px_rgba(0,229,153,0.5)]">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex items-center justify-between mb-5">
                   <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Live Demo</span>
-                  <div className="flex items-center gap-1.5 text-[10px] text-[#00D4FF]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00D4FF] animate-pulse" />
+                  <div className="flex items-center gap-1.5 text-[10px] text-[#00E599]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00E599] animate-pulse" />
                     Calculating
                   </div>
                 </div>
@@ -693,7 +699,7 @@ export default function LandingPage() {
           className="grid lg:grid-cols-2 gap-12 items-center"
         >
           <div>
-            <Badge className="mb-5 bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/30 font-mono">
+            <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
               <LineChartIcon className="w-3 h-3 mr-1.5" />
               LIVE INTELLIGENCE
             </Badge>
@@ -715,7 +721,7 @@ export default function LandingPage() {
                 <div key={stat.label} className="p-4 rounded-xl border border-white/8 bg-[#0A0D0F]">
                   <div className="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">{stat.label}</div>
                   <div className="text-2xl font-black tabular-nums mb-0.5" style={{ fontFamily: 'var(--font-display)' }}>{stat.value}</div>
-                  <div className="text-xs text-[#00D4FF]">{stat.change}</div>
+                  <div className="text-xs text-[#00E599]">{stat.change}</div>
                 </div>
               ))}
             </div>
@@ -753,7 +759,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge className="mb-5 bg-[#2E8BFF]/10 text-[#2E8BFF] border-[#2E8BFF]/30 font-mono">
+            <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
               <MessageSquare className="w-3 h-3 mr-1.5" />
               REAL STORIES
             </Badge>
@@ -790,21 +796,24 @@ export default function LandingPage() {
             initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
             className="relative"
           >
-            <div className="relative aspect-square rounded-3xl overflow-hidden border border-white/8 glow-ember">
+            <div className="relative aspect-square rounded-3xl overflow-hidden border border-white/8 glow-emerald">
               <Image
-                src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=800&h=800&fit=crop"
-                alt="Privacy illustration — abstract encrypted patterns"
-                fill className="object-cover"
+                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=800&fit=crop"
+                alt="Abstract minimalist form representing privacy"
+                fill className="object-cover grayscale"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#00E599]/20 via-transparent to-[#2E8BFF]/20 mix-blend-overlay" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050708] via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#00E599]/25 via-transparent to-transparent mix-blend-soft-light" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050708] via-[#050708]/20 to-transparent" />
+              <div className="absolute inset-0 bg-dots opacity-30 mix-blend-overlay" />
               <div className="absolute bottom-6 left-6 right-6">
-                <div className="flex items-center gap-3 p-3 rounded-xl glass">
-                  <LockKeyhole className="w-5 h-5 text-[#00D4FF]" />
+                <div className="flex items-center gap-3 p-3.5 rounded-2xl glass">
+                  <div className="w-9 h-9 rounded-xl bg-[#00E599]/15 border border-[#00E599]/30 flex items-center justify-center shrink-0">
+                    <LockKeyhole className="w-4.5 h-4.5 text-[#00E599]" />
+                  </div>
                   <div>
-                    <div className="text-xs font-mono text-[#00D4FF]">aes-256-gcm</div>
-                    <div className="text-[10px] text-zinc-400">Authenticated encryption</div>
+                    <div className="text-xs font-mono text-[#00E599]">aes-256-gcm</div>
+                    <div className="text-[10px] text-zinc-400">Authenticated client-side encryption</div>
                   </div>
                 </div>
               </div>
@@ -814,14 +823,14 @@ export default function LandingPage() {
           <motion.div
             initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
           >
-            <Badge className="mb-5 bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/30 font-mono">
+            <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
               <ShieldCheck className="w-3 h-3 mr-1.5" />
               ZERO-KNOWLEDGE
             </Badge>
             <h2 className="text-5xl font-black mb-5 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
               We can&apos;t betray
               <br />
-              <span className="text-gradient-cool">what we can&apos;t see.</span>
+              <span className="text-gradient-aurora">what we can&apos;t see.</span>
             </h2>
             <p className="text-zinc-400 text-lg leading-relaxed mb-8">
               Reports are encrypted client-side before they touch our servers.
@@ -835,8 +844,8 @@ export default function LandingPage() {
                 { icon: Shield, t: 'Open-source verification', d: 'Codebase available on GitHub' },
               ].map(p => (
                 <div key={p.t} className="flex gap-4 p-4 rounded-xl border border-white/8 bg-[#0A0D0F]">
-                  <div className="w-10 h-10 shrink-0 rounded-xl bg-[#00D4FF]/10 border border-[#00D4FF]/20 flex items-center justify-center">
-                    <p.icon className="w-4.5 h-4.5 text-[#00D4FF]" />
+                  <div className="w-10 h-10 shrink-0 rounded-xl bg-[#00E599]/10 border border-[#00E599]/20 flex items-center justify-center">
+                    <p.icon className="w-4.5 h-4.5 text-[#00E599]" />
                   </div>
                   <div>
                     <div className="font-semibold text-sm mb-0.5">{p.t}</div>
@@ -892,7 +901,7 @@ export default function LandingPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/auth/signup">
-                <Button size="lg" className="bg-gradient-to-r from-[#00E599] to-[#14E5C8] hover:from-[#00C885] hover:to-[#00E599] text-white border-0 shadow-[0_8px_30px_rgba(255,94,58,0.4)] gap-2">
+                <Button size="lg" className="bg-gradient-to-r from-[#00E599] to-[#00E599] hover:from-[#00C885] hover:to-[#00E599] text-white border-0 shadow-[0_8px_30px_rgba(0,229,153,0.4)] gap-2">
                   Join Free
                   <ArrowUpRight className="w-4 h-4" />
                 </Button>
@@ -953,7 +962,7 @@ export default function LandingPage() {
           <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
             <p>&copy; 2026 BURNOUT Platform · Built for workers, by workers.</p>
             <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00D4FF] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00E599] animate-pulse" />
               All systems operational
             </div>
           </div>

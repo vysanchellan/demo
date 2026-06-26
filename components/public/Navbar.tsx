@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react'
+import { Menu, X, ArrowUpRight, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import Logo from '@/components/public/Logo'
@@ -30,66 +30,61 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        initial={{ y: -20, opacity: 0 }}
+        initial={{ y: -16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          'fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-6xl rounded-2xl transition-all duration-500',
+          'fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl rounded-full transition-all duration-500',
           scrolled
-            ? 'glass-strong border border-white/8 shadow-2xl shadow-black/40'
-            : 'border border-white/[0.04] bg-[#0A0D0F]/30 backdrop-blur-md'
+            ? 'glass-strong border border-white/[0.08] shadow-[0_8px_40px_rgba(0,0,0,0.5)]'
+            : 'border border-white/[0.06] bg-[#0A0D0F]/40 backdrop-blur-xl'
         )}
         aria-label="Primary"
       >
-        <div className="flex items-center justify-between px-4 py-2.5">
+        <div className="flex items-center justify-between pl-3 pr-2 py-2">
+          {/* Brand */}
           <Link href="/" className="flex items-center gap-2.5 group" aria-label="BURNOUT home">
-            <Logo size={36} glow className="group-hover:scale-110 transition-transform" />
-            <span className="text-lg font-black tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <Logo size={34} className="group-hover:scale-105 transition-transform duration-300" />
+            <span className="text-base font-bold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
               BURN<span className="text-[#00E599]">OUT</span>
-            </span>
-            <span className="hidden sm:inline-flex items-center gap-1 ml-2 px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] text-zinc-400 font-mono">
-              v2.0
             </span>
           </Link>
 
-          <div className="hidden lg:flex items-center gap-1">
+          {/* Center nav — pill */}
+          <div className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2">
             {NAV.map(item => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative px-3 py-2 text-sm text-zinc-400 hover:text-white transition-colors group rounded-lg"
+                className="relative px-3.5 py-1.5 text-[13px] font-medium text-zinc-400 hover:text-white transition-colors duration-200 rounded-full group"
               >
-                <span className="relative z-10 flex items-center gap-1">
-                  {item.label}
-                  {item.label === 'Risk Predictor' && (
-                    <Sparkles className="w-3 h-3 text-[#00E599]" />
-                  )}
-                </span>
-                <span className="absolute inset-0 bg-white/[0.05] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
+                <span className="relative z-10">{item.label}</span>
+                <span className="absolute inset-0 rounded-full bg-white/[0.06] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
               </Link>
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
+          {/* Actions */}
+          <div className="flex items-center gap-1.5">
             <Link href="/auth/login" className="hidden sm:block">
-              <Button variant="ghost" size="sm" className="text-zinc-400 hover:text-white">
+              <Button variant="ghost" size="sm" className="text-zinc-400 hover:text-white text-[13px] h-9 px-3 rounded-full">
                 Sign In
               </Button>
             </Link>
             <Link href="/auth/signup">
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-[#00E599] to-[#14E5C8] hover:from-[#00C885] hover:to-[#00E599] text-white border-0 shadow-[0_4px_20px_rgba(255,94,58,0.3)] gap-1.5"
+                className="bg-[#00E599] hover:bg-[#00FFAB] text-[#04130D] font-semibold border-0 shadow-[0_4px_18px_rgba(0,229,153,0.35)] gap-1.5 h-9 px-4 rounded-full text-[13px]"
               >
-                Report Now <ArrowUpRight className="w-3.5 h-3.5" />
+                Report Now <ArrowRight className="w-3.5 h-3.5" />
               </Button>
             </Link>
             <button
               onClick={() => setOpen(true)}
-              className="lg:hidden w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center"
+              className="lg:hidden w-9 h-9 rounded-full border border-white/10 flex items-center justify-center"
               aria-label="Open menu"
             >
-              <Menu className="w-5 h-5" />
+              <Menu className="w-4.5 h-4.5" />
             </button>
           </div>
         </div>
@@ -109,10 +104,8 @@ export default function Navbar() {
               className="fixed right-0 top-0 bottom-0 z-50 w-72 bg-[#0A0D0F] border-l border-white/8 lg:hidden p-6"
             >
               <div className="flex items-center justify-between mb-8">
-                <span className="font-black text-xl" style={{ fontFamily: 'var(--font-display)' }}>
-                  Menu
-                </span>
-                <button onClick={() => setOpen(false)} className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center" aria-label="Close menu">
+                <Logo size={32} variant="wordmark" />
+                <button onClick={() => setOpen(false)} className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center" aria-label="Close menu">
                   <X className="w-5 h-5" />
                 </button>
               </div>

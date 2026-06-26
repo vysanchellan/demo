@@ -10,19 +10,16 @@ interface LogoProps {
 }
 
 /**
- * BURNOUT custom logo — abstract ember mark.
- * A layered diamond/flame shape with depth, gradient fill, and inner highlight.
+ * BURNOUT logo — a crisp, high-contrast ember mark.
+ * Solid emerald tile, bold dark flame, hot inner core.
  */
-export default function Logo({ className, size = 36, glow = false, variant = 'mark' }: LogoProps) {
+export default function Logo({ className, size = 38, glow = false, variant = 'mark' }: LogoProps) {
   if (variant === 'wordmark') {
     return (
       <div className={cn('flex items-center gap-2.5', className)}>
         <LogoMark size={size} glow={glow} />
-        <span
-          className="text-lg font-black tracking-tight"
-          style={{ fontFamily: 'var(--font-display)' }}
-        >
-          BURN<span className="text-[#FF5E3A]">OUT</span>
+        <span className="text-lg font-bold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+          BURN<span className="text-[#00E599]">OUT</span>
         </span>
       </div>
     )
@@ -30,89 +27,60 @@ export default function Logo({ className, size = 36, glow = false, variant = 'ma
   return <LogoMark size={size} glow={glow} className={className} />
 }
 
-function LogoMark({ size = 36, glow = false, className }: { size?: number; glow?: boolean; className?: string }) {
-  const id = 'logo-' + Math.random().toString(36).slice(2, 7)
+function LogoMark({ size = 38, glow = false, className }: { size?: number; glow?: boolean; className?: string }) {
+  const id = 'lg' + Math.round(size)
   return (
     <div
       className={cn(
-        'relative inline-flex items-center justify-center rounded-xl shrink-0',
-        glow && 'shadow-[0_8px_30px_rgba(0,229,153,0.5)]',
+        'relative inline-flex items-center justify-center shrink-0',
+        glow && 'shadow-[0_6px_28px_rgba(0,229,153,0.45)]',
         className
       )}
-      style={{
-        width: size,
-        height: size,
-        background: 'linear-gradient(135deg, #00E599 0%, #14E5C8 55%, #5EEAD4 100%)',
-      }}
+      style={{ width: size, height: size, borderRadius: size * 0.28 }}
       aria-label="BURNOUT logo"
     >
-      {/* Inner highlight gradient overlay */}
-      <span
-        className="absolute inset-0 rounded-xl opacity-60"
-        style={{
-          background: 'radial-gradient(circle at 30% 20%, rgba(255,255,255,0.45) 0%, transparent 55%)',
-        }}
-        aria-hidden="true"
-      />
-      {/* Bottom shadow tint */}
-      <span
-        className="absolute inset-0 rounded-xl opacity-45"
-        style={{
-          background: 'linear-gradient(180deg, transparent 50%, rgba(176,18,70,0.6) 100%)',
-        }}
-        aria-hidden="true"
-      />
-      {/* Custom mark SVG */}
-      <svg
-        viewBox="0 0 32 32"
-        width={size * 0.65}
-        height={size * 0.65}
-        fill="none"
-        className="relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]"
-      >
+      <svg viewBox="0 0 48 48" width={size} height={size} className="relative z-10">
         <defs>
-          <linearGradient id={`${id}-a`} x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
-            <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.7" />
+          <linearGradient id={`${id}-tile`} x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#00FFAB" />
+            <stop offset="55%" stopColor="#00E599" />
+            <stop offset="100%" stopColor="#00B47A" />
+          </linearGradient>
+          <linearGradient id={`${id}-spark`} x1="24" y1="14" x2="24" y2="36" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#063626" />
+            <stop offset="100%" stopColor="#04130D" />
           </linearGradient>
         </defs>
-        {/* Outer abstract flame — sharper, more geometric than lucide flame */}
+
+        {/* Tile */}
+        <rect x="0" y="0" width="48" height="48" rx="13.5" fill={`url(#${id}-tile)`} />
+        {/* Top sheen */}
+        <rect x="0" y="0" width="48" height="22" rx="13.5" fill="#FFFFFF" opacity="0.16" />
+
+        {/* Bold flame in dark negative space */}
         <path
-          d="M16 3
-             L21.5 11
-             L19 14.5
-             L23 18
-             L20 22
-             L23 27
-             L16 29.5
-             L9 27
-             L12 22
-             L9 18
-             L13 14.5
-             L10.5 11 Z"
-          fill={`url(#${id}-a)`}
-          stroke="rgba(255,255,255,0.85)"
-          strokeWidth="0.6"
-          strokeLinejoin="round"
+          d="M24 9
+             C 27 16, 33 18, 33 26.5
+             C 33 33, 28.5 38, 24 38
+             C 19.5 38, 15 33.5, 15 27
+             C 15 23, 17 21.5, 18.5 19.5
+             C 19.2 22, 20.8 23, 22 22.5
+             C 23.6 21.8, 22.5 17, 24 9 Z"
+          fill={`url(#${id}-spark)`}
         />
-        {/* Inner core diamond */}
+        {/* Inner hot core */}
         <path
-          d="M16 11
-             L18.5 16
-             L16 22
-             L13.5 16 Z"
-          fill="#00E599"
-          fillOpacity="0.9"
+          d="M24 22
+             C 26 25.5, 27.5 27.5, 27.5 30
+             C 27.5 33.2, 25.9 35, 24 35
+             C 22.1 35, 20.5 33.2, 20.5 30.2
+             C 20.5 27.8, 22 25.6, 24 22 Z"
+          fill="#00FFAB"
         />
+
+        {/* Crisp border */}
+        <rect x="0.6" y="0.6" width="46.8" height="46.8" rx="13" fill="none" stroke="#FFFFFF" strokeOpacity="0.18" strokeWidth="1.2" />
       </svg>
-      {/* Glass highlight ring */}
-      <span
-        className="absolute inset-0 rounded-xl pointer-events-none"
-        style={{
-          boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -2px 3px rgba(0,0,0,0.2)',
-        }}
-        aria-hidden="true"
-      />
     </div>
   )
 }
