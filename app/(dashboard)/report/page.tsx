@@ -50,7 +50,7 @@ export default function ReportPage() {
 
   if (done) {
     return (
-      <div className="min-h-screen bg-[#08090B] flex items-center justify-center px-6">
+      <div className="min-h-screen bg-[#050708] flex items-center justify-center px-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -60,16 +60,16 @@ export default function ReportPage() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="w-20 h-20 rounded-full bg-[#00E5FF]/10 border-2 border-[#00E5FF]/30 flex items-center justify-center mx-auto mb-8"
+            className="w-20 h-20 rounded-full bg-[#00D4FF]/10 border-2 border-[#00D4FF]/30 flex items-center justify-center mx-auto mb-8"
           >
-            <CheckCircle2 className="w-10 h-10 text-[#00E5FF]" />
+            <CheckCircle2 className="w-10 h-10 text-[#00D4FF]" />
           </motion.div>
           <h1 className="text-4xl font-black mb-4" style={{ fontFamily: 'var(--font-display)' }}>REPORT FILED</h1>
-          <p className="text-[#ADA7B5] mb-6 leading-relaxed">
+          <p className="text-[#93A29E] mb-6 leading-relaxed">
             Your anonymous report has been submitted and encrypted.
             It will be reviewed and published within 24 hours.
           </p>
-          <div className="flex items-center justify-center gap-2 text-[#00E5FF] text-sm mb-8">
+          <div className="flex items-center justify-center gap-2 text-[#00D4FF] text-sm mb-8">
             <Shield className="w-4 h-4" />
             <span>100% anonymous — zero identifying data stored</span>
           </div>
@@ -78,7 +78,7 @@ export default function ReportPage() {
               <Button variant="outline" className="border-white/20">View Reports</Button>
             </Link>
             <Link href="/assessment">
-              <Button className="bg-[#FF2D55] hover:bg-[#FF1B47] text-white border-0">
+              <Button className="bg-[#00E599] hover:bg-[#00C885] text-white border-0">
                 Take Burnout Test
               </Button>
             </Link>
@@ -89,25 +89,25 @@ export default function ReportPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#08090B] py-12 px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#050708] py-12 px-6 relative overflow-hidden">
       <div className="absolute inset-0 bg-mesh-soft" />
 
       <div className="relative z-10 max-w-2xl mx-auto">
         <div className="flex items-center gap-3 mb-10">
-          <FileWarning className="w-6 h-6 text-[#FF2D55]" />
+          <FileWarning className="w-6 h-6 text-[#00E599]" />
           <h1 className="text-3xl font-black tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>File Report</h1>
         </div>
 
         {/* Anon banner */}
-        <div className="flex items-center justify-between p-4 rounded-2xl bg-[#00E5FF]/5 border border-[#00E5FF]/20 mb-8">
+        <div className="flex items-center justify-between p-4 rounded-2xl bg-[#00D4FF]/5 border border-[#00D4FF]/20 mb-8">
           <div className="flex items-center gap-3">
-            <Shield className="w-5 h-5 text-[#00E5FF]" />
+            <Shield className="w-5 h-5 text-[#00D4FF]" />
             <div>
-              <div className="text-sm font-semibold text-[#00E5FF]">Anonymous Mode</div>
-              <div className="text-xs text-[#ADA7B5]">Your identity will never be disclosed</div>
+              <div className="text-sm font-semibold text-[#00D4FF]">Anonymous Mode</div>
+              <div className="text-xs text-[#93A29E]">Your identity will never be disclosed</div>
             </div>
           </div>
-          <Switch checked={anonymous} onCheckedChange={setAnonymous} className="data-[state=checked]:bg-[#00E5FF]" />
+          <Switch checked={anonymous} onCheckedChange={setAnonymous} className="data-[state=checked]:bg-[#00D4FF]" />
         </div>
 
         {/* Steps indicator */}
@@ -115,13 +115,13 @@ export default function ReportPage() {
           {STEPS.map((s, i) => (
             <div key={s} className="flex items-center gap-2">
               <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border transition-all duration-300 ${
-                i < step ? 'bg-[#00E5FF] border-[#00E5FF] text-black'
-                : i === step ? 'bg-[#FF2D55] border-[#FF2D55] text-white'
-                : 'bg-transparent border-white/20 text-[#ADA7B5]'
+                i < step ? 'bg-[#00D4FF] border-[#00D4FF] text-black'
+                : i === step ? 'bg-[#00E599] border-[#00E599] text-white'
+                : 'bg-transparent border-white/20 text-[#93A29E]'
               }`}>
                 {i < step ? <CheckCircle2 className="w-4 h-4" /> : i + 1}
               </div>
-              <span className={`text-xs ${i === step ? 'text-white' : 'text-[#ADA7B5]'}`}>{s}</span>
+              <span className={`text-xs ${i === step ? 'text-white' : 'text-[#93A29E]'}`}>{s}</span>
               {i < STEPS.length - 1 && <div className="flex-1 h-px bg-white/10 mx-1 w-8" />}
             </div>
           ))}
@@ -132,7 +132,7 @@ export default function ReportPage() {
           key={step}
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="p-8 bg-[#0E0C11] border border-white/8 rounded-3xl"
+          className="p-8 bg-[#0A0D0F] border border-white/8 rounded-3xl"
         >
           {step === 0 && (
             <div className="space-y-5">
@@ -140,34 +140,34 @@ export default function ReportPage() {
                 ABOUT THE COMPANY
               </h2>
               <div>
-                <label className="text-xs font-semibold text-[#ADA7B5] uppercase tracking-wider block mb-2">
+                <label className="text-xs font-semibold text-[#93A29E] uppercase tracking-wider block mb-2">
                   Company Name *
                 </label>
                 <Input
                   value={form.company_name}
                   onChange={e => update('company_name', e.target.value)}
                   placeholder="Company name (will be partially redacted)"
-                  className="bg-[#060507] border-white/10 focus:border-[#FF2D55]/50"
+                  className="bg-[#050708] border-white/10 focus:border-[#00E599]/50"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-semibold text-[#ADA7B5] uppercase tracking-wider block mb-2">Industry</label>
+                  <label className="text-xs font-semibold text-[#93A29E] uppercase tracking-wider block mb-2">Industry</label>
                   <select
                     value={form.industry}
                     onChange={e => update('industry', e.target.value)}
-                    className="w-full h-10 px-3 rounded-lg bg-[#060507] border border-white/10 text-white text-sm focus:outline-none focus:border-[#FF2D55]/50"
+                    className="w-full h-10 px-3 rounded-lg bg-[#050708] border border-white/10 text-white text-sm focus:outline-none focus:border-[#00E599]/50"
                   >
                     <option value="">Select industry</option>
                     {INDUSTRIES.map(i => <option key={i} value={i}>{i}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-[#ADA7B5] uppercase tracking-wider block mb-2">Company Size</label>
+                  <label className="text-xs font-semibold text-[#93A29E] uppercase tracking-wider block mb-2">Company Size</label>
                   <select
                     value={form.company_size}
                     onChange={e => update('company_size', e.target.value)}
-                    className="w-full h-10 px-3 rounded-lg bg-[#060507] border border-white/10 text-white text-sm focus:outline-none focus:border-[#FF2D55]/50"
+                    className="w-full h-10 px-3 rounded-lg bg-[#050708] border border-white/10 text-white text-sm focus:outline-none focus:border-[#00E599]/50"
                   >
                     <option value="">Select size</option>
                     {['1–10', '11–50', '51–200', '201–1000', '1000+'].map(s => <option key={s} value={s}>{s} employees</option>)}
@@ -176,12 +176,12 @@ export default function ReportPage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-semibold text-[#ADA7B5] uppercase tracking-wider block mb-2">City</label>
-                  <Input value={form.city} onChange={e => update('city', e.target.value)} placeholder="e.g. Johannesburg" className="bg-[#060507] border-white/10 focus:border-[#FF2D55]/50" />
+                  <label className="text-xs font-semibold text-[#93A29E] uppercase tracking-wider block mb-2">City</label>
+                  <Input value={form.city} onChange={e => update('city', e.target.value)} placeholder="e.g. Johannesburg" className="bg-[#050708] border-white/10 focus:border-[#00E599]/50" />
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-[#ADA7B5] uppercase tracking-wider block mb-2">Country</label>
-                  <Input value={form.country} onChange={e => update('country', e.target.value)} className="bg-[#060507] border-white/10 focus:border-[#FF2D55]/50" />
+                  <label className="text-xs font-semibold text-[#93A29E] uppercase tracking-wider block mb-2">Country</label>
+                  <Input value={form.country} onChange={e => update('country', e.target.value)} className="bg-[#050708] border-white/10 focus:border-[#00E599]/50" />
                 </div>
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function ReportPage() {
               <h2 className="text-2xl font-black mb-6" style={{ fontFamily: 'var(--font-display)' }}>
                 WHAT HAPPENED?
               </h2>
-              <label className="text-xs font-semibold text-[#ADA7B5] uppercase tracking-wider block mb-3">
+              <label className="text-xs font-semibold text-[#93A29E] uppercase tracking-wider block mb-3">
                 Report Type *
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -202,8 +202,8 @@ export default function ReportPage() {
                     onClick={() => update('report_type', key)}
                     className={`p-3 text-left rounded-xl border text-sm transition-all duration-200 ${
                       form.report_type === key
-                        ? 'bg-[#FF2D55]/15 border-[#FF2D55]/50 text-white'
-                        : 'bg-[#060507] border-white/10 text-[#ADA7B5] hover:border-white/20 hover:text-white'
+                        ? 'bg-[#00E599]/15 border-[#00E599]/50 text-white'
+                        : 'bg-[#050708] border-white/10 text-[#93A29E] hover:border-white/20 hover:text-white'
                     }`}
                   >
                     {label}
@@ -219,20 +219,20 @@ export default function ReportPage() {
                 SEVERITY & DETAILS
               </h2>
               <div>
-                <label className="text-xs font-semibold text-[#ADA7B5] uppercase tracking-wider block mb-3">
-                  Severity: <span className="text-[#FF2D55]">{form.severity}/10</span>
+                <label className="text-xs font-semibold text-[#93A29E] uppercase tracking-wider block mb-3">
+                  Severity: <span className="text-[#00E599]">{form.severity}/10</span>
                 </label>
                 <input
                   type="range" min={1} max={10} value={form.severity}
                   onChange={e => update('severity', parseInt(e.target.value))}
-                  className="w-full accent-[#FF2D55]"
+                  className="w-full accent-[#00E599]"
                 />
-                <div className="flex justify-between text-xs text-[#ADA7B5] mt-1">
+                <div className="flex justify-between text-xs text-[#93A29E] mt-1">
                   <span>Minor</span><span>Severe</span>
                 </div>
               </div>
               <div>
-                <label className="text-xs font-semibold text-[#ADA7B5] uppercase tracking-wider block mb-2">
+                <label className="text-xs font-semibold text-[#93A29E] uppercase tracking-wider block mb-2">
                   Your Account *
                 </label>
                 <Textarea
@@ -240,9 +240,9 @@ export default function ReportPage() {
                   onChange={e => update('description', e.target.value)}
                   placeholder="Describe what happened. Be specific. Dates, patterns, incidents. The more detail, the stronger the report. (Minimum 100 characters)"
                   rows={8}
-                  className="bg-[#060507] border-white/10 focus:border-[#FF2D55]/50 resize-none"
+                  className="bg-[#050708] border-white/10 focus:border-[#00E599]/50 resize-none"
                 />
-                <div className="text-xs text-[#ADA7B5] mt-1 text-right">{form.description.length} / min 100</div>
+                <div className="text-xs text-[#93A29E] mt-1 text-right">{form.description.length} / min 100</div>
               </div>
             </div>
           )}
@@ -259,14 +259,14 @@ export default function ReportPage() {
                   { label: 'Severity', value: `${form.severity}/10` },
                 ].map(row => (
                   <div key={row.label} className="flex justify-between py-2 border-b border-white/5">
-                    <span className="text-[#ADA7B5]">{row.label}</span>
+                    <span className="text-[#93A29E]">{row.label}</span>
                     <span className="font-medium">{row.value}</span>
                   </div>
                 ))}
               </div>
-              <div className="flex items-start gap-3 p-4 rounded-xl bg-[#00E5FF]/5 border border-[#00E5FF]/20 mt-4">
-                <Shield className="w-4 h-4 text-[#00E5FF] mt-0.5 shrink-0" />
-                <p className="text-xs text-[#ADA7B5] leading-relaxed">
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-[#00D4FF]/5 border border-[#00D4FF]/20 mt-4">
+                <Shield className="w-4 h-4 text-[#00D4FF] mt-0.5 shrink-0" />
+                <p className="text-xs text-[#93A29E] leading-relaxed">
                   This report is {anonymous ? 'anonymous' : 'attributed to your account'}.
                   Company names are partially redacted to prevent legal exposure.
                   Your IP address is not logged.
@@ -289,7 +289,7 @@ export default function ReportPage() {
                   if (step === 1 && !form.report_type) { toast.error('Select a report type'); return }
                   setStep(s => s + 1)
                 }}
-                className="bg-[#FF2D55] hover:bg-[#FF1B47] text-white border-0"
+                className="bg-[#00E599] hover:bg-[#00C885] text-white border-0"
               >
                 Continue <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
@@ -297,7 +297,7 @@ export default function ReportPage() {
               <Button
                 onClick={submit}
                 disabled={loading}
-                className="bg-[#FF2D55] hover:bg-[#FF1B47] text-white border-0"
+                className="bg-[#00E599] hover:bg-[#00C885] text-white border-0"
               >
                 {loading ? 'Submitting...' : 'Submit Report'}
               </Button>

@@ -22,12 +22,12 @@ const TABS = [
 ]
 
 const ACCENTS = [
-  { name: 'Scarlet', color: '#FF2D55' },
-  { name: 'Molten', color: '#FF6B35' },
-  { name: 'Violet', color: '#B026FF' },
-  { name: 'Cyan', color: '#00E5FF' },
-  { name: 'Gold', color: '#FFC83D' },
-  { name: 'Magenta', color: '#FF1B8D' },
+  { name: 'Emerald', color: '#00E599' },
+  { name: 'Teal', color: '#14E5C8' },
+  { name: 'Blue', color: '#2E8BFF' },
+  { name: 'Cyan', color: '#00D4FF' },
+  { name: 'Mint', color: '#5EEAD4' },
+  { name: 'Deep Blue', color: '#1B5BFF' },
 ]
 
 export default function SettingsPage() {
@@ -35,7 +35,7 @@ export default function SettingsPage() {
   const [email, setEmail] = useState('')
   const [displayName, setDisplayName] = useState('Anonymous Worker')
   const [bio, setBio] = useState('')
-  const [accent, setAccent] = useState('#FF2D55')
+  const [accent, setAccent] = useState('#00E599')
 
   // Toggles
   const [toggles, setToggles] = useState({
@@ -83,7 +83,7 @@ export default function SettingsPage() {
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <div className="flex items-center gap-2 mb-1">
             <h1 className="text-4xl font-black tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>Settings</h1>
-            <Badge className="bg-[#FFC83D]/10 text-[#FFC83D] border-[#FFC83D]/30 font-mono text-[10px]">DEMO MODE</Badge>
+            <Badge className="bg-[#5EEAD4]/10 text-[#5EEAD4] border-[#5EEAD4]/30 font-mono text-[10px]">DEMO MODE</Badge>
           </div>
           <p className="text-zinc-400 text-sm">Manage your account, privacy, and preferences.</p>
         </motion.div>
@@ -97,7 +97,7 @@ export default function SettingsPage() {
                 onClick={() => setTab(t.key)}
                 className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm whitespace-nowrap transition-all ${
                   tab === t.key
-                    ? 'bg-[#FF2D55]/12 text-[#FF2D55] border border-[#FF2D55]/20'
+                    ? 'bg-[#00E599]/12 text-[#00E599] border border-[#00E599]/20'
                     : 'text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
                 }`}
               >
@@ -122,36 +122,36 @@ export default function SettingsPage() {
                     {/* Avatar */}
                     <div className="flex items-center gap-5 mb-6">
                       <div className="relative">
-                        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#FF2D55] via-[#FF6B35] to-[#FFC83D] flex items-center justify-center text-2xl font-black text-white" style={{ fontFamily: 'var(--font-display)' }}>
+                        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#00E599] via-[#14E5C8] to-[#5EEAD4] flex items-center justify-center text-2xl font-black text-white" style={{ fontFamily: 'var(--font-display)' }}>
                           {displayName.slice(0, 2).toUpperCase()}
                         </div>
-                        <button className="absolute -bottom-1 -right-1 w-7 h-7 rounded-lg bg-[#18141C] border border-white/10 flex items-center justify-center hover:bg-[#1C1722]" aria-label="Change avatar">
+                        <button className="absolute -bottom-1 -right-1 w-7 h-7 rounded-lg bg-[#12161A] border border-white/10 flex items-center justify-center hover:bg-[#141A1F]" aria-label="Change avatar">
                           <Camera className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="font-semibold">{displayName}</span>
-                          <BadgeCheck className="w-4 h-4 text-[#00E5FF]" />
+                          <BadgeCheck className="w-4 h-4 text-[#00D4FF]" />
                         </div>
                         <p className="text-zinc-400 text-xs mt-0.5">Member since June 2026 · 7 reports filed</p>
                       </div>
                     </div>
 
                     <Field label="Display Name">
-                      <Input value={displayName} onChange={e => setDisplayName(e.target.value)} className="bg-[#0A0810] border-white/10 focus:border-[#FF2D55]/50" />
+                      <Input value={displayName} onChange={e => setDisplayName(e.target.value)} className="bg-[#070A0C] border-white/10 focus:border-[#00E599]/50" />
                     </Field>
                     <Field label="Email">
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-                        <Input value={email} disabled className="pl-10 bg-[#0A0810] border-white/10 opacity-60" />
+                        <Input value={email} disabled className="pl-10 bg-[#070A0C] border-white/10 opacity-60" />
                       </div>
                     </Field>
                     <Field label="Bio (optional)">
                       <textarea
                         value={bio} onChange={e => setBio(e.target.value)}
                         placeholder="Tell us about your work situation…" rows={3}
-                        className="w-full px-3 py-2 rounded-lg bg-[#0A0810] border border-white/10 text-sm focus:outline-none focus:border-[#FF2D55]/50 resize-none"
+                        className="w-full px-3 py-2 rounded-lg bg-[#070A0C] border border-white/10 text-sm focus:outline-none focus:border-[#00E599]/50 resize-none"
                       />
                     </Field>
                   </Card>
@@ -194,8 +194,8 @@ export default function SettingsPage() {
                       <Button variant="outline" size="sm" className="border-white/15" onClick={() => toast.info('Password reset email sent (demo)')}>Update</Button>
                     </div>
                   </Card>
-                  <div className="p-4 rounded-xl bg-[#00E5FF]/5 border border-[#00E5FF]/20 flex items-start gap-3">
-                    <Shield className="w-4 h-4 text-[#00E5FF] mt-0.5 shrink-0" />
+                  <div className="p-4 rounded-xl bg-[#00D4FF]/5 border border-[#00D4FF]/20 flex items-start gap-3">
+                    <Shield className="w-4 h-4 text-[#00D4FF] mt-0.5 shrink-0" />
                     <p className="text-xs text-zinc-400 leading-relaxed">Your reports are encrypted with AES-256-GCM client-side. We never log your IP address. Even our administrators cannot connect a report to your identity.</p>
                   </div>
                 </>
@@ -231,18 +231,18 @@ export default function SettingsPage() {
               {tab === 'account' && (
                 <>
                   <Card title="Plan" desc="You're on the free plan — forever.">
-                    <div className="p-5 rounded-2xl border-gradient border border-white/8 bg-gradient-to-br from-[#18141C] to-[#0E0C11]">
+                    <div className="p-5 rounded-2xl border-gradient border border-white/8 bg-gradient-to-br from-[#12161A] to-[#0A0D0F]">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FF2D55] to-[#FF6B35] flex items-center justify-center">
+                          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#00E599] to-[#14E5C8] flex items-center justify-center">
                             <Flame className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-bold flex items-center gap-2">Free Forever <Sparkles className="w-3.5 h-3.5 text-[#FFC83D]" /></div>
+                            <div className="font-bold flex items-center gap-2">Free Forever <Sparkles className="w-3.5 h-3.5 text-[#5EEAD4]" /></div>
                             <div className="text-xs text-zinc-400">Unlimited reports, assessments & intelligence</div>
                           </div>
                         </div>
-                        <Badge className="bg-[#00E5FF]/10 text-[#00E5FF] border-[#00E5FF]/20">ACTIVE</Badge>
+                        <Badge className="bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/20">ACTIVE</Badge>
                       </div>
                     </div>
                   </Card>
@@ -255,7 +255,7 @@ export default function SettingsPage() {
                           <div className="text-xs text-zinc-400">Johannesburg, ZA · Active now</div>
                         </div>
                       </div>
-                      <Badge className="bg-[#00E5FF]/10 text-[#00E5FF] border-[#00E5FF]/20 text-xs">Current</Badge>
+                      <Badge className="bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/20 text-xs">Current</Badge>
                     </div>
                     <button onClick={() => toast.success('Signed out of all other sessions')} className="text-sm text-zinc-400 hover:text-white mt-3 flex items-center gap-2">
                       <LogOut className="w-4 h-4" /> Sign out of all other sessions
@@ -264,10 +264,10 @@ export default function SettingsPage() {
                   <Card title="Danger Zone" desc="Irreversible account actions." danger>
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="text-sm font-medium text-[#FF2D55]">Delete account</div>
+                        <div className="text-sm font-medium text-[#00E599]">Delete account</div>
                         <div className="text-xs text-zinc-400">Permanently remove your account and all data</div>
                       </div>
-                      <Button variant="outline" size="sm" className="border-[#FF2D55]/30 text-[#FF2D55] hover:bg-[#FF2D55]/10" onClick={() => toast.error('Account deletion is disabled in demo mode')}>
+                      <Button variant="outline" size="sm" className="border-[#00E599]/30 text-[#00E599] hover:bg-[#00E599]/10" onClick={() => toast.error('Account deletion is disabled in demo mode')}>
                         <Trash2 className="w-4 h-4 mr-1.5" /> Delete
                       </Button>
                     </div>
@@ -284,9 +284,9 @@ export default function SettingsPage() {
 
 function Card({ title, desc, children, danger }: { title: string; desc?: string; children: React.ReactNode; danger?: boolean }) {
   return (
-    <div className={`p-6 glass-card rounded-2xl ${danger ? '!border-[#FF2D55]/20' : ''}`}>
+    <div className={`p-6 glass-card rounded-2xl ${danger ? '!border-[#00E599]/20' : ''}`}>
       <div className="mb-5">
-        <h2 className={`font-bold ${danger ? 'text-[#FF2D55]' : ''}`}>{title}</h2>
+        <h2 className={`font-bold ${danger ? 'text-[#00E599]' : ''}`}>{title}</h2>
         {desc && <p className="text-zinc-400 text-xs mt-0.5">{desc}</p>}
       </div>
       {children}
@@ -317,7 +317,7 @@ function ToggleRow({ icon: Icon, label, desc, checked, onChange, disabled }: {
           <div className="text-xs text-zinc-400">{desc}</div>
         </div>
       </div>
-      <Switch checked={checked} onCheckedChange={onChange} disabled={disabled} className="data-[state=checked]:bg-[#FF2D55]" />
+      <Switch checked={checked} onCheckedChange={onChange} disabled={disabled} className="data-[state=checked]:bg-[#00E599]" />
     </div>
   )
 }
@@ -326,7 +326,7 @@ function SaveBar({ onSave }: { onSave: () => void }) {
   return (
     <div className="flex justify-end gap-3">
       <Button variant="outline" className="border-white/15">Cancel</Button>
-      <Button onClick={onSave} className="bg-gradient-to-r from-[#FF2D55] to-[#FF6B35] hover:from-[#FF1B47] text-white border-0">
+      <Button onClick={onSave} className="bg-gradient-to-r from-[#00E599] to-[#14E5C8] hover:from-[#00C885] text-white border-0">
         <Check className="w-4 h-4 mr-1.5" /> Save Changes
       </Button>
     </div>

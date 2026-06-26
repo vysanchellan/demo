@@ -21,10 +21,10 @@ const COMPANIES = [
 ]
 
 const SCORE_COLOR = (s: number) => {
-  if (s >= 75) return '#FF2D55'
-  if (s >= 50) return '#FFC83D'
-  if (s >= 25) return '#FF6B35'
-  return '#00E5FF'
+  if (s >= 75) return '#00E599'
+  if (s >= 50) return '#5EEAD4'
+  if (s >= 25) return '#14E5C8'
+  return '#00D4FF'
 }
 
 export default function CompaniesPage() {
@@ -38,7 +38,7 @@ export default function CompaniesPage() {
     .sort((a, b) => b.score - a.score)
 
   return (
-    <div className="min-h-screen bg-[#08090B] py-12 px-6 relative">
+    <div className="min-h-screen bg-[#050708] py-12 px-6 relative">
       <div className="absolute inset-0 bg-mesh-soft" />
 
       <div className="relative z-10 max-w-6xl mx-auto">
@@ -53,12 +53,12 @@ export default function CompaniesPage() {
           {/* Search + filter */}
           <div className="flex flex-col sm:flex-row gap-3 mb-6">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#ADA7B5]" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#93A29E]" />
               <Input
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search companies..."
-                className="pl-10 bg-[#0E0C11] border-white/10 focus:border-[#FF2D55]/50"
+                className="pl-10 bg-[#0A0D0F] border-white/10 focus:border-[#00E599]/50"
               />
             </div>
             <div className="flex gap-2 flex-wrap">
@@ -68,8 +68,8 @@ export default function CompaniesPage() {
                   onClick={() => setFilter(ind)}
                   className={`px-3 py-1.5 rounded-lg text-sm border transition-all ${
                     filter === ind
-                      ? 'bg-[#FF2D55]/15 border-[#FF2D55]/50 text-[#FF2D55]'
-                      : 'bg-[#0E0C11] border-white/10 text-[#ADA7B5] hover:text-white'
+                      ? 'bg-[#00E599]/15 border-[#00E599]/50 text-[#00E599]'
+                      : 'bg-[#0A0D0F] border-white/10 text-[#93A29E] hover:text-white'
                   }`}
                 >
                   {ind}
@@ -89,10 +89,10 @@ export default function CompaniesPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="flex items-center gap-5 p-5 bg-[#0E0C11] border border-white/8 rounded-2xl hover:border-[#FF2D55]/30 transition-all duration-300 cursor-pointer group"
+                  className="flex items-center gap-5 p-5 bg-[#0A0D0F] border border-white/8 rounded-2xl hover:border-[#00E599]/30 transition-all duration-300 cursor-pointer group"
                 >
                   {/* Rank */}
-                  <div className="text-2xl font-black text-[#ADA7B5] w-8 shrink-0" style={{ fontFamily: 'var(--font-display)' }}>
+                  <div className="text-2xl font-black text-[#93A29E] w-8 shrink-0" style={{ fontFamily: 'var(--font-display)' }}>
                     {i + 1}
                   </div>
 
@@ -106,12 +106,12 @@ export default function CompaniesPage() {
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-bold text-base truncate">{company.name}</span>
                       {company.verified && (
-                        <Badge className="bg-[#00E5FF]/10 text-[#00E5FF] border-[#00E5FF]/20 text-xs shrink-0">
+                        <Badge className="bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/20 text-xs shrink-0">
                           Verified
                         </Badge>
                       )}
                     </div>
-                    <div className="text-[#ADA7B5] text-xs flex items-center gap-3">
+                    <div className="text-[#93A29E] text-xs flex items-center gap-3">
                       <span>{company.industry}</span>
                       <span>·</span>
                       <span>{company.city}</span>
@@ -128,13 +128,13 @@ export default function CompaniesPage() {
                       </div>
                       <div className="text-xs font-semibold" style={{ color }}>{label}</div>
                     </div>
-                    <div className="w-24 h-2 bg-[#18141C] rounded-full overflow-hidden hidden sm:block">
+                    <div className="w-24 h-2 bg-[#12161A] rounded-full overflow-hidden hidden sm:block">
                       <div
                         className="h-full rounded-full"
                         style={{ width: `${company.score}%`, background: color }}
                       />
                     </div>
-                    <ChevronRight className="w-4 h-4 text-[#ADA7B5] opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <ChevronRight className="w-4 h-4 text-[#93A29E] opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                 </motion.div>
               )
@@ -142,7 +142,7 @@ export default function CompaniesPage() {
           </div>
 
           {filtered.length === 0 && (
-            <div className="text-center py-20 text-[#ADA7B5]">
+            <div className="text-center py-20 text-[#93A29E]">
               <Building2 className="w-12 h-12 mx-auto mb-4 opacity-30" />
               <p>No companies found</p>
             </div>

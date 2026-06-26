@@ -52,7 +52,7 @@ export default function DashboardSidebar() {
     <>
       <button
         onClick={() => setMobileOpen(true)}
-        className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 rounded-xl bg-[#0E0C11] border border-white/10 flex items-center justify-center"
+        className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 rounded-xl bg-[#0A0D0F] border border-white/10 flex items-center justify-center"
         aria-label="Open sidebar"
       >
         <Menu className="w-5 h-5" />
@@ -72,7 +72,7 @@ export default function DashboardSidebar() {
         animate={{ width: collapsed ? 72 : 240 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className={cn(
-          'fixed left-0 top-0 h-full z-40 flex flex-col bg-[#0A0810] border-r border-white/5 overflow-hidden',
+          'fixed left-0 top-0 h-full z-40 flex flex-col bg-[#070A0C] border-r border-white/5 overflow-hidden',
           'hidden lg:flex',
           mobileOpen && '!flex'
         )}
@@ -87,7 +87,7 @@ export default function DashboardSidebar() {
                 className="text-lg font-black whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                BURN<span className="text-[#FF2D55]">OUT</span>
+                BURN<span className="text-[#00E599]">OUT</span>
               </motion.span>
             )}
           </Link>
@@ -121,15 +121,15 @@ export default function DashboardSidebar() {
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200',
                   active
-                    ? 'bg-[#FF2D55]/12 text-[#FF2D55] border border-[#FF2D55]/20'
+                    ? 'bg-[#00E599]/12 text-[#00E599] border border-[#00E599]/20'
                     : 'text-zinc-400 hover:text-white hover:bg-white/5'
                 )}
                 aria-current={active ? 'page' : undefined}
               >
-                <item.icon className={cn('w-5 h-5 shrink-0', active && 'text-[#FF2D55]')} />
+                <item.icon className={cn('w-5 h-5 shrink-0', active && 'text-[#00E599]')} />
                 {!collapsed && <span className="whitespace-nowrap font-medium">{item.label}</span>}
                 {active && !collapsed && (
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FF2D55]" />
+                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#00E599]" />
                 )}
               </Link>
             )
@@ -146,7 +146,7 @@ export default function DashboardSidebar() {
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200',
                   pathname === '/admin'
-                    ? 'bg-[#FF2D55]/12 text-[#FF2D55] border border-[#FF2D55]/20'
+                    ? 'bg-[#00E599]/12 text-[#00E599] border border-[#00E599]/20'
                     : 'text-zinc-400 hover:text-white hover:bg-white/5'
                 )}
               >
@@ -164,7 +164,7 @@ export default function DashboardSidebar() {
           </Link>
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-[#FF2D55] hover:bg-[#FF2D55]/5 transition-all duration-200"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-[#00E599] hover:bg-[#00E599]/5 transition-all duration-200"
             aria-label="Sign out"
           >
             <LogOut className="w-5 h-5 shrink-0" />

@@ -69,10 +69,10 @@ export default function PredictPage() {
   const risk = Math.min(100, Math.round(riskRaw * industry.mult * tenureFactor * roleMult))
 
   const riskLevel =
-    risk >= 80 ? { label: 'CRITICAL', color: '#FF2D55', desc: 'Severe burnout imminent. Clinical intervention strongly recommended within 30 days.' } :
-    risk >= 60 ? { label: 'HIGH', color: '#FFC83D', desc: 'Significant risk. Consider workplace change or formal mental health support.' } :
-    risk >= 40 ? { label: 'MEDIUM', color: '#B026FF', desc: 'Manageable but watch for escalation. Establish boundaries now.' } :
-                 { label: 'LOW', color: '#00E5FF', desc: 'Healthy baseline. Maintain current habits and monitor signals.' }
+    risk >= 80 ? { label: 'CRITICAL', color: '#00E599', desc: 'Severe burnout imminent. Clinical intervention strongly recommended within 30 days.' } :
+    risk >= 60 ? { label: 'HIGH', color: '#5EEAD4', desc: 'Significant risk. Consider workplace change or formal mental health support.' } :
+    risk >= 40 ? { label: 'MEDIUM', color: '#2E8BFF', desc: 'Manageable but watch for escalation. Establish boundaries now.' } :
+                 { label: 'LOW', color: '#00D4FF', desc: 'Healthy baseline. Maintain current habits and monitor signals.' }
 
   const radar = [
     { axis: 'Exhaustion', value: Math.min(100, hours * 1.5 + (signals.includes('overwork') ? 25 : 5)) },
@@ -85,17 +85,17 @@ export default function PredictPage() {
 
   const benchmark = [
     { name: 'You', value: risk, color: riskLevel.color },
-    { name: `${industry.name} avg`, value: Math.round(industry.baseline * 1.05), color: '#FF6B35' },
+    { name: `${industry.name} avg`, value: Math.round(industry.baseline * 1.05), color: '#14E5C8' },
     { name: 'Cross-industry', value: 58, color: '#A1A1AA' },
   ]
 
   return (
-    <div className="min-h-screen bg-[#08090B] text-zinc-100 relative">
+    <div className="min-h-screen bg-[#050708] text-zinc-100 relative">
       <div className="absolute inset-0 bg-mesh-soft pointer-events-none" />
       <div className="relative max-w-5xl mx-auto px-6 py-12">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
-          <Badge className="mb-5 bg-[#FFC83D]/10 text-[#FFC83D] border-[#FFC83D]/30 font-mono">
+          <Badge className="mb-5 bg-[#5EEAD4]/10 text-[#5EEAD4] border-[#5EEAD4]/30 font-mono">
             <Sparkles className="w-3 h-3 mr-1.5" />
             AI POWERED · 14,891 REPORTS
           </Badge>
@@ -114,7 +114,7 @@ export default function PredictPage() {
           {[0, 1, 2, 3].map(i => (
             <button
               key={i} onClick={() => setStep(i)}
-              className={`h-1.5 rounded-full transition-all ${i === step ? 'w-12 bg-[#FF2D55]' : i < step ? 'w-6 bg-[#FF2D55]/40' : 'w-6 bg-white/10'}`}
+              className={`h-1.5 rounded-full transition-all ${i === step ? 'w-12 bg-[#00E599]' : i < step ? 'w-6 bg-[#00E599]/40' : 'w-6 bg-white/10'}`}
               aria-label={`Step ${i + 1}`}
             />
           ))}
@@ -125,12 +125,12 @@ export default function PredictPage() {
         <motion.div
           key={step}
           initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-          className="p-8 rounded-3xl border border-white/8 bg-[#0E0C11]/80 backdrop-blur-md mb-6 min-h-[420px]"
+          className="p-8 rounded-3xl border border-white/8 bg-[#0A0D0F]/80 backdrop-blur-md mb-6 min-h-[420px]"
         >
           {step === 0 && (
             <>
               <div className="flex items-center gap-3 mb-2">
-                <Building2 className="w-5 h-5 text-[#FF2D55]" />
+                <Building2 className="w-5 h-5 text-[#00E599]" />
                 <h2 className="text-2xl font-bold">Your industry & role</h2>
               </div>
               <p className="text-zinc-400 text-sm mb-8">Different sectors have different baseline burnout exposure.</p>
@@ -145,7 +145,7 @@ export default function PredictPage() {
                       aria-pressed={industry.name === ind.name}
                       className={`p-3 text-left rounded-xl border text-sm transition-all ${
                         industry.name === ind.name
-                          ? 'bg-[#FF2D55]/15 border-[#FF2D55]/40 text-[#FF2D55]'
+                          ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]'
                           : 'bg-white/[0.03] border-white/8 text-zinc-300 hover:border-white/20'
                       }`}
                     >
@@ -164,7 +164,7 @@ export default function PredictPage() {
                       key={r} onClick={() => setRole(r)}
                       aria-pressed={role === r}
                       className={`px-3 py-2.5 rounded-xl border text-sm transition-all ${
-                        role === r ? 'bg-[#FF2D55]/15 border-[#FF2D55]/40 text-[#FF2D55]' : 'bg-white/[0.03] border-white/8 text-zinc-300 hover:border-white/20'
+                        role === r ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]' : 'bg-white/[0.03] border-white/8 text-zinc-300 hover:border-white/20'
                       }`}
                     >
                       {r}
@@ -178,7 +178,7 @@ export default function PredictPage() {
           {step === 1 && (
             <>
               <div className="flex items-center gap-3 mb-2">
-                <Clock className="w-5 h-5 text-[#FF2D55]" />
+                <Clock className="w-5 h-5 text-[#00E599]" />
                 <h2 className="text-2xl font-bold">Hours & tenure</h2>
               </div>
               <p className="text-zinc-400 text-sm mb-8">Long hours and tenure both compound burnout risk non-linearly.</p>
@@ -186,11 +186,11 @@ export default function PredictPage() {
               <div className="mb-10">
                 <div className="flex items-center justify-between mb-3">
                   <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Average weekly hours</label>
-                  <span className="font-mono text-2xl text-[#FF2D55] font-bold">{hours}h</span>
+                  <span className="font-mono text-2xl text-[#00E599] font-bold">{hours}h</span>
                 </div>
                 <input type="range" min={30} max={100} value={hours}
                   onChange={e => setHours(parseInt(e.target.value))}
-                  className="w-full accent-[#FF2D55]"
+                  className="w-full accent-[#00E599]"
                   aria-label="Weekly hours"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-500 mt-1 font-mono">
@@ -201,11 +201,11 @@ export default function PredictPage() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Tenure at current role (months)</label>
-                  <span className="font-mono text-2xl text-[#FF2D55] font-bold">{tenure}m</span>
+                  <span className="font-mono text-2xl text-[#00E599] font-bold">{tenure}m</span>
                 </div>
                 <input type="range" min={1} max={120} value={tenure}
                   onChange={e => setTenure(parseInt(e.target.value))}
-                  className="w-full accent-[#FF2D55]"
+                  className="w-full accent-[#00E599]"
                   aria-label="Tenure"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-500 mt-1 font-mono">
@@ -218,7 +218,7 @@ export default function PredictPage() {
           {step === 2 && (
             <>
               <div className="flex items-center gap-3 mb-2">
-                <AlertTriangle className="w-5 h-5 text-[#FF2D55]" />
+                <AlertTriangle className="w-5 h-5 text-[#00E599]" />
                 <h2 className="text-2xl font-bold">Active signals</h2>
               </div>
               <p className="text-zinc-400 text-sm mb-8">Select every signal you&apos;re currently experiencing. ({signals.length} of {SIGNALS.length} selected)</p>
@@ -232,10 +232,10 @@ export default function PredictPage() {
                       onClick={() => toggleSignal(s.key)}
                       aria-pressed={active}
                       className={`p-4 text-left rounded-xl border transition-all flex items-center gap-3 ${
-                        active ? 'bg-[#FF2D55]/15 border-[#FF2D55]/40' : 'bg-white/[0.03] border-white/8 hover:border-white/20'
+                        active ? 'bg-[#00E599]/15 border-[#00E599]/40' : 'bg-white/[0.03] border-white/8 hover:border-white/20'
                       }`}
                     >
-                      <div className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 ${active ? 'bg-[#FF2D55] border-[#FF2D55]' : 'border-white/20'}`}>
+                      <div className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 ${active ? 'bg-[#00E599] border-[#00E599]' : 'border-white/20'}`}>
                         {active && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
                       </div>
                       <div className="flex-1">
@@ -252,13 +252,13 @@ export default function PredictPage() {
           {step === 3 && (
             <>
               <div className="flex items-center gap-3 mb-6">
-                <Target className="w-5 h-5 text-[#FF2D55]" />
+                <Target className="w-5 h-5 text-[#00E599]" />
                 <h2 className="text-2xl font-bold">Your projection</h2>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-6 mb-6">
                 {/* Score card */}
-                <div className="p-6 rounded-2xl border bg-gradient-to-br from-[#18141C] to-[#0E0C11]"
+                <div className="p-6 rounded-2xl border bg-gradient-to-br from-[#12161A] to-[#0A0D0F]"
                   style={{ borderColor: `${riskLevel.color}40` }}
                 >
                   <div className="flex items-center justify-between mb-4">
@@ -276,20 +276,20 @@ export default function PredictPage() {
                       initial={{ width: 0 }} animate={{ width: `${risk}%` }}
                       transition={{ duration: 1.2, ease: 'easeOut' }}
                       className="h-full rounded-full"
-                      style={{ background: `linear-gradient(90deg, #FFC83D, ${riskLevel.color})` }}
+                      style={{ background: `linear-gradient(90deg, #5EEAD4, ${riskLevel.color})` }}
                     />
                   </div>
                 </div>
 
                 {/* Benchmark */}
-                <div className="p-6 rounded-2xl border border-white/8 bg-[#0E0C11]">
+                <div className="p-6 rounded-2xl border border-white/8 bg-[#0A0D0F]">
                   <div className="text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-4">Benchmark</div>
                   <ResponsiveContainer width="100%" height={180}>
                     <BarChart data={benchmark} layout="vertical">
                       <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
                       <XAxis type="number" tick={{ fill: '#71717A', fontSize: 11 }} axisLine={false} tickLine={false} />
                       <YAxis dataKey="name" type="category" tick={{ fill: '#A1A1AA', fontSize: 11 }} axisLine={false} tickLine={false} width={100} />
-                      <Tooltip cursor={{ fill: 'rgba(255,255,255,0.04)' }} contentStyle={{ background: '#18141C', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10 }} />
+                      <Tooltip cursor={{ fill: 'rgba(255,255,255,0.04)' }} contentStyle={{ background: '#12161A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10 }} />
                       <Bar dataKey="value" radius={[0, 8, 8, 0]}>
                         {benchmark.map((b, i) => <Bar key={i} fill={b.color} />)}
                       </Bar>
@@ -299,7 +299,7 @@ export default function PredictPage() {
               </div>
 
               {/* Radar */}
-              <div className="p-6 rounded-2xl border border-white/8 bg-[#0E0C11]">
+              <div className="p-6 rounded-2xl border border-white/8 bg-[#0A0D0F]">
                 <div className="text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-3">Multi-axis breakdown</div>
                 <ResponsiveContainer width="100%" height={280}>
                   <RadarChart data={radar}>
@@ -326,12 +326,12 @@ export default function PredictPage() {
             )}
           </div>
           {step < 3 ? (
-            <Button onClick={next} className="bg-gradient-to-r from-[#FF2D55] to-[#FF6B35] hover:from-[#FF1B47] text-white border-0 gap-2">
+            <Button onClick={next} className="bg-gradient-to-r from-[#00E599] to-[#14E5C8] hover:from-[#00C885] text-white border-0 gap-2">
               Continue <ArrowRight className="w-4 h-4" />
             </Button>
           ) : (
             <Link href="/resources">
-              <Button className="bg-gradient-to-r from-[#FF2D55] to-[#FF6B35] hover:from-[#FF1B47] text-white border-0 gap-2">
+              <Button className="bg-gradient-to-r from-[#00E599] to-[#14E5C8] hover:from-[#00C885] text-white border-0 gap-2">
                 <Heart className="w-4 h-4" /> Find Resources
               </Button>
             </Link>

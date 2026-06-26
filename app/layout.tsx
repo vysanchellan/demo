@@ -25,13 +25,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${barlowCondensed.variable} ${inter.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#060507] text-[#F5F5F5]">
+      <body className="min-h-full flex flex-col bg-[#050708] text-[#F5F5F5]">
         {children}
         <Toaster
           position="top-right"
           toastOptions={{
             style: {
-              background: "#18141C",
+              background: "#12161A",
               border: "1px solid rgba(255,255,255,0.1)",
               color: "#F5F5F5",
             },

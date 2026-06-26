@@ -36,13 +36,13 @@ function LogoMark({ size = 36, glow = false, className }: { size?: number; glow?
     <div
       className={cn(
         'relative inline-flex items-center justify-center rounded-xl shrink-0',
-        glow && 'shadow-[0_8px_30px_rgba(255,45,85,0.5)]',
+        glow && 'shadow-[0_8px_30px_rgba(0,229,153,0.5)]',
         className
       )}
       style={{
         width: size,
         height: size,
-        background: 'linear-gradient(135deg, #FF2D55 0%, #FF6B35 55%, #FFC83D 100%)',
+        background: 'linear-gradient(135deg, #00E599 0%, #14E5C8 55%, #5EEAD4 100%)',
       }}
       aria-label="BURNOUT logo"
     >
@@ -101,7 +101,7 @@ function LogoMark({ size = 36, glow = false, className }: { size?: number; glow?
              L18.5 16
              L16 22
              L13.5 16 Z"
-          fill="#FF2D55"
+          fill="#00E599"
           fillOpacity="0.9"
         />
       </svg>

@@ -20,7 +20,7 @@ export default function HeroCanvas() {
     let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2)
     const mouse = { x: -9999, y: -9999 }
 
-    const COLORS = ['#FF2D55', '#FF6B35', '#B026FF', '#00E5FF', '#FFC83D']
+    const COLORS = ['#00E599', '#14E5C8', '#2E8BFF', '#00D4FF', '#5EEAD4']
 
     interface P { x: number; y: number; vx: number; vy: number; r: number; c: string; baseR: number }
     let particles: P[] = []
@@ -59,7 +59,7 @@ export default function HeroCanvas() {
           const dist = Math.hypot(dx, dy)
           if (dist < 130) {
             const op = (1 - dist / 130) * 0.18
-            ctx.strokeStyle = `rgba(255,45,85,${op})`
+            ctx.strokeStyle = `rgba(0,229,153,${op})`
             ctx.lineWidth = 0.6
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
@@ -105,8 +105,8 @@ export default function HeroCanvas() {
       // cursor light orb
       if (mouse.x > -9000) {
         const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 180)
-        g.addColorStop(0, 'rgba(255,45,85,0.10)')
-        g.addColorStop(1, 'rgba(255,45,85,0)')
+        g.addColorStop(0, 'rgba(0,229,153,0.10)')
+        g.addColorStop(1, 'rgba(0,229,153,0)')
         ctx.fillStyle = g
         ctx.fillRect(mouse.x - 180, mouse.y - 180, 360, 360)
       }

@@ -38,7 +38,7 @@ const PIE_DATA = [
   { name: 'Discrimination', value: 14 },
   { name: 'Other', value: 18 },
 ]
-const PIE_COLORS = ['#FF2D55', '#FF6B35', '#B026FF', '#00E5FF', '#FFC83D']
+const PIE_COLORS = ['#00E599', '#14E5C8', '#2E8BFF', '#00D4FF', '#5EEAD4']
 
 const RECENT = [
   { company: 'TechCorp ZA', type: 'Overwork', severity: 9, time: '2h ago' },
@@ -49,10 +49,10 @@ const RECENT = [
 ]
 
 const STATS = [
-  { label: 'Total Reports', value: '14,891', change: '+23%', icon: FileWarning, color: '#FF2D55' },
-  { label: 'Companies Flagged', value: '2,340', change: '+12%', icon: Building2, color: '#FF6B35' },
-  { label: 'Users Protected', value: '51,200', change: '+31%', icon: Users, color: '#00E5FF' },
-  { label: 'Avg Severity', value: '7.4/10', change: '+0.3', icon: AlertTriangle, color: '#B026FF' },
+  { label: 'Total Reports', value: '14,891', change: '+23%', icon: FileWarning, color: '#00E599' },
+  { label: 'Companies Flagged', value: '2,340', change: '+12%', icon: Building2, color: '#14E5C8' },
+  { label: 'Users Protected', value: '51,200', change: '+31%', icon: Users, color: '#00D4FF' },
+  { label: 'Avg Severity', value: '7.4/10', change: '+0.3', icon: AlertTriangle, color: '#2E8BFF' },
 ]
 
 export default function DashboardPage() {
@@ -81,7 +81,7 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 rounded-full border-2 border-[#FF2D55]/30 border-t-[#FF2D55] animate-spin mx-auto mb-4" />
+          <div className="w-12 h-12 rounded-full border-2 border-[#00E599]/30 border-t-[#00E599] animate-spin mx-auto mb-4" />
           <p className="text-zinc-400 text-sm">Loading your dashboard…</p>
         </div>
       </div>
@@ -106,7 +106,7 @@ export default function DashboardPage() {
             </p>
           </div>
           <Link href="/report">
-            <Button className="bg-gradient-to-r from-[#FF2D55] to-[#FF6B35] hover:from-[#FF1B47] text-white border-0 shadow-[0_4px_20px_rgba(255,45,85,0.4)]">
+            <Button className="bg-gradient-to-r from-[#00E599] to-[#14E5C8] hover:from-[#00C885] text-white border-0 shadow-[0_4px_20px_rgba(0,229,153,0.4)]">
               <FileWarning className="w-4 h-4 mr-2" />
               New Report
             </Button>
@@ -125,7 +125,7 @@ export default function DashboardPage() {
                 <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: `${stat.color}1F` }}>
                   <stat.icon className="w-4 h-4" style={{ color: stat.color }} />
                 </div>
-                <Badge className="bg-transparent border-0 text-[#00E5FF] text-xs">
+                <Badge className="bg-transparent border-0 text-[#00D4FF] text-xs">
                   <ArrowUpRight className="w-3 h-3 mr-1" />
                   {stat.change}
                 </Badge>
@@ -146,24 +146,24 @@ export default function DashboardPage() {
           >
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-bold text-sm uppercase tracking-wider text-zinc-400">Reports Trend</h2>
-              <Badge className="bg-[#FF2D55]/10 text-[#FF2D55] border-[#FF2D55]/20 text-xs">2026</Badge>
+              <Badge className="bg-[#00E599]/10 text-[#00E599] border-[#00E599]/20 text-xs">2026</Badge>
             </div>
             <ResponsiveContainer width="100%" height={200}>
               <AreaChart data={AREA_DATA}>
                 <defs>
                   <linearGradient id="reportsGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#FF2D55" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#FF2D55" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#00E599" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="#00E599" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                <XAxis dataKey="month" tick={{ fill: '#ADA7B5', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: '#ADA7B5', fontSize: 11 }} axisLine={false} tickLine={false} />
+                <XAxis dataKey="month" tick={{ fill: '#93A29E', fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: '#93A29E', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip
-                  contentStyle={{ background: '#18141C', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12 }}
-                  labelStyle={{ color: '#F7F5F8' }} itemStyle={{ color: '#FF2D55' }}
+                  contentStyle={{ background: '#12161A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12 }}
+                  labelStyle={{ color: '#F2F6F5' }} itemStyle={{ color: '#00E599' }}
                 />
-                <Area type="monotone" dataKey="reports" stroke="#FF2D55" fill="url(#reportsGrad)" strokeWidth={2.5} />
+                <Area type="monotone" dataKey="reports" stroke="#00E599" fill="url(#reportsGrad)" strokeWidth={2.5} />
               </AreaChart>
             </ResponsiveContainer>
           </motion.div>
@@ -179,7 +179,7 @@ export default function DashboardPage() {
                   {PIE_DATA.map((_, i) => <Cell key={i} fill={PIE_COLORS[i]} />)}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ background: '#18141C', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12 }}
+                  contentStyle={{ background: '#12161A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12 }}
                   formatter={(value: any, name: any) => [value + '%', name]}
                 />
               </PieChart>
@@ -207,14 +207,14 @@ export default function DashboardPage() {
             <h2 className="font-bold text-sm uppercase tracking-wider text-zinc-400 mb-6">By Industry</h2>
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={INDUSTRY_DATA} layout="vertical">
-                <XAxis type="number" tick={{ fill: '#ADA7B5', fontSize: 10 }} axisLine={false} tickLine={false} />
-                <YAxis dataKey="name" type="category" tick={{ fill: '#ADA7B5', fontSize: 11 }} axisLine={false} tickLine={false} width={60} />
+                <XAxis type="number" tick={{ fill: '#93A29E', fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis dataKey="name" type="category" tick={{ fill: '#93A29E', fontSize: 11 }} axisLine={false} tickLine={false} width={60} />
                 <Tooltip
                   cursor={{ fill: 'rgba(255,255,255,0.03)' }}
-                  contentStyle={{ background: '#18141C', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12 }}
+                  contentStyle={{ background: '#12161A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12 }}
                   formatter={(value: any) => [value, 'Reports']}
                 />
-                <Bar dataKey="reports" fill="#FF2D55" radius={[0, 6, 6, 0]} />
+                <Bar dataKey="reports" fill="#00E599" radius={[0, 6, 6, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </motion.div>
@@ -235,8 +235,8 @@ export default function DashboardPage() {
               {RECENT.map((r, i) => (
                 <div key={i} className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#FF2D55]/10 flex items-center justify-center shrink-0">
-                      <AlertTriangle className="w-4 h-4 text-[#FF2D55]" />
+                    <div className="w-8 h-8 rounded-lg bg-[#00E599]/10 flex items-center justify-center shrink-0">
+                      <AlertTriangle className="w-4 h-4 text-[#00E599]" />
                     </div>
                     <div>
                       <div className="text-sm font-semibold">{r.company}</div>
@@ -246,9 +246,9 @@ export default function DashboardPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Badge className="bg-[#18141C] text-zinc-400 border-white/10 text-xs hidden sm:inline-flex">{r.type}</Badge>
+                    <Badge className="bg-[#12161A] text-zinc-400 border-white/10 text-xs hidden sm:inline-flex">{r.type}</Badge>
                     <div className="flex items-center gap-1.5">
-                      <span className="text-sm font-bold tabular-nums" style={{ color: r.severity >= 9 ? '#FF2D55' : r.severity >= 7 ? '#FF6B35' : '#00E5FF' }}>
+                      <span className="text-sm font-bold tabular-nums" style={{ color: r.severity >= 9 ? '#00E599' : r.severity >= 7 ? '#14E5C8' : '#00D4FF' }}>
                         {r.severity}
                       </span>
                       <span className="text-zinc-500 text-xs">/10</span>
