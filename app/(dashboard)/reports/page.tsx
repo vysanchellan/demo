@@ -22,7 +22,7 @@ const MOCK_REPORTS = [
   { id: 6, company: 'BuildCo Construction', industry: 'Construction', city: 'Johannesburg', type: 'unsafe_conditions' as ReportType, severity: 9, description: 'Safety equipment not provided. Sites inspected but management hides violations. Two injuries in the past 3 months no reporting done.', upvotes: 201, date: '2026-06-19', verified: true },
 ]
 
-const SEVERITY_COLOR = (s: number) => s >= 9 ? '#FF3B30' : s >= 7 ? '#FFB347' : '#4ECDC4'
+const SEVERITY_COLOR = (s: number) => s >= 9 ? '#FF2D55' : s >= 7 ? '#FFC83D' : '#00E5FF'
 
 export default function ReportsPage() {
   const [search, setSearch] = useState('')
@@ -44,25 +44,25 @@ export default function ReportsPage() {
               <h1 className="text-4xl font-black" style={{ fontFamily: 'var(--font-display)' }}>
                 REPORTS FEED
               </h1>
-              <p className="text-[#9A9A9A] text-sm mt-1 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#FF3B30] animate-pulse inline-block" />
+              <p className="text-[#ADA7B5] text-sm mt-1 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#FF2D55] animate-pulse inline-block" />
                 {MOCK_REPORTS.length} reports — community verified
               </p>
             </div>
             <Link href="/report">
-              <Button className="bg-[#FF3B30] hover:bg-[#E0342A] text-white border-0">
+              <Button className="bg-[#FF2D55] hover:bg-[#FF1B47] text-white border-0">
                 + File Report
               </Button>
             </Link>
           </div>
 
           <div className="relative mb-6">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9A9A9A]" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#ADA7B5]" />
             <Input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search companies, descriptions..."
-              className="pl-10 bg-[#111111] border-white/10 focus:border-[#FF3B30]/50"
+              className="pl-10 bg-[#0E0C11] border-white/10 focus:border-[#FF2D55]/50"
             />
           </div>
 
@@ -73,22 +73,22 @@ export default function ReportsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.07 }}
-                className="p-6 bg-[#111111] border border-white/8 rounded-2xl hover:border-[#FF3B30]/20 transition-all duration-300"
+                className="p-6 bg-[#0E0C11] border border-white/8 rounded-2xl hover:border-[#FF2D55]/20 transition-all duration-300"
               >
                 {/* Top row */}
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#FF3B30]/10 flex items-center justify-center shrink-0">
-                      <Building2 className="w-5 h-5 text-[#FF3B30]" />
+                    <div className="w-10 h-10 rounded-xl bg-[#FF2D55]/10 flex items-center justify-center shrink-0">
+                      <Building2 className="w-5 h-5 text-[#FF2D55]" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="font-bold">{report.company}</span>
                         {report.verified && (
-                          <Badge className="bg-[#4ECDC4]/10 text-[#4ECDC4] border-[#4ECDC4]/20 text-xs">Verified</Badge>
+                          <Badge className="bg-[#00E5FF]/10 text-[#00E5FF] border-[#00E5FF]/20 text-xs">Verified</Badge>
                         )}
                       </div>
-                      <div className="text-[#9A9A9A] text-xs flex items-center gap-2 mt-0.5">
+                      <div className="text-[#ADA7B5] text-xs flex items-center gap-2 mt-0.5">
                         <MapPin className="w-3 h-3" /> {report.city}
                         <span>·</span>
                         <Clock className="w-3 h-3" /> {formatRelative(report.date)}
@@ -97,7 +97,7 @@ export default function ReportsPage() {
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    <Badge className="bg-[#1A1A1A] text-[#9A9A9A] border-white/10 text-xs hidden sm:inline-flex">
+                    <Badge className="bg-[#18141C] text-[#ADA7B5] border-white/10 text-xs hidden sm:inline-flex">
                       {REPORT_TYPE_LABELS[report.type]}
                     </Badge>
                     <div className="flex items-center gap-1.5 px-3 py-1 rounded-lg border" style={{ borderColor: `${SEVERITY_COLOR(report.severity)}30`, background: `${SEVERITY_COLOR(report.severity)}10` }}>
@@ -110,15 +110,15 @@ export default function ReportsPage() {
                 </div>
 
                 {/* Description */}
-                <p className="text-[#9A9A9A] text-sm leading-relaxed mb-5 line-clamp-3">
+                <p className="text-[#ADA7B5] text-sm leading-relaxed mb-5 line-clamp-3">
                   {report.description}
                 </p>
 
                 {/* Severity bar */}
-                <div className="h-1 bg-[#1A1A1A] rounded-full overflow-hidden mb-4">
+                <div className="h-1 bg-[#18141C] rounded-full overflow-hidden mb-4">
                   <div
                     className="h-full rounded-full"
-                    style={{ width: `${report.severity * 10}%`, background: `linear-gradient(90deg, #FF6B6B, ${SEVERITY_COLOR(report.severity)})` }}
+                    style={{ width: `${report.severity * 10}%`, background: `linear-gradient(90deg, #FF6B35, ${SEVERITY_COLOR(report.severity)})` }}
                   />
                 </div>
 
@@ -132,14 +132,14 @@ export default function ReportsPage() {
                     })}
                     className={`flex items-center gap-2 text-sm px-3 py-1.5 rounded-lg border transition-all ${
                       upvoted.has(report.id)
-                        ? 'bg-[#FF3B30]/15 border-[#FF3B30]/40 text-[#FF3B30]'
-                        : 'border-white/10 text-[#9A9A9A] hover:text-white hover:border-white/20'
+                        ? 'bg-[#FF2D55]/15 border-[#FF2D55]/40 text-[#FF2D55]'
+                        : 'border-white/10 text-[#ADA7B5] hover:text-white hover:border-white/20'
                     }`}
                   >
                     <ThumbsUp className="w-3.5 h-3.5" />
                     <span>{report.upvotes + (upvoted.has(report.id) ? 1 : 0)}</span>
                   </button>
-                  <span className="text-[#9A9A9A] text-xs">{report.industry}</span>
+                  <span className="text-[#ADA7B5] text-xs">{report.industry}</span>
                 </div>
               </motion.div>
             ))}

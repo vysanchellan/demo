@@ -5,25 +5,39 @@ export default function AuroraBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
       <div className="absolute inset-0 bg-mesh" />
+
+      {/* Morphing blobs */}
       <motion.div
-        className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(255,94,58,0.18) 0%, transparent 70%)' }}
-        animate={{ x: [0, 80, -40, 0], y: [0, -40, 60, 0], scale: [1, 1.1, 0.95, 1] }}
+        className="absolute top-[5%] left-[15%] w-[640px] h-[640px] animate-blob"
+        style={{ background: 'radial-gradient(circle, rgba(255,45,85,0.22) 0%, transparent 65%)' }}
+        animate={{ x: [0, 90, -50, 0], y: [0, -50, 70, 0] }}
+        transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="absolute bottom-[2%] right-[18%] w-[560px] h-[560px] animate-blob"
+        style={{ background: 'radial-gradient(circle, rgba(176,38,255,0.18) 0%, transparent 65%)' }}
+        animate={{ x: [0, -70, 50, 0], y: [0, 50, -70, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="absolute top-[40%] right-[5%] w-[420px] h-[420px] animate-blob"
+        style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.12) 0%, transparent 65%)' }}
+        animate={{ x: [0, -90, 0], y: [0, 70, 0] }}
+        transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
+      />
+      <motion.div
+        className="absolute top-[20%] left-[40%] w-[380px] h-[380px] animate-blob"
+        style={{ background: 'radial-gradient(circle, rgba(255,107,53,0.14) 0%, transparent 65%)' }}
+        animate={{ x: [0, 60, -40, 0], y: [0, -40, 30, 0] }}
         transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
       />
-      <motion.div
-        className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)' }}
-        animate={{ x: [0, -60, 40, 0], y: [0, 40, -60, 0], scale: [1, 0.9, 1.1, 1] }}
-        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+
+      {/* Rotating conic ring */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full opacity-[0.08] animate-rotate-slow"
+        style={{ background: 'conic-gradient(from 0deg, transparent, #FF2D55, transparent, #B026FF, transparent, #FF6B35, transparent)' }}
       />
-      <motion.div
-        className="absolute top-1/2 right-0 w-[400px] h-[400px] rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(16,217,184,0.08) 0%, transparent 70%)' }}
-        animate={{ x: [0, -80, 0], y: [0, 60, 0], scale: [1, 1.2, 1] }}
-        transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <div className="absolute inset-0 bg-grid opacity-60" />
+
+      <div className="absolute inset-0 bg-grid opacity-50" />
     </div>
   )
 }

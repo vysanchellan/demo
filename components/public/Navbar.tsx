@@ -37,7 +37,7 @@ export default function Navbar() {
           'fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-6xl rounded-2xl transition-all duration-500',
           scrolled
             ? 'glass-strong border border-white/8 shadow-2xl shadow-black/40'
-            : 'border border-white/[0.04] bg-[#0F1012]/30 backdrop-blur-md'
+            : 'border border-white/[0.04] bg-[#0E0C11]/30 backdrop-blur-md'
         )}
         aria-label="Primary"
       >
@@ -45,7 +45,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2.5 group" aria-label="BURNOUT home">
             <Logo size={36} glow className="group-hover:scale-110 transition-transform" />
             <span className="text-lg font-black tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-              BURN<span className="text-[#FF5E3A]">OUT</span>
+              BURN<span className="text-[#FF2D55]">OUT</span>
             </span>
             <span className="hidden sm:inline-flex items-center gap-1 ml-2 px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/10 text-[10px] text-zinc-400 font-mono">
               v2.0
@@ -62,7 +62,7 @@ export default function Navbar() {
                 <span className="relative z-10 flex items-center gap-1">
                   {item.label}
                   {item.label === 'Risk Predictor' && (
-                    <Sparkles className="w-3 h-3 text-[#FF5E3A]" />
+                    <Sparkles className="w-3 h-3 text-[#FF2D55]" />
                   )}
                 </span>
                 <span className="absolute inset-0 bg-white/[0.05] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -79,7 +79,7 @@ export default function Navbar() {
             <Link href="/auth/signup">
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-[#FF5E3A] to-[#FF8A65] hover:from-[#EA4520] hover:to-[#FF5E3A] text-white border-0 shadow-[0_4px_20px_rgba(255,94,58,0.3)] gap-1.5"
+                className="bg-gradient-to-r from-[#FF2D55] to-[#FF6B35] hover:from-[#FF1B47] hover:to-[#FF2D55] text-white border-0 shadow-[0_4px_20px_rgba(255,94,58,0.3)] gap-1.5"
               >
                 Report Now <ArrowUpRight className="w-3.5 h-3.5" />
               </Button>
@@ -106,7 +106,7 @@ export default function Navbar() {
             <motion.div
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 280 }}
-              className="fixed right-0 top-0 bottom-0 z-50 w-72 bg-[#0F1012] border-l border-white/8 lg:hidden p-6"
+              className="fixed right-0 top-0 bottom-0 z-50 w-72 bg-[#0E0C11] border-l border-white/8 lg:hidden p-6"
             >
               <div className="flex items-center justify-between mb-8">
                 <span className="font-black text-xl" style={{ fontFamily: 'var(--font-display)' }}>

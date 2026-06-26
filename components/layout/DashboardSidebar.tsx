@@ -39,11 +39,10 @@ export default function DashboardSidebar() {
     async function check() {
       try {
         const { createClient } = await import('@/lib/supabase/client')
+        const { isUserAdmin } = await import('@/lib/auth')
         const supabase = createClient()
         const { data: { user } } = await supabase.auth.getUser()
-        if (!user) return
-        const { data } = await supabase.from('profiles').select('role').eq('id', user.id).single()
-        if (data?.role === 'admin') setIsAdmin(true)
+        if (await isUserAdmin(user)) setIsAdmin(true)
       } catch {}
     }
     check()
@@ -53,7 +52,7 @@ export default function DashboardSidebar() {
     <>
       <button
         onClick={() => setMobileOpen(true)}
-        className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 rounded-xl bg-[#0F1012] border border-white/10 flex items-center justify-center"
+        className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 rounded-xl bg-[#0E0C11] border border-white/10 flex items-center justify-center"
         aria-label="Open sidebar"
       >
         <Menu className="w-5 h-5" />
@@ -73,7 +72,7 @@ export default function DashboardSidebar() {
         animate={{ width: collapsed ? 72 : 240 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className={cn(
-          'fixed left-0 top-0 h-full z-40 flex flex-col bg-[#0B0C0E] border-r border-white/5 overflow-hidden',
+          'fixed left-0 top-0 h-full z-40 flex flex-col bg-[#0A0810] border-r border-white/5 overflow-hidden',
           'hidden lg:flex',
           mobileOpen && '!flex'
         )}
@@ -88,7 +87,7 @@ export default function DashboardSidebar() {
                 className="text-lg font-black whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                BURN<span className="text-[#FF5E3A]">OUT</span>
+                BURN<span className="text-[#FF2D55]">OUT</span>
               </motion.span>
             )}
           </Link>
@@ -122,15 +121,15 @@ export default function DashboardSidebar() {
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200',
                   active
-                    ? 'bg-[#FF5E3A]/12 text-[#FF5E3A] border border-[#FF5E3A]/20'
+                    ? 'bg-[#FF2D55]/12 text-[#FF2D55] border border-[#FF2D55]/20'
                     : 'text-zinc-400 hover:text-white hover:bg-white/5'
                 )}
                 aria-current={active ? 'page' : undefined}
               >
-                <item.icon className={cn('w-5 h-5 shrink-0', active && 'text-[#FF5E3A]')} />
+                <item.icon className={cn('w-5 h-5 shrink-0', active && 'text-[#FF2D55]')} />
                 {!collapsed && <span className="whitespace-nowrap font-medium">{item.label}</span>}
                 {active && !collapsed && (
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FF5E3A]" />
+                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FF2D55]" />
                 )}
               </Link>
             )
@@ -147,7 +146,7 @@ export default function DashboardSidebar() {
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200',
                   pathname === '/admin'
-                    ? 'bg-[#FF5E3A]/12 text-[#FF5E3A] border border-[#FF5E3A]/20'
+                    ? 'bg-[#FF2D55]/12 text-[#FF2D55] border border-[#FF2D55]/20'
                     : 'text-zinc-400 hover:text-white hover:bg-white/5'
                 )}
               >
@@ -159,13 +158,13 @@ export default function DashboardSidebar() {
         </nav>
 
         <div className="p-3 border-t border-white/5 space-y-1">
-          <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+          <Link href="/settings" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/5 transition-all duration-200">
             <Settings className="w-5 h-5 shrink-0" />
             {!collapsed && <span className="font-medium">Settings</span>}
           </Link>
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-[#FF5E3A] hover:bg-[#FF5E3A]/5 transition-all duration-200"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-[#FF2D55] hover:bg-[#FF2D55]/5 transition-all duration-200"
             aria-label="Sign out"
           >
             <LogOut className="w-5 h-5 shrink-0" />

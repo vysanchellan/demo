@@ -17,6 +17,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import AuroraBackground from '@/components/public/AuroraBackground'
+import HeroCanvas from '@/components/public/HeroCanvas'
 import Navbar from '@/components/public/Navbar'
 import Logo from '@/components/public/Logo'
 import {
@@ -27,32 +28,32 @@ import {
 
 // ─────────── Data ───────────
 const STATS = [
-  { value: 77, suffix: '%', label: 'workers experiencing burnout', sub: '+18% since 2023', icon: Flame, color: '#FF5E3A' },
-  { value: 63, suffix: '%', label: 'employers ignoring complaints', sub: 'WHO 2025 report', icon: EyeOff, color: '#FBBF24' },
-  { value: 322, prefix: '$', suffix: 'B', label: 'global productivity lost yearly', sub: 'Gallup workplace study', icon: TrendingDown, color: '#8B5CF6' },
-  { value: 51200, suffix: '+', label: 'workers protected via BURNOUT', sub: 'Live, growing daily', icon: Users, color: '#10D9B8' },
+  { value: 77, suffix: '%', label: 'workers experiencing burnout', sub: '+18% since 2023', icon: Flame, color: '#FF2D55' },
+  { value: 63, suffix: '%', label: 'employers ignoring complaints', sub: 'WHO 2025 report', icon: EyeOff, color: '#FFC83D' },
+  { value: 322, prefix: '$', suffix: 'B', label: 'global productivity lost yearly', sub: 'Gallup workplace study', icon: TrendingDown, color: '#B026FF' },
+  { value: 51200, suffix: '+', label: 'workers protected via BURNOUT', sub: 'Live, growing daily', icon: Users, color: '#00E5FF' },
 ]
 
 const FEATURES_BENTO = [
   {
     title: 'Anonymous Encrypted Reports',
     desc: 'AES-256 encryption. No IP logging. Zero-knowledge architecture means we couldn\'t leak your data if we wanted to.',
-    icon: ShieldCheck, color: '#FF5E3A', span: 'lg:col-span-2', tag: 'Privacy First',
+    icon: ShieldCheck, color: '#FF2D55', span: 'lg:col-span-2', tag: 'Privacy First',
   },
   {
     title: 'Clinical Burnout Assessment',
     desc: 'Maslach Burnout Inventory-aligned scoring across 3 dimensions.',
-    icon: Brain, color: '#8B5CF6', span: '', tag: 'Validated Method',
+    icon: Brain, color: '#B026FF', span: '', tag: 'Validated Method',
   },
   {
     title: 'Real-Time Company Intelligence',
     desc: 'Aggregated toxicity scores across 2,340+ companies. Filter, search, compare.',
-    icon: Building2, color: '#10D9B8', span: '', tag: 'Live Data',
+    icon: Building2, color: '#00E5FF', span: '', tag: 'Live Data',
   },
   {
     title: 'AI Risk Predictor',
     desc: 'Input your industry, role, and signals — get a personalised burnout probability with similar-case benchmarks.',
-    icon: Sparkles, color: '#FBBF24', span: 'lg:col-span-2', tag: 'New',
+    icon: Sparkles, color: '#FFC83D', span: 'lg:col-span-2', tag: 'New',
   },
 ]
 
@@ -178,7 +179,7 @@ function RiskPredictor() {
     (hours - 35) * 1.4 + signals.length * 8 + 22 * (INDUSTRY_MULT[industry] ?? 1)
   ))
   const riskLevel = risk >= 75 ? 'CRITICAL' : risk >= 55 ? 'HIGH' : risk >= 35 ? 'MEDIUM' : 'LOW'
-  const riskColor = risk >= 75 ? '#FF5E3A' : risk >= 55 ? '#FBBF24' : risk >= 35 ? '#10D9B8' : '#3B82F6'
+  const riskColor = risk >= 75 ? '#FF2D55' : risk >= 55 ? '#FFC83D' : risk >= 35 ? '#00E5FF' : '#3B82F6'
 
   const radarData = [
     { axis: 'Exhaustion', value: Math.min(100, hours * 1.6 + (signals.includes('overwork') ? 20 : 0)) },
@@ -209,7 +210,7 @@ function RiskPredictor() {
                 aria-pressed={industry === ind}
                 className={`px-3 py-2 text-sm rounded-lg border transition-all ${
                   industry === ind
-                    ? 'bg-[#FF5E3A]/15 border-[#FF5E3A]/40 text-[#FF5E3A]'
+                    ? 'bg-[#FF2D55]/15 border-[#FF2D55]/40 text-[#FF2D55]'
                     : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20 hover:text-white'
                 }`}
               >
@@ -224,13 +225,13 @@ function RiskPredictor() {
             <label htmlFor="hours-slider" className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
               Weekly Hours
             </label>
-            <span className="font-mono text-sm text-[#FF5E3A] font-semibold">{hours}h</span>
+            <span className="font-mono text-sm text-[#FF2D55] font-semibold">{hours}h</span>
           </div>
           <input
             id="hours-slider"
             type="range" min={30} max={90} value={hours}
             onChange={e => setHours(parseInt(e.target.value))}
-            className="w-full accent-[#FF5E3A]"
+            className="w-full accent-[#FF2D55]"
             aria-label="Weekly hours worked"
           />
           <div className="flex justify-between text-[10px] text-zinc-500 mt-1">
@@ -250,7 +251,7 @@ function RiskPredictor() {
                 aria-pressed={signals.includes(s.key)}
                 className={`px-3 py-1.5 text-xs rounded-full border transition-all ${
                   signals.includes(s.key)
-                    ? 'bg-[#FF5E3A]/15 border-[#FF5E3A]/40 text-[#FF5E3A]'
+                    ? 'bg-[#FF2D55]/15 border-[#FF2D55]/40 text-[#FF2D55]'
                     : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20 hover:text-white'
                 }`}
               >
@@ -263,7 +264,7 @@ function RiskPredictor() {
 
       {/* Result + Radar */}
       <div className="space-y-4">
-        <div className="relative p-5 rounded-2xl border bg-gradient-to-br from-[#16171A] to-[#0F1012]"
+        <div className="relative p-5 rounded-2xl border bg-gradient-to-br from-[#18141C] to-[#0E0C11]"
           style={{ borderColor: `${riskColor}40` }}
           role="status" aria-live="polite"
         >
@@ -295,12 +296,12 @@ function RiskPredictor() {
               animate={{ width: `${risk}%` }}
               transition={{ duration: 0.6 }}
               className="h-full rounded-full"
-              style={{ background: `linear-gradient(90deg, #FBBF24, ${riskColor})` }}
+              style={{ background: `linear-gradient(90deg, #FFC83D, ${riskColor})` }}
             />
           </div>
         </div>
 
-        <div className="p-3 rounded-2xl border border-white/8 bg-[#0F1012] h-[210px]">
+        <div className="p-3 rounded-2xl border border-white/8 bg-[#0E0C11] h-[210px]">
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart data={radarData}>
               <PolarGrid stroke="rgba(255,255,255,0.08)" />
@@ -317,23 +318,23 @@ function RiskPredictor() {
 // ─────────── Testimonial Card ───────────
 function TestimonialCard({ t }: { t: typeof TESTIMONIALS[number] }) {
   return (
-    <div className="p-6 rounded-2xl border border-white/8 bg-gradient-to-br from-[#16171A] to-[#0F1012] surface-hover h-full flex flex-col">
-      <Quote className="w-7 h-7 text-[#FF5E3A]/40 mb-4" />
+    <div className="p-6 rounded-2xl border border-white/8 bg-gradient-to-br from-[#18141C] to-[#0E0C11] surface-hover h-full flex flex-col">
+      <Quote className="w-7 h-7 text-[#FF2D55]/40 mb-4" />
       <p className="text-zinc-300 leading-relaxed mb-6 flex-1">&ldquo;{t.quote}&rdquo;</p>
 
       {/* Before/after */}
       <div className="grid grid-cols-2 gap-3 mb-5">
-        <div className="p-3 rounded-xl bg-[#FF5E3A]/10 border border-[#FF5E3A]/20">
+        <div className="p-3 rounded-xl bg-[#FF2D55]/10 border border-[#FF2D55]/20">
           <div className="text-[10px] uppercase tracking-wider text-zinc-400 mb-1">Before BURNOUT</div>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-black tabular-nums" style={{ color: '#FF5E3A', fontFamily: 'var(--font-display)' }}>{t.burnoutBefore}</span>
+            <span className="text-2xl font-black tabular-nums" style={{ color: '#FF2D55', fontFamily: 'var(--font-display)' }}>{t.burnoutBefore}</span>
             <span className="text-xs text-zinc-500">/100</span>
           </div>
         </div>
-        <div className="p-3 rounded-xl bg-[#10D9B8]/10 border border-[#10D9B8]/20">
+        <div className="p-3 rounded-xl bg-[#00E5FF]/10 border border-[#00E5FF]/20">
           <div className="text-[10px] uppercase tracking-wider text-zinc-400 mb-1">After 90 days</div>
           <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-black tabular-nums" style={{ color: '#10D9B8', fontFamily: 'var(--font-display)' }}>{t.burnoutAfter}</span>
+            <span className="text-2xl font-black tabular-nums" style={{ color: '#00E5FF', fontFamily: 'var(--font-display)' }}>{t.burnoutAfter}</span>
             <span className="text-xs text-zinc-500">/100</span>
           </div>
         </div>
@@ -361,7 +362,7 @@ function FaqItem({ q, a, idx }: { q: string; a: string; idx: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: idx * 0.04 }}
-      className="border border-white/8 rounded-xl bg-[#0F1012] overflow-hidden"
+      className="border border-white/8 rounded-xl bg-[#0E0C11] overflow-hidden"
     >
       <button
         onClick={() => setOpen(!open)}
@@ -407,58 +408,91 @@ export default function LandingPage() {
       <Navbar />
 
       {/* ─── HERO ─── */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden grain">
         <AuroraBackground />
+        <HeroCanvas />
 
-        {/* Background image with overlay — adds depth */}
-        <div className="absolute inset-0 opacity-[0.18]" aria-hidden="true">
-          <Image
-            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1920&h=1080&fit=crop"
-            alt=""
-            fill priority
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#08090B] via-[#08090B]/70 to-[#08090B]" />
-        </div>
+        {/* Floating images in weird shapes */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: -12 }}
+          animate={{ opacity: 1, scale: 1, rotate: -6 }}
+          transition={{ delay: 0.8, duration: 1 }}
+          className="absolute top-[18%] left-[6%] w-40 h-48 hidden lg:block animate-float-slow"
+        >
+          <div className="relative w-full h-full clip-hexagon overflow-hidden border border-white/10 glow-scarlet-sm">
+            <Image src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=400&h=480&fit=crop" alt="" fill className="object-cover grayscale contrast-125" sizes="160px" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#FF2D55]/40 via-transparent to-transparent mix-blend-color" />
+          </div>
+        </motion.div>
 
-        {/* Layered radial glows for stronger lighting */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[700px] pointer-events-none" aria-hidden="true"
-          style={{ background: 'radial-gradient(ellipse, rgba(255,94,58,0.22) 0%, transparent 60%)' }} />
-        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full pointer-events-none animate-glow-pulse" aria-hidden="true"
-          style={{ background: 'radial-gradient(circle, rgba(255,138,101,0.15) 0%, transparent 60%)' }} />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: 14 }}
+          animate={{ opacity: 1, scale: 1, rotate: 8 }}
+          transition={{ delay: 1, duration: 1 }}
+          className="absolute top-[22%] right-[7%] w-36 h-36 hidden lg:block animate-float-medium"
+        >
+          <div className="relative w-full h-full clip-diamond overflow-hidden border border-white/10 glow-violet">
+            <Image src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=360&h=360&fit=crop" alt="" fill className="object-cover grayscale contrast-125" sizes="144px" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#B026FF]/40 via-transparent to-transparent mix-blend-color" />
+          </div>
+        </motion.div>
 
-        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF5E3A]/40 to-transparent animate-scan pointer-events-none" aria-hidden="true" />
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 1 }}
+          className="absolute bottom-[14%] left-[12%] w-32 h-40 hidden xl:block animate-float-x"
+        >
+          <div className="relative w-full h-full rounded-[40%_60%_55%_45%/55%_45%_60%_40%] overflow-hidden border border-white/10 glow-cyan">
+            <Image src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=320&h=400&fit=crop" alt="" fill className="object-cover grayscale contrast-125" sizes="128px" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#00E5FF]/30 via-transparent to-transparent mix-blend-color" />
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.4, duration: 1 }}
+          className="absolute bottom-[20%] right-[11%] w-28 h-28 hidden xl:block animate-float-slow"
+        >
+          <div className="relative w-full h-full clip-blob overflow-hidden border border-white/10 glow-gold">
+            <Image src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=280&h=280&fit=crop" alt="" fill className="object-cover grayscale contrast-125" sizes="112px" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#FFC83D]/30 via-transparent to-transparent mix-blend-color" />
+          </div>
+        </motion.div>
+
+        {/* Layered radial glows */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[700px] pointer-events-none animate-glow-pulse" aria-hidden="true"
+          style={{ background: 'radial-gradient(ellipse, rgba(255,45,85,0.2) 0%, transparent 60%)' }} />
+
+        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF2D55]/50 to-transparent animate-scan pointer-events-none" aria-hidden="true" />
 
         <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 px-6 max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-xl text-xs text-zinc-200 mb-8 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border-gradient bg-white/[0.04] backdrop-blur-xl text-xs text-zinc-200 mb-8 shadow-[0_4px_24px_rgba(255,45,85,0.2)]"
           >
             <span className="relative flex w-2 h-2">
-              <span className="absolute inset-0 rounded-full bg-[#FF5E3A] animate-ping opacity-75" />
-              <span className="relative rounded-full w-2 h-2 bg-[#FF5E3A]" />
+              <span className="absolute inset-0 rounded-full bg-[#FF2D55] animate-ping opacity-75" />
+              <span className="relative rounded-full w-2 h-2 bg-[#FF2D55]" />
             </span>
             <span className="font-medium">14,891 reports this month</span>
             <span className="text-zinc-500">·</span>
-            <span className="text-[#10D9B8]">2,340 companies tracked</span>
+            <span className="text-[#00E5FF]">2,340 companies tracked</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-6xl md:text-8xl lg:text-[10rem] font-black leading-[0.92] tracking-[-0.04em] mb-6 drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+            className="text-6xl md:text-8xl lg:text-[10.5rem] font-black leading-[0.9] tracking-[-0.045em] mb-6 drop-shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             <span
               className="block bg-clip-text text-transparent"
-              style={{ backgroundImage: 'linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 40%, #71717A 100%)' }}
+              style={{ backgroundImage: 'linear-gradient(180deg, #FFFFFF 0%, #F7F5F8 38%, #6E6877 100%)' }}
             >
               The workplace
             </span>
-            <span
-              className="block bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(255,94,58,0.35)]"
-              style={{ backgroundImage: 'linear-gradient(135deg, #FF5E3A 0%, #FF8A65 45%, #FBBF24 100%)' }}
-            >
+            <span className="block text-gradient-animated drop-shadow-[0_0_50px_rgba(255,45,85,0.4)]">
               won&apos;t name itself.
             </span>
           </motion.h1>
@@ -476,14 +510,14 @@ export default function LandingPage() {
             className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16"
           >
             <Link href="/auth/signup">
-              <Button size="lg" className="bg-gradient-to-r from-[#FF5E3A] to-[#FF8A65] hover:from-[#EA4520] hover:to-[#FF5E3A] text-white border-0 shadow-[0_8px_30px_rgba(255,94,58,0.35)] text-base px-7 py-6 gap-2 group transition-all hover:scale-105">
+              <Button size="lg" className="bg-gradient-to-r from-[#FF2D55] to-[#FF6B35] hover:from-[#FF1B47] hover:to-[#FF5722] text-white border-0 shadow-[0_8px_32px_rgba(255,45,85,0.45)] text-base px-7 py-6 gap-2 group transition-all hover:scale-105 hover:shadow-[0_12px_44px_rgba(255,45,85,0.6)]">
                 <FileWarning className="w-5 h-5" />
                 File a Report
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Button>
             </Link>
             <Link href="/assessment">
-              <Button size="lg" variant="outline" className="border-white/15 hover:border-white/30 text-white hover:bg-white/[0.04] text-base px-7 py-6 gap-2 group">
+              <Button size="lg" variant="outline" className="border-white/15 hover:border-[#B026FF]/50 text-white hover:bg-[#B026FF]/[0.08] text-base px-7 py-6 gap-2 group backdrop-blur-sm">
                 <Brain className="w-5 h-5" />
                 Free Burnout Test
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -494,12 +528,12 @@ export default function LandingPage() {
           {/* Trust indicators */}
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
-            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-zinc-500"
+            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-zinc-400"
           >
-            <div className="flex items-center gap-1.5"><LockKeyhole className="w-3.5 h-3.5" /> AES-256 encrypted</div>
-            <div className="flex items-center gap-1.5"><EyeOff className="w-3.5 h-3.5" /> Zero IP logging</div>
-            <div className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" /> POPIA compliant</div>
-            <div className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-[#FBBF24]" /> 4.9/5 (3,201 reviews)</div>
+            <div className="flex items-center gap-1.5"><LockKeyhole className="w-3.5 h-3.5 text-[#FF2D55]" /> AES-256 encrypted</div>
+            <div className="flex items-center gap-1.5"><EyeOff className="w-3.5 h-3.5 text-[#B026FF]" /> Zero IP logging</div>
+            <div className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#00E5FF]" /> POPIA compliant</div>
+            <div className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-[#FFC83D]" /> 4.9/5 (3,201 reviews)</div>
           </motion.div>
         </motion.div>
 
@@ -526,7 +560,7 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="p-5 rounded-2xl border border-white/8 bg-[#0F1012]/60 backdrop-blur-sm surface-hover"
+                className="p-5 rounded-2xl border border-white/8 bg-[#0E0C11]/60 backdrop-blur-sm surface-hover"
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: `${s.color}18` }}>
@@ -545,7 +579,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── INDUSTRY TICKER ─── */}
-      <div className="border-b border-white/5 py-5 overflow-hidden bg-[#0B0C0E]">
+      <div className="border-b border-white/5 py-5 overflow-hidden bg-[#0A0810]">
         <div className="animate-marquee-x">
           {[...TICKER_INDUSTRIES, ...TICKER_INDUSTRIES].map((t, i) => {
             const isPositive = t.change.startsWith('+')
@@ -553,7 +587,7 @@ export default function LandingPage() {
               <div key={i} className="mx-6 flex items-center gap-3 whitespace-nowrap text-sm">
                 <span className="text-zinc-300 font-medium">{t.name}</span>
                 <span className="font-mono text-zinc-100 font-bold tabular-nums">{t.score}</span>
-                <span className={`font-mono text-xs flex items-center gap-0.5 ${isPositive ? 'text-[#FF5E3A]' : 'text-[#10D9B8]'}`}>
+                <span className={`font-mono text-xs flex items-center gap-0.5 ${isPositive ? 'text-[#FF2D55]' : 'text-[#00E5FF]'}`}>
                   {isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                   {t.change}
                 </span>
@@ -570,14 +604,14 @@ export default function LandingPage() {
           initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="max-w-3xl mb-16"
         >
-          <Badge className="mb-5 bg-[#FF5E3A]/10 text-[#FF5E3A] border-[#FF5E3A]/30 font-mono">
+          <Badge className="mb-5 bg-[#FF2D55]/10 text-[#FF2D55] border-[#FF2D55]/30 font-mono">
             <Layers className="w-3 h-3 mr-1.5" />
             PLATFORM
           </Badge>
           <h2 className="text-5xl md:text-6xl font-black mb-6 leading-[1.05] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
             <span className="text-gradient-soft">Tools built for</span>
             <br />
-            <span className="text-gradient-ember">people who&apos;ve had enough.</span>
+            <span className="text-gradient-inferno">people who&apos;ve had enough.</span>
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed">
             Every feature is designed to give workers the leverage that companies have always denied them.
@@ -592,7 +626,7 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.5 }}
-              className={`group relative p-7 rounded-3xl border border-white/8 bg-gradient-to-br from-[#16171A] to-[#0F1012] surface-hover overflow-hidden ${f.span}`}
+              className={`group relative p-7 rounded-3xl border border-white/8 bg-gradient-to-br from-[#18141C] to-[#0E0C11] surface-hover overflow-hidden ${f.span}`}
             >
               <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-20 group-hover:opacity-40 transition-opacity" style={{ background: `radial-gradient(circle, ${f.color}, transparent 70%)` }} />
               <div className="relative">
@@ -620,14 +654,14 @@ export default function LandingPage() {
             <motion.div
               initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
             >
-              <Badge className="mb-5 bg-[#FBBF24]/10 text-[#FBBF24] border-[#FBBF24]/30 font-mono">
+              <Badge className="mb-5 bg-[#FFC83D]/10 text-[#FFC83D] border-[#FFC83D]/30 font-mono">
                 <Sparkles className="w-3 h-3 mr-1.5" />
                 AI-POWERED
               </Badge>
               <h2 className="text-5xl md:text-6xl font-black mb-6 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
                 Personal burnout
                 <br />
-                <span className="text-gradient-ember">risk predictor.</span>
+                <span className="text-gradient-inferno">risk predictor.</span>
               </h2>
               <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
                 Our model weighs 60+ workplace signals — industry baselines, role intensity, hour patterns,
@@ -644,7 +678,7 @@ export default function LandingPage() {
                 ].map(item => (
                   <li key={item.t} className="flex items-start gap-3 text-sm text-zinc-300">
                     <div className="w-8 h-8 shrink-0 rounded-lg bg-white/[0.04] border border-white/8 flex items-center justify-center">
-                      <item.icon className="w-4 h-4 text-[#FF5E3A]" />
+                      <item.icon className="w-4 h-4 text-[#FF2D55]" />
                     </div>
                     <span className="pt-1.5">{item.t}</span>
                   </li>
@@ -663,14 +697,14 @@ export default function LandingPage() {
               initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
               className="lg:sticky lg:top-32"
             >
-              <div className="relative p-7 rounded-3xl border-gradient border border-white/8 bg-[#0F1012]/80 backdrop-blur-md shadow-2xl">
-                <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-gradient-to-br from-[#FF5E3A] to-[#FF8A65] flex items-center justify-center shadow-[0_8px_30px_rgba(255,94,58,0.5)]">
+              <div className="relative p-7 rounded-3xl border-gradient border border-white/8 bg-[#0E0C11]/80 backdrop-blur-md shadow-2xl">
+                <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-gradient-to-br from-[#FF2D55] to-[#FF6B35] flex items-center justify-center shadow-[0_8px_30px_rgba(255,94,58,0.5)]">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex items-center justify-between mb-5">
                   <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Live Demo</span>
-                  <div className="flex items-center gap-1.5 text-[10px] text-[#10D9B8]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#10D9B8] animate-pulse" />
+                  <div className="flex items-center gap-1.5 text-[10px] text-[#00E5FF]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse" />
                     Calculating
                   </div>
                 </div>
@@ -682,7 +716,7 @@ export default function LandingPage() {
       </section>
 
       {/* ─── TRUSTED BY (Companies marquee) ─── */}
-      <section className="py-20 border-b border-white/5 bg-[#0B0C0E]">
+      <section className="py-20 border-b border-white/5 bg-[#0A0810]">
         <div className="max-w-7xl mx-auto px-6">
           <p className="text-center text-xs uppercase tracking-widest text-zinc-500 mb-8 font-mono">
             Reports filed against employees of
@@ -706,14 +740,14 @@ export default function LandingPage() {
           className="grid lg:grid-cols-2 gap-12 items-center"
         >
           <div>
-            <Badge className="mb-5 bg-[#10D9B8]/10 text-[#10D9B8] border-[#10D9B8]/30 font-mono">
+            <Badge className="mb-5 bg-[#00E5FF]/10 text-[#00E5FF] border-[#00E5FF]/30 font-mono">
               <LineChartIcon className="w-3 h-3 mr-1.5" />
               LIVE INTELLIGENCE
             </Badge>
             <h2 className="text-5xl font-black mb-5 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
               Reports are
               <br />
-              <span className="text-gradient-ember">accelerating.</span>
+              <span className="text-gradient-inferno">accelerating.</span>
             </h2>
             <p className="text-zinc-400 text-lg leading-relaxed mb-8">
               Weekly report volume has tripled since launch. Workers are talking.
@@ -725,33 +759,33 @@ export default function LandingPage() {
                 { label: 'Verified', value: '78%', change: '+4.2%' },
                 { label: 'Avg severity', value: '7.4/10', change: '+0.3' },
               ].map(stat => (
-                <div key={stat.label} className="p-4 rounded-xl border border-white/8 bg-[#0F1012]">
+                <div key={stat.label} className="p-4 rounded-xl border border-white/8 bg-[#0E0C11]">
                   <div className="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">{stat.label}</div>
                   <div className="text-2xl font-black tabular-nums mb-0.5" style={{ fontFamily: 'var(--font-display)' }}>{stat.value}</div>
-                  <div className="text-xs text-[#10D9B8]">{stat.change}</div>
+                  <div className="text-xs text-[#00E5FF]">{stat.change}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="p-6 rounded-3xl border border-white/8 bg-gradient-to-br from-[#16171A] to-[#0F1012]">
+          <div className="p-6 rounded-3xl border border-white/8 bg-gradient-to-br from-[#18141C] to-[#0E0C11]">
             <div className="flex items-center justify-between mb-4">
               <span className="text-sm font-semibold">Weekly reports filed</span>
-              <Badge className="bg-[#FF5E3A]/10 text-[#FF5E3A] border-[#FF5E3A]/30 text-xs">Live</Badge>
+              <Badge className="bg-[#FF2D55]/10 text-[#FF2D55] border-[#FF2D55]/30 text-xs">Live</Badge>
             </div>
             <ResponsiveContainer width="100%" height={280}>
               <AreaChart data={TREND_DATA}>
                 <defs>
                   <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#FF5E3A" stopOpacity={0.5} />
-                    <stop offset="100%" stopColor="#FF5E3A" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#FF2D55" stopOpacity={0.5} />
+                    <stop offset="100%" stopColor="#FF2D55" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
                 <XAxis dataKey="week" tick={{ fill: '#71717A', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: '#71717A', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ background: '#16171A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} />
-                <Area type="monotone" dataKey="reports" stroke="#FF5E3A" strokeWidth={2.5} fill="url(#trendGrad)" />
+                <Tooltip contentStyle={{ background: '#18141C', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} />
+                <Area type="monotone" dataKey="reports" stroke="#FF2D55" strokeWidth={2.5} fill="url(#trendGrad)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -766,14 +800,14 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge className="mb-5 bg-[#8B5CF6]/10 text-[#8B5CF6] border-[#8B5CF6]/30 font-mono">
+            <Badge className="mb-5 bg-[#B026FF]/10 text-[#B026FF] border-[#B026FF]/30 font-mono">
               <MessageSquare className="w-3 h-3 mr-1.5" />
               REAL STORIES
             </Badge>
             <h2 className="text-5xl md:text-6xl font-black mb-5 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
               <span className="text-gradient-soft">Workers who</span>
               <br />
-              <span className="text-gradient-ember">named names.</span>
+              <span className="text-gradient-inferno">named names.</span>
             </h2>
             <p className="text-zinc-400 text-lg max-w-xl mx-auto">
               Anonymised testimonials. Real outcomes. Real burnout scores before and after intervention.
@@ -810,13 +844,13 @@ export default function LandingPage() {
                 fill className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#FF5E3A]/20 via-transparent to-[#8B5CF6]/20 mix-blend-overlay" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#FF2D55]/20 via-transparent to-[#B026FF]/20 mix-blend-overlay" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#08090B] via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="flex items-center gap-3 p-3 rounded-xl glass">
-                  <LockKeyhole className="w-5 h-5 text-[#10D9B8]" />
+                  <LockKeyhole className="w-5 h-5 text-[#00E5FF]" />
                   <div>
-                    <div className="text-xs font-mono text-[#10D9B8]">aes-256-gcm</div>
+                    <div className="text-xs font-mono text-[#00E5FF]">aes-256-gcm</div>
                     <div className="text-[10px] text-zinc-400">Authenticated encryption</div>
                   </div>
                 </div>
@@ -827,7 +861,7 @@ export default function LandingPage() {
           <motion.div
             initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
           >
-            <Badge className="mb-5 bg-[#10D9B8]/10 text-[#10D9B8] border-[#10D9B8]/30 font-mono">
+            <Badge className="mb-5 bg-[#00E5FF]/10 text-[#00E5FF] border-[#00E5FF]/30 font-mono">
               <ShieldCheck className="w-3 h-3 mr-1.5" />
               ZERO-KNOWLEDGE
             </Badge>
@@ -847,9 +881,9 @@ export default function LandingPage() {
                 { icon: FileLock, t: 'POPIA, GDPR, and CCPA compliant', d: 'Audit reports available on request' },
                 { icon: Shield, t: 'Open-source verification', d: 'Codebase available on GitHub' },
               ].map(p => (
-                <div key={p.t} className="flex gap-4 p-4 rounded-xl border border-white/8 bg-[#0F1012]">
-                  <div className="w-10 h-10 shrink-0 rounded-xl bg-[#10D9B8]/10 border border-[#10D9B8]/20 flex items-center justify-center">
-                    <p.icon className="w-4.5 h-4.5 text-[#10D9B8]" />
+                <div key={p.t} className="flex gap-4 p-4 rounded-xl border border-white/8 bg-[#0E0C11]">
+                  <div className="w-10 h-10 shrink-0 rounded-xl bg-[#00E5FF]/10 border border-[#00E5FF]/20 flex items-center justify-center">
+                    <p.icon className="w-4.5 h-4.5 text-[#00E5FF]" />
                   </div>
                   <div>
                     <div className="font-semibold text-sm mb-0.5">{p.t}</div>
@@ -872,7 +906,7 @@ export default function LandingPage() {
             FAQ
           </Badge>
           <h2 className="text-5xl font-black leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
-            Questions you <span className="text-gradient-ember">should be asking.</span>
+            Questions you <span className="text-gradient-inferno">should be asking.</span>
           </h2>
         </motion.div>
 
@@ -888,7 +922,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-mesh" aria-hidden="true" />
         <motion.div
           initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="relative max-w-3xl mx-auto text-center p-12 rounded-3xl border-gradient border border-white/8 bg-[#0F1012]/80 backdrop-blur-xl"
+          className="relative max-w-3xl mx-auto text-center p-12 rounded-3xl border-gradient border border-white/8 bg-[#0E0C11]/80 backdrop-blur-xl"
         >
           <div className="absolute -top-12 left-1/2 -translate-x-1/2 animate-float-medium">
             <Logo size={80} glow />
@@ -897,7 +931,7 @@ export default function LandingPage() {
             <h2 className="text-5xl md:text-6xl font-black mb-6 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
               <span className="text-gradient-soft">Silence is what</span>
               <br />
-              <span className="text-gradient-ember">they bank on.</span>
+              <span className="text-gradient-inferno">they bank on.</span>
             </h2>
             <p className="text-zinc-400 text-lg max-w-md mx-auto mb-8 leading-relaxed">
               Every report you file is data the next worker uses to choose a better job.
@@ -905,7 +939,7 @@ export default function LandingPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/auth/signup">
-                <Button size="lg" className="bg-gradient-to-r from-[#FF5E3A] to-[#FF8A65] hover:from-[#EA4520] hover:to-[#FF5E3A] text-white border-0 shadow-[0_8px_30px_rgba(255,94,58,0.4)] gap-2">
+                <Button size="lg" className="bg-gradient-to-r from-[#FF2D55] to-[#FF6B35] hover:from-[#FF1B47] hover:to-[#FF2D55] text-white border-0 shadow-[0_8px_30px_rgba(255,94,58,0.4)] gap-2">
                   Join Free
                   <ArrowUpRight className="w-4 h-4" />
                 </Button>
@@ -928,7 +962,7 @@ export default function LandingPage() {
               <Link href="/" className="flex items-center gap-2.5 mb-4">
                 <Logo size={36} />
                 <span className="text-lg font-black" style={{ fontFamily: 'var(--font-display)' }}>
-                  BURN<span className="text-[#FF5E3A]">OUT</span>
+                  BURN<span className="text-[#FF2D55]">OUT</span>
                 </span>
               </Link>
               <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">
@@ -966,7 +1000,7 @@ export default function LandingPage() {
           <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
             <p>&copy; 2026 BURNOUT Platform · Built for workers, by workers.</p>
             <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10D9B8] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse" />
               All systems operational
             </div>
           </div>

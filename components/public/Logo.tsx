@@ -36,13 +36,13 @@ function LogoMark({ size = 36, glow = false, className }: { size?: number; glow?
     <div
       className={cn(
         'relative inline-flex items-center justify-center rounded-xl shrink-0',
-        glow && 'shadow-[0_8px_30px_rgba(255,94,58,0.45)]',
+        glow && 'shadow-[0_8px_30px_rgba(255,45,85,0.5)]',
         className
       )}
       style={{
         width: size,
         height: size,
-        background: 'linear-gradient(135deg, #FF5E3A 0%, #FF8A65 60%, #FBBF24 100%)',
+        background: 'linear-gradient(135deg, #FF2D55 0%, #FF6B35 55%, #FFC83D 100%)',
       }}
       aria-label="BURNOUT logo"
     >
@@ -50,15 +50,15 @@ function LogoMark({ size = 36, glow = false, className }: { size?: number; glow?
       <span
         className="absolute inset-0 rounded-xl opacity-60"
         style={{
-          background: 'radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4) 0%, transparent 55%)',
+          background: 'radial-gradient(circle at 30% 20%, rgba(255,255,255,0.45) 0%, transparent 55%)',
         }}
         aria-hidden="true"
       />
       {/* Bottom shadow tint */}
       <span
-        className="absolute inset-0 rounded-xl opacity-40"
+        className="absolute inset-0 rounded-xl opacity-45"
         style={{
-          background: 'linear-gradient(180deg, transparent 50%, rgba(193,56,22,0.6) 100%)',
+          background: 'linear-gradient(180deg, transparent 50%, rgba(176,18,70,0.6) 100%)',
         }}
         aria-hidden="true"
       />
@@ -101,8 +101,8 @@ function LogoMark({ size = 36, glow = false, className }: { size?: number; glow?
              L18.5 16
              L16 22
              L13.5 16 Z"
-          fill="#FF5E3A"
-          fillOpacity="0.85"
+          fill="#FF2D55"
+          fillOpacity="0.9"
         />
       </svg>
       {/* Glass highlight ring */}

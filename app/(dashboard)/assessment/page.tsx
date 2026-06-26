@@ -84,22 +84,22 @@ export default function AssessmentPage() {
     const color = getBurnoutColor(result.overall)
     const level = getBurnoutLevel(result.overall)
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-6 py-12">
-        <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+      <div className="min-h-screen bg-[#060507] flex items-center justify-center px-6 py-12">
+        <div className="absolute inset-0 bg-grid-full opacity-20" />
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           className="relative z-10 w-full max-w-2xl"
         >
-          <div className="p-8 bg-[#111111] border border-white/8 rounded-3xl text-center">
+          <div className="p-8 bg-[#0E0C11] border border-white/8 rounded-3xl text-center">
             <h1 className="text-4xl font-black mb-2" style={{ fontFamily: 'var(--font-display)' }}>YOUR RESULTS</h1>
-            <p className="text-[#9A9A9A] mb-10">Based on your 16 responses</p>
+            <p className="text-[#ADA7B5] mb-10">Based on your 16 responses</p>
 
             {/* Big score */}
             <div className="relative w-48 h-48 mx-auto mb-10">
               <div className="absolute inset-0 rounded-full border-4 animate-pulse" style={{ borderColor: `${color}30` }} />
               <div className="absolute inset-3 rounded-full border-2" style={{ borderColor: `${color}20` }} />
-              <div className="absolute inset-6 rounded-full flex flex-col items-center justify-center" style={{ background: '#0A0A0A', boxShadow: `0 0 60px ${color}30` }}>
+              <div className="absolute inset-6 rounded-full flex flex-col items-center justify-center" style={{ background: '#060507', boxShadow: `0 0 60px ${color}30` }}>
                 <span className="text-6xl font-black" style={{ color, fontFamily: 'var(--font-display)' }}>{result.overall}</span>
                 <span className="text-sm font-semibold mt-1" style={{ color }}>{level}</span>
               </div>
@@ -108,14 +108,14 @@ export default function AssessmentPage() {
             {/* Sub scores */}
             <div className="grid grid-cols-3 gap-4 mb-10">
               {[
-                { label: 'Exhaustion', value: result.exhaustion, color: '#FF3B30' },
-                { label: 'Cynicism', value: result.cynicism, color: '#FFB347' },
-                { label: 'Low Efficacy', value: result.efficacy, color: '#FF6B6B' },
+                { label: 'Exhaustion', value: result.exhaustion, color: '#FF2D55' },
+                { label: 'Cynicism', value: result.cynicism, color: '#FFC83D' },
+                { label: 'Low Efficacy', value: result.efficacy, color: '#FF6B35' },
               ].map(s => (
-                <div key={s.label} className="p-4 bg-[#0A0A0A] rounded-xl border border-white/8">
+                <div key={s.label} className="p-4 bg-[#060507] rounded-xl border border-white/8">
                   <div className="text-2xl font-black mb-1" style={{ color: s.color, fontFamily: 'var(--font-display)' }}>{s.value}</div>
-                  <div className="text-[#9A9A9A] text-xs">{s.label}</div>
-                  <div className="mt-2 h-1 bg-[#1A1A1A] rounded-full overflow-hidden">
+                  <div className="text-[#ADA7B5] text-xs">{s.label}</div>
+                  <div className="mt-2 h-1 bg-[#18141C] rounded-full overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${s.value}%` }}
@@ -146,7 +146,7 @@ export default function AssessmentPage() {
                 <RotateCcw className="w-4 h-4 mr-2" /> Retake
               </Button>
               <Link href="/resources">
-                <Button className="bg-[#FF3B30] hover:bg-[#E0342A] text-white border-0">
+                <Button className="bg-[#FF2D55] hover:bg-[#FF1B47] text-white border-0">
                   Find Resources <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
@@ -164,18 +164,18 @@ export default function AssessmentPage() {
       <div className="relative z-10 w-full max-w-2xl">
         {/* Progress */}
         <div className="mb-8">
-          <div className="flex items-center justify-between text-sm text-[#9A9A9A] mb-2">
+          <div className="flex items-center justify-between text-sm text-[#ADA7B5] mb-2">
             <span className="flex items-center gap-2">
               <Brain className="w-4 h-4" />
               Burnout Assessment
             </span>
             <span>{current + 1} / {QUESTIONS.length}</span>
           </div>
-          <div className="h-1.5 bg-[#1A1A1A] rounded-full overflow-hidden">
+          <div className="h-1.5 bg-[#18141C] rounded-full overflow-hidden">
             <motion.div
               animate={{ width: `${((current + 1) / QUESTIONS.length) * 100}%` }}
               transition={{ duration: 0.3 }}
-              className="h-full rounded-full bg-gradient-to-r from-[#FF6B6B] to-[#FF3B30]"
+              className="h-full rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF2D55]"
             />
           </div>
         </div>
@@ -188,10 +188,10 @@ export default function AssessmentPage() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -direction * 40 }}
             transition={{ duration: 0.25 }}
-            className="p-8 bg-[#111111] border border-white/8 rounded-3xl"
+            className="p-8 bg-[#0E0C11] border border-white/8 rounded-3xl"
           >
             <div className="flex items-center gap-2 mb-6">
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full text-[#9A9A9A] bg-white/5 border border-white/10">
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full text-[#ADA7B5] bg-white/5 border border-white/10">
                 {q.dimension === 'E' ? 'Exhaustion' : q.dimension === 'C' ? 'Cynicism' : 'Efficacy'}
               </span>
             </div>
@@ -207,8 +207,8 @@ export default function AssessmentPage() {
                   onClick={() => answer(s.value)}
                   className={`p-3 rounded-xl border text-center transition-all duration-200 ${
                     answers[q.id] === s.value
-                      ? 'bg-[#FF3B30] border-[#FF3B30] text-white'
-                      : 'bg-[#0A0A0A] border-white/10 text-[#9A9A9A] hover:border-[#FF3B30]/40 hover:text-white'
+                      ? 'bg-[#FF2D55] border-[#FF2D55] text-white'
+                      : 'bg-[#060507] border-white/10 text-[#ADA7B5] hover:border-[#FF2D55]/40 hover:text-white'
                   }`}
                 >
                   <div className="text-lg font-black mb-1" style={{ fontFamily: 'var(--font-display)' }}>{s.value}</div>
@@ -232,7 +232,7 @@ export default function AssessmentPage() {
           {answered && current < QUESTIONS.length - 1 && (
             <Button
               onClick={() => { setDirection(1); setCurrent(c => c + 1) }}
-              className="bg-[#FF3B30] hover:bg-[#E0342A] text-white border-0"
+              className="bg-[#FF2D55] hover:bg-[#FF1B47] text-white border-0"
             >
               Next <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
