@@ -7,22 +7,18 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Flame, LayoutDashboard, FileWarning, Building2, Brain,
   Heart, BarChart3, Settings, LogOut, Menu, X, ChevronRight,
-  Users, Shield
+  Sparkles, Shield
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const NAV_ITEMS = [
-  { href: '/dashboard', icon: LayoutDashboard, label: 'Overview', exact: true },
+  { href: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
   { href: '/report', icon: FileWarning, label: 'New Report' },
   { href: '/reports', icon: BarChart3, label: 'All Reports' },
   { href: '/companies', icon: Building2, label: 'Companies' },
   { href: '/assessment', icon: Brain, label: 'Burnout Test' },
+  { href: '/predict', icon: Sparkles, label: 'Risk Predictor' },
   { href: '/resources', icon: Heart, label: 'Resources' },
-]
-
-const ADMIN_ITEMS = [
-  { href: '/admin', icon: Shield, label: 'Admin Panel' },
-  { href: '/admin/users', icon: Users, label: 'Users' },
 ]
 
 async function handleSignOut() {
@@ -36,78 +32,86 @@ export default function DashboardSidebar() {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    async function check() {
+      try {
+        const { createClient } = await import('@/lib/supabase/client')
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return
+        const { data } = await supabase.from('profiles').select('role').eq('id', user.id).single()
+        if (data?.role === 'admin') setIsAdmin(true)
+      } catch {}
+    }
+    check()
+  }, [])
 
   return (
     <>
-      {/* Mobile toggle */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 rounded-xl bg-[#111111] border border-white/10 flex items-center justify-center"
+        className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 rounded-xl bg-[#0F1012] border border-white/10 flex items-center justify-center"
+        aria-label="Open sidebar"
       >
         <Menu className="w-5 h-5" />
       </button>
 
-      {/* Mobile overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setMobileOpen(false)}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 bg-black/70 backdrop-blur-md z-40 lg:hidden"
           />
         )}
       </AnimatePresence>
 
-      {/* Sidebar */}
       <motion.aside
         animate={{ width: collapsed ? 72 : 240 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className={cn(
-          'fixed left-0 top-0 h-full z-40 flex flex-col bg-[#0D0D0D] border-r border-white/5 overflow-hidden',
+          'fixed left-0 top-0 h-full z-40 flex flex-col bg-[#0B0C0E] border-r border-white/5 overflow-hidden',
           'hidden lg:flex',
           mobileOpen && '!flex'
         )}
+        aria-label="Dashboard navigation"
       >
-        {/* Logo */}
         <div className="flex items-center justify-between p-4 border-b border-white/5 shrink-0">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 shrink-0 relative">
-              <div className="absolute inset-0 bg-[#FF3B30] rounded-lg opacity-20 animate-pulse" />
-              <Flame className="w-8 h-8 text-[#FF3B30] relative z-10" />
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="w-9 h-9 shrink-0 rounded-xl bg-gradient-to-br from-[#FF5E3A] to-[#FF8A65] flex items-center justify-center shadow-[0_4px_20px_rgba(255,94,58,0.35)]">
+              <Flame className="w-5 h-5 text-white" />
             </div>
             {!collapsed && (
               <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 className="text-lg font-black whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                BURN<span className="text-[#FF3B30]">OUT</span>
+                BURN<span className="text-[#FF5E3A]">OUT</span>
               </motion.span>
             )}
           </Link>
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="p-1.5 rounded-lg hover:bg-white/5 transition-colors shrink-0 hidden lg:flex"
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            <ChevronRight className={cn('w-4 h-4 text-[#9A9A9A] transition-transform', collapsed && 'rotate-180')} />
+            <ChevronRight className={cn('w-4 h-4 text-zinc-400 transition-transform', collapsed && 'rotate-180')} />
           </button>
           <button
             onClick={() => setMobileOpen(false)}
             className="p-1.5 rounded-lg hover:bg-white/5 transition-colors lg:hidden"
+            aria-label="Close sidebar"
           >
-            <X className="w-4 h-4 text-[#9A9A9A]" />
+            <X className="w-4 h-4 text-zinc-400" />
           </button>
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
           {!collapsed && (
-            <p className="text-[10px] font-semibold text-[#9A9A9A] uppercase tracking-widest px-3 py-2">
-              Main
-            </p>
+            <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest px-3 py-2">Main</p>
           )}
           {NAV_ITEMS.map(item => {
             const active = pathname === item.href
@@ -119,48 +123,51 @@ export default function DashboardSidebar() {
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200',
                   active
-                    ? 'bg-[#FF3B30]/15 text-[#FF3B30] border border-[#FF3B30]/20'
-                    : 'text-[#9A9A9A] hover:text-white hover:bg-white/5'
+                    ? 'bg-[#FF5E3A]/12 text-[#FF5E3A] border border-[#FF5E3A]/20'
+                    : 'text-zinc-400 hover:text-white hover:bg-white/5'
                 )}
+                aria-current={active ? 'page' : undefined}
               >
-                <item.icon className={cn('w-5 h-5 shrink-0', active && 'text-[#FF3B30]')} />
-                {!collapsed && (
-                  <span className="whitespace-nowrap font-medium">{item.label}</span>
-                )}
+                <item.icon className={cn('w-5 h-5 shrink-0', active && 'text-[#FF5E3A]')} />
+                {!collapsed && <span className="whitespace-nowrap font-medium">{item.label}</span>}
                 {active && !collapsed && (
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FF3B30]" />
+                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FF5E3A]" />
                 )}
               </Link>
             )
           })}
 
-          {!collapsed && (
-            <p className="text-[10px] font-semibold text-[#9A9A9A] uppercase tracking-widest px-3 py-2 mt-4">
-              Admin
-            </p>
+          {isAdmin && (
+            <>
+              {!collapsed && (
+                <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest px-3 py-2 mt-4">Admin</p>
+              )}
+              <Link
+                href="/admin"
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200',
+                  pathname === '/admin'
+                    ? 'bg-[#FF5E3A]/12 text-[#FF5E3A] border border-[#FF5E3A]/20'
+                    : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                )}
+              >
+                <Shield className="w-5 h-5 shrink-0" />
+                {!collapsed && <span className="font-medium">Admin Panel</span>}
+              </Link>
+            </>
           )}
-          {ADMIN_ITEMS.map(item => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[#9A9A9A] hover:text-white hover:bg-white/5 transition-all duration-200"
-            >
-              <item.icon className="w-5 h-5 shrink-0" />
-              {!collapsed && <span className="whitespace-nowrap font-medium">{item.label}</span>}
-            </Link>
-          ))}
         </nav>
 
-        {/* Bottom */}
         <div className="p-3 border-t border-white/5 space-y-1">
-          <Link href="/settings" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[#9A9A9A] hover:text-white hover:bg-white/5 transition-all duration-200">
+          <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-white hover:bg-white/5 transition-all duration-200">
             <Settings className="w-5 h-5 shrink-0" />
             {!collapsed && <span className="font-medium">Settings</span>}
           </Link>
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[#9A9A9A] hover:text-[#FF3B30] hover:bg-[#FF3B30]/5 transition-all duration-200"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:text-[#FF5E3A] hover:bg-[#FF5E3A]/5 transition-all duration-200"
+            aria-label="Sign out"
           >
             <LogOut className="w-5 h-5 shrink-0" />
             {!collapsed && <span className="font-medium">Sign Out</span>}
