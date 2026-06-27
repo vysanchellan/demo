@@ -314,6 +314,37 @@
   background-size: 200% 100%; animation: shimmer 1.5s linear infinite;
 }
 
+/* ═══════════ GLASS BUTTONS ═══════════ */
+.btn-glass {
+  position: relative;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.btn-glass:hover {
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.22);
+  transform: translateY(-1px);
+}
+/* Emerald-tinted glass (primary) */
+.btn-glass-emerald {
+  position: relative;
+  background: linear-gradient(135deg, rgba(0,229,153,0.18), rgba(0,229,153,0.06));
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(0,229,153,0.35);
+  color: #BFFFE6;
+  transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.btn-glass-emerald:hover {
+  background: linear-gradient(135deg, rgba(0,229,153,0.28), rgba(0,229,153,0.1));
+  border-color: rgba(0,229,153,0.55);
+  box-shadow: 0 8px 32px rgba(0,229,153,0.22);
+  transform: translateY(-1px);
+}
+
 /* ═══════════ UTIL ═══════════ */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }

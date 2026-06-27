@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Flame, Mail, Lock, Eye, EyeOff, ArrowRight, AlertTriangle } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertTriangle } from 'lucide-react'
+import Logo from '@/components/public/Logo'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from 'sonner'
@@ -36,7 +37,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-[#050708] flex items-center justify-center px-6 relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-full opacity-30" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(255,59,48,0.08) 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(circle, rgba(0,229,153,0.08) 0%, transparent 70%)' }} />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -45,14 +46,14 @@ export default function LoginPage() {
         className="relative z-10 w-full max-w-md"
       >
         {/* Logo */}
-        <div className="flex items-center justify-center gap-2 mb-10">
-          <Flame className="w-8 h-8 text-[#00E599]" />
-          <span className="text-2xl font-black" style={{ fontFamily: 'var(--font-display)' }}>
+        <div className="flex items-center justify-center gap-2.5 mb-10">
+          <Logo size={38} glow />
+          <span className="text-2xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>
             BURN<span className="text-[#00E599]">OUT</span>
           </span>
         </div>
 
-        <div className="p-8 bg-[#0A0D0F] border border-white/8 rounded-2xl">
+        <div className="p-8 glass-card rounded-2xl">
           <h1 className="text-3xl font-black mb-2" style={{ fontFamily: 'var(--font-display)' }}>SIGN IN</h1>
           <p className="text-[#93A29E] mb-8 text-sm">Access your reports and burnout data.</p>
 
@@ -95,7 +96,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#00E599] hover:bg-[#00C885] text-white border-0 h-12 text-base font-semibold transition-all duration-300"
+              className="w-full btn-glass-emerald h-12 text-base font-semibold rounded-xl"
             >
               {loading ? 'Signing in...' : 'Sign In'}
               {!loading && <ArrowRight className="w-4 h-4 ml-2" />}

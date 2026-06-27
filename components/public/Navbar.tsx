@@ -11,9 +11,10 @@ import Logo from '@/components/public/Logo'
 const NAV = [
   { label: 'Reports', href: '/reports' },
   { label: 'Companies', href: '/companies' },
+  { label: 'Red Flags', href: '/red-flags' },
+  { label: 'The Wall', href: '/wall' },
   { label: 'Assessment', href: '/assessment' },
   { label: 'Resources', href: '/resources' },
-  { label: 'Risk Predictor', href: '/predict' },
 ]
 
 export default function Navbar() {
@@ -74,7 +75,7 @@ export default function Navbar() {
             <Link href="/auth/signup">
               <Button
                 size="sm"
-                className="bg-[#00E599] hover:bg-[#00FFAB] text-[#04130D] font-semibold border-0 shadow-[0_4px_18px_rgba(0,229,153,0.35)] gap-1.5 h-9 px-4 rounded-full text-[13px]"
+                className="btn-glass-emerald font-semibold gap-1.5 h-9 px-4 rounded-full text-[13px]"
               >
                 Report Now <ArrowRight className="w-3.5 h-3.5" />
               </Button>

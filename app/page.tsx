@@ -12,7 +12,7 @@ import {
   MessageSquare, Globe, Activity, Target, Briefcase, Coffee,
   Moon, Sun, Bell, Quote, Play, Pause, Plus, Minus,
   Database, Cpu, Network, Layers, Gauge, LineChart as LineChartIcon,
-  ShieldCheck, LockKeyhole, FileLock, KeyRound
+  ShieldCheck, LockKeyhole, FileLock, KeyRound, ScanLine, Footprints
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -42,19 +42,34 @@ const FEATURES_BENTO = [
     icon: ShieldCheck, color: '#00E599', span: 'lg:col-span-2', tag: 'Privacy First',
   },
   {
-    title: 'Clinical Burnout Assessment',
-    desc: 'Maslach Burnout Inventory-aligned scoring across 3 dimensions.',
-    icon: Brain, color: '#00E599', span: '', tag: 'Validated Method',
+    title: 'Red Flag Detector',
+    desc: 'Paste a job ad. We decode the toxic clichés before you apply.',
+    icon: ScanLine, color: '#00E599', span: '', tag: 'New Tool',
   },
   {
-    title: 'Real-Time Company Intelligence',
-    desc: 'Aggregated toxicity scores across 2,340+ companies. Filter, search, compare.',
-    icon: Building2, color: '#00E599', span: '', tag: 'Live Data',
+    title: 'The Wall',
+    desc: 'An anonymous wall of workplace confessions. You are not alone.',
+    icon: MessageSquare, color: '#00E599', span: '', tag: 'Community',
   },
   {
     title: 'AI Risk Predictor',
     desc: 'Input your industry, role, and signals — get a personalised burnout probability with similar-case benchmarks.',
-    icon: Sparkles, color: '#00E599', span: 'lg:col-span-2', tag: 'New',
+    icon: Sparkles, color: '#00E599', span: 'lg:col-span-2', tag: 'AI',
+  },
+  {
+    title: 'Recovery Roadmap',
+    desc: 'A gentle 4-week plan to climb out of burnout, one step at a time.',
+    icon: Footprints, color: '#00E599', span: '', tag: 'New Tool',
+  },
+  {
+    title: 'Clinical Burnout Assessment',
+    desc: 'Maslach Burnout Inventory-aligned scoring across 3 dimensions.',
+    icon: Brain, color: '#00E599', span: '', tag: 'Validated',
+  },
+  {
+    title: 'Real-Time Company Intelligence',
+    desc: 'Aggregated toxicity scores across 2,340+ companies. Filter, search, compare.',
+    icon: Building2, color: '#00E599', span: 'lg:col-span-2', tag: 'Live Data',
   },
 ]
 
@@ -469,14 +484,14 @@ export default function LandingPage() {
             className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16"
           >
             <Link href="/auth/signup">
-              <Button size="lg" className="bg-gradient-to-r from-[#00E599] to-[#00E599] hover:from-[#00C885] hover:to-[#00C885] text-white border-0 shadow-[0_8px_32px_rgba(0,229,153,0.45)] text-base px-7 py-6 gap-2 group transition-all hover:scale-105 hover:shadow-[0_12px_44px_rgba(0,229,153,0.6)]">
+              <Button size="lg" className="btn-glass-emerald text-base px-7 py-6 gap-2 group rounded-2xl">
                 <FileWarning className="w-5 h-5" />
                 File a Report
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Button>
             </Link>
             <Link href="/assessment">
-              <Button size="lg" variant="outline" className="border-white/15 hover:border-[#00E599]/50 text-white hover:bg-[#00E599]/[0.08] text-base px-7 py-6 gap-2 group backdrop-blur-sm">
+              <Button size="lg" className="btn-glass text-white text-base px-7 py-6 gap-2 group rounded-2xl">
                 <Brain className="w-5 h-5" />
                 Free Burnout Test
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -585,20 +600,20 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.5 }}
-              className={`group relative p-7 rounded-3xl border border-white/8 bg-gradient-to-br from-[#12161A] to-[#0A0D0F] surface-hover overflow-hidden ${f.span}`}
+              className={`group relative p-7 rounded-3xl glass-card surface-hover overflow-hidden ${f.span}`}
             >
-              <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-20 group-hover:opacity-40 transition-opacity" style={{ background: `radial-gradient(circle, ${f.color}, transparent 70%)` }} />
+              <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-[0.12] group-hover:opacity-25 transition-opacity duration-500" style={{ background: `radial-gradient(circle, ${f.color}, transparent 70%)` }} />
               <div className="relative">
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: `${f.color}18`, border: `1px solid ${f.color}30` }}>
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center backdrop-blur-sm" style={{ background: `${f.color}14`, border: `1px solid ${f.color}2E` }}>
                     <f.icon className="w-5 h-5" style={{ color: f.color }} />
                   </div>
-                  <Badge className="text-[10px] font-mono uppercase" style={{ background: `${f.color}15`, color: f.color, borderColor: `${f.color}30` }}>
+                  <Badge className="text-[10px] font-mono uppercase backdrop-blur-sm" style={{ background: `${f.color}12`, color: f.color, borderColor: `${f.color}28` }}>
                     {f.tag}
                   </Badge>
                 </div>
-                <h3 className="text-2xl font-bold mb-3 tracking-tight">{f.title}</h3>
-                <p className="text-zinc-400 leading-relaxed">{f.desc}</p>
+                <h3 className="text-xl font-semibold mb-2.5 tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{f.title}</h3>
+                <p className="text-zinc-400 text-sm leading-relaxed">{f.desc}</p>
               </div>
             </motion.div>
           ))}
@@ -645,7 +660,7 @@ export default function LandingPage() {
               </ul>
 
               <Link href="/predict">
-                <Button size="lg" className="bg-white text-[#050708] hover:bg-zinc-200 gap-2">
+                <Button size="lg" className="btn-glass-emerald gap-2 rounded-2xl px-7">
                   Try the Risk Predictor
                   <ArrowUpRight className="w-4 h-4" />
                 </Button>
@@ -798,9 +813,9 @@ export default function LandingPage() {
           >
             <div className="relative aspect-square rounded-3xl overflow-hidden border border-white/8 glow-emerald">
               <Image
-                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=800&fit=crop"
-                alt="Abstract minimalist form representing privacy"
-                fill className="object-cover grayscale"
+                src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=900&h=900&fit=crop"
+                alt="Calm misty forest at dawn"
+                fill className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-[#00E599]/25 via-transparent to-transparent mix-blend-soft-light" />
@@ -901,13 +916,13 @@ export default function LandingPage() {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/auth/signup">
-                <Button size="lg" className="bg-gradient-to-r from-[#00E599] to-[#00E599] hover:from-[#00C885] hover:to-[#00E599] text-white border-0 shadow-[0_8px_30px_rgba(0,229,153,0.4)] gap-2">
+                <Button size="lg" className="btn-glass-emerald gap-2 rounded-2xl px-7">
                   Join Free
                   <ArrowUpRight className="w-4 h-4" />
                 </Button>
               </Link>
               <Link href="/assessment">
-                <Button size="lg" variant="outline" className="border-white/15 hover:border-white/30 hover:bg-white/[0.04] text-white gap-2">
+                <Button size="lg" className="btn-glass text-white gap-2 rounded-2xl px-7">
                   Take Assessment
                 </Button>
               </Link>
