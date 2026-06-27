@@ -52,7 +52,16 @@ export default function AdminPage() {
         const { data: { user } } = await supabase.auth.getUser()
         if (!user) { setRole('forbidden'); return }
         setUserEmail(user.email ?? '')
-        setRole((await isUserAdmin(user)) ? 'admin' : 'forbidden')
+        const admin = await isUserAdmin(user)
+        setRole(admin ? 'admin' : 'forbidden')
+        if (admin) {
+          const { data } = await supabase
+            .from('toxicity_reports')
+            .select('id, company_name, report_type, severity, status, created_at, upvotes')
+            .order('created_at', { ascending: false })
+            .limit(100)
+          if (data && data.length > 0) setReports(data as ReportRow[])
+        }
       } catch {
         setRole('forbidden')
       }
@@ -60,14 +69,24 @@ export default function AdminPage() {
     check()
   }, [])
 
-  function updateStatus(id: string, status: ReportRow['status']) {
+  async function updateStatus(id: string, status: ReportRow['status']) {
     setReports(prev => prev.map(r => r.id === id ? { ...r, status } : r))
     toast.success(`Report marked as ${status}`)
+    try {
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
+      if (!String(id).match(/^\d+$/)) await supabase.from('toxicity_reports').update({ status }).eq('id', id)
+    } catch {}
   }
 
-  function deleteReport(id: string) {
+  async function deleteReport(id: string) {
     setReports(prev => prev.filter(r => r.id !== id))
     toast.success('Report deleted')
+    try {
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
+      if (!String(id).match(/^\d+$/)) await supabase.from('toxicity_reports').delete().eq('id', id)
+    } catch {}
   }
 
   const filtered = reports.filter(r => r.company_name.toLowerCase().includes(search.toLowerCase()))

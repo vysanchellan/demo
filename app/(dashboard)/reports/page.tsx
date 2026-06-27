@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
@@ -26,9 +26,40 @@ const SEVERITY_COLOR = (s: number) => s >= 9 ? '#00E599' : s >= 7 ? '#5EEAD4' : 
 
 export default function ReportsPage() {
   const [search, setSearch] = useState('')
-  const [upvoted, setUpvoted] = useState<Set<number>>(new Set())
+  const [upvoted, setUpvoted] = useState<Set<number | string>>(new Set())
+  const [reports, setReports] = useState(MOCK_REPORTS)
 
-  const filtered = MOCK_REPORTS.filter(r =>
+  // Merge real reports on top of the seed so the feed is always rich
+  useEffect(() => {
+    async function load() {
+      try {
+        const { createClient } = await import('@/lib/supabase/client')
+        const supabase = createClient()
+        const { data, error } = await supabase
+          .from('toxicity_reports')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(50)
+        if (error || !data || data.length === 0) return
+        const mapped = data.map((d: any) => ({
+          id: d.id,
+          company: d.company_name,
+          industry: d.industry ?? 'Other',
+          city: d.city ?? '—',
+          type: d.report_type as ReportType,
+          severity: d.severity,
+          description: d.description,
+          upvotes: d.upvotes ?? 0,
+          date: d.created_at,
+          verified: d.status === 'verified',
+        }))
+        setReports([...mapped, ...MOCK_REPORTS] as typeof MOCK_REPORTS)
+      } catch {}
+    }
+    load()
+  }, [])
+
+  const filtered = reports.filter(r =>
     r.company.toLowerCase().includes(search.toLowerCase()) ||
     r.description.toLowerCase().includes(search.toLowerCase())
   )

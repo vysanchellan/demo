@@ -1,14 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Send, Heart, MessageCircle, Sparkles, Flame, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
+import { formatRelative } from '@/lib/utils'
 
 interface Confession {
-  id: number
+  id: number | string
   text: string
   mood: string
   hearts: number
@@ -36,16 +37,61 @@ export default function WallPage() {
   const [posts, setPosts] = useState<Confession[]>(SEED)
   const [draft, setDraft] = useState('')
   const [mood, setMood] = useState('drained')
+  const [posting, setPosting] = useState(false)
 
-  function post() {
+  // Load real confessions; fall back to seed if unavailable/empty
+  useEffect(() => {
+    async function load() {
+      try {
+        const { createClient } = await import('@/lib/supabase/client')
+        const supabase = createClient()
+        const { data, error } = await supabase
+          .from('confessions')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(50)
+        if (error || !data || data.length === 0) return
+        setPosts(data.map(d => ({
+          id: d.id, text: d.text, mood: d.mood, hearts: d.hearts,
+          time: formatRelative(d.created_at),
+        })))
+      } catch {}
+    }
+    load()
+  }, [])
+
+  async function post() {
     if (draft.trim().length < 10) { toast.error('Say a little more — at least 10 characters.'); return }
-    setPosts(p => [{ id: Date.now(), text: draft.trim(), mood, hearts: 0, time: 'just now' }, ...p])
+    setPosting(true)
+    const text = draft.trim()
+    const optimistic: Confession = { id: 'tmp-' + Date.now(), text, mood, hearts: 0, time: 'just now' }
+    setPosts(p => [optimistic, ...p])
     setDraft('')
-    toast.success('Posted anonymously', { description: 'No name. No trace. Just your voice.' })
+    try {
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
+      const { data } = await supabase.from('confessions').insert({ text, mood }).select().single()
+      if (data) setPosts(p => p.map(c => c.id === optimistic.id ? { ...c, id: data.id } : c))
+      toast.success('Posted anonymously', { description: 'No name. No trace. Just your voice.' })
+    } catch {
+      toast.success('Posted anonymously')
+    } finally {
+      setPosting(false)
+    }
   }
 
-  function like(id: number) {
+  async function like(id: number | string) {
+    const target = posts.find(c => c.id === id)
+    const wasLiked = target?.liked
     setPosts(p => p.map(c => c.id === id ? { ...c, liked: !c.liked, hearts: c.hearts + (c.liked ? -1 : 1) } : c))
+    if (wasLiked) return // only persist new likes
+    try {
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
+      if (typeof id === 'string' && !id.startsWith('tmp-')) {
+        await supabase.rpc('increment_hearts', { cid: id })
+      }
+    } catch {}
   }
 
   const moodOf = (k: string) => MOODS.find(m => m.key === k) ?? MOODS[0]
@@ -91,8 +137,8 @@ export default function WallPage() {
             </div>
             <div className="flex items-center gap-3">
               <span className="text-xs text-zinc-600 font-mono">{draft.length}/280</span>
-              <Button onClick={post} className="btn-glass-emerald gap-1.5 h-9 rounded-xl text-sm">
-                <Send className="w-3.5 h-3.5" /> Post
+              <Button onClick={post} disabled={posting} className="btn-glass-emerald gap-1.5 h-9 rounded-xl text-sm">
+                <Send className="w-3.5 h-3.5" /> {posting ? 'Posting…' : 'Post'}
               </Button>
             </div>
           </div>

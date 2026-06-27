@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Search, Building2, ChevronRight } from 'lucide-react'
@@ -30,9 +30,27 @@ const SCORE_COLOR = (s: number) => {
 export default function CompaniesPage() {
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('All')
+  const [companies, setCompanies] = useState(COMPANIES)
 
-  const industries = ['All', ...Array.from(new Set(COMPANIES.map(c => c.industry)))]
-  const filtered = COMPANIES
+  useEffect(() => {
+    async function load() {
+      try {
+        const { createClient } = await import('@/lib/supabase/client')
+        const supabase = createClient()
+        const { data, error } = await supabase.from('companies').select('*')
+        if (error || !data || data.length === 0) return
+        setCompanies(data.map((d: any) => ({
+          id: d.id, name: d.name, industry: d.industry ?? 'Other',
+          city: d.city ?? '—', score: Math.round(d.toxicity_score ?? 0),
+          reports: d.report_count ?? 0, verified: d.verified,
+        })))
+      } catch {}
+    }
+    load()
+  }, [])
+
+  const industries = ['All', ...Array.from(new Set(companies.map(c => c.industry)))]
+  const filtered = companies
     .filter(c => filter === 'All' || c.industry === filter)
     .filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => b.score - a.score)

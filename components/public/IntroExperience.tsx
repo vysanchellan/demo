@@ -135,19 +135,38 @@ export default function IntroExperience() {
             ))}
           </div>
 
-          {/* The line */}
+          {/* The line — word-by-word reveal */}
           <div className="relative z-10 px-6 text-center max-w-4xl">
             <AnimatePresence mode="wait">
               <motion.h1
                 key={index}
-                initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, y: -24, filter: 'blur(8px)' }}
-                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl md:text-6xl lg:text-7xl leading-[1.12] text-white/90 whitespace-pre-line"
+                exit={{ opacity: 0, y: -30, filter: 'blur(10px)' }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl md:text-6xl lg:text-7xl leading-[1.14] text-white/90"
                 style={{ fontFamily: 'var(--font-serif)' }}
               >
-                {LINES[index]}
+                {LINES[index].split('\n').map((row, ri) => (
+                  <span key={ri} className="block overflow-hidden">
+                    <motion.span className="inline-block">
+                      {row.split(' ').map((word, wi) => (
+                        <motion.span
+                          key={`${index}-${ri}-${wi}`}
+                          initial={{ opacity: 0, y: 40, rotateX: 40 }}
+                          animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                          transition={{
+                            delay: 0.15 + (ri * 4 + wi) * 0.07,
+                            duration: 0.7,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
+                          className="inline-block mr-[0.28em]"
+                          style={{ transformOrigin: 'bottom' }}
+                        >
+                          {word}
+                        </motion.span>
+                      ))}
+                    </motion.span>
+                  </span>
+                ))}
               </motion.h1>
             </AnimatePresence>
           </div>
