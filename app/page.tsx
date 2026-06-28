@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
-  ArrowUpRight, ArrowRight, ChevronDown, PawPrint, Apple,
+  ArrowUpRight, ArrowRight, ChevronLeft, ChevronRight, PawPrint, Apple,
   ShieldCheck, Heart, Stethoscope, MapPin, MessageSquare, BookOpen,
   ClipboardCheck, Sparkles, CheckCircle2, Star, Quote, Plus,
   Bone, Cat, Dog, Activity, Bell, Calendar, Syringe, Scale
@@ -214,94 +214,197 @@ function FaqItem({ q, a, idx }: { q: string; a: string; idx: number }) {
   )
 }
 
-// ─────────── Parallax Photo Band ───────────
-const GALLERY = [
-  { src: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=500&h=640&fit=crop', speed: -80, h: 'h-72' },
-  { src: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&h=520&fit=crop', speed: 120, h: 'h-56' },
-  { src: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=500&h=680&fit=crop', speed: -140, h: 'h-80' },
-  { src: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=500&h=520&fit=crop', speed: 90, h: 'h-56' },
-  { src: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=500&h=620&fit=crop', speed: -100, h: 'h-72' },
-]
-
-function ParallaxGallery() {
+// ═══════════ Immersive Reveal — emotional scroll band ═══════════
+function ImmersiveReveal() {
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  // Hooks called unconditionally at top level (fixed count)
-  const y0 = useTransform(scrollYProgress, [0, 1], [GALLERY[0].speed, -GALLERY[0].speed])
-  const y1 = useTransform(scrollYProgress, [0, 1], [GALLERY[1].speed, -GALLERY[1].speed])
-  const y2 = useTransform(scrollYProgress, [0, 1], [GALLERY[2].speed, -GALLERY[2].speed])
-  const y3 = useTransform(scrollYProgress, [0, 1], [GALLERY[3].speed, -GALLERY[3].speed])
-  const y4 = useTransform(scrollYProgress, [0, 1], [GALLERY[4].speed, -GALLERY[4].speed])
-  const ys = [y0, y1, y2, y3, y4]
+  const clip = useTransform(scrollYProgress, [0, 0.5, 1], ['inset(38% 22% 38% 22% round 2.5rem)', 'inset(0% 0% 0% 0% round 1.25rem)', 'inset(0% 0% 0% 0% round 1.25rem)'])
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1.25, 1])
+  const imgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
+  const textY = useTransform(scrollYProgress, [0.2, 0.6], [40, 0])
+  const textO = useTransform(scrollYProgress, [0.25, 0.55], [0, 1])
 
   return (
-    <section ref={ref} className="relative py-24 overflow-hidden">
+    <section ref={ref} className="relative py-20 px-6">
+      <div className="relative max-w-7xl mx-auto h-[80vh] min-h-[520px]">
+        <motion.div style={{ clipPath: clip }} className="absolute inset-0 overflow-hidden will-change-transform">
+          <motion.div style={{ scale, y: imgY }} className="absolute inset-0">
+            <Image src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=1600&h=1000&fit=crop" alt="A person and their dog" fill className="object-cover" sizes="100vw" priority />
+          </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A0A] via-[#0C0A0A]/30 to-[#0C0A0A]/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0C0A0A]/60 to-transparent" />
+          <motion.div style={{ y: textY, opacity: textO }} className="absolute inset-0 flex flex-col justify-end p-8 md:p-16">
+            <p className="text-xs uppercase tracking-[0.3em] text-[#FF7A6B] mb-5">Why we built PawPal</p>
+            <h2 className="text-4xl md:text-7xl font-semibold leading-[1.0] max-w-3xl mb-5" style={{ fontFamily: 'var(--font-display)' }}>
+              They give you their <span style={{ fontFamily: 'var(--font-serif)' }} className="italic text-[#FF7A6B]">whole</span> world.
+            </h2>
+            <p className="text-lg md:text-xl text-zinc-200 max-w-xl leading-relaxed">
+              The least we can do is make sure they&rsquo;re fed right, kept safe, and never one tap away from help.
+            </p>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ═══════════ 3D Coverflow Slider — "Four ways PawPal has your back" ═══════════
+const SHOWCASE = [
+  { tag: 'Nutrition', title: 'Feed them exactly right', desc: 'Precise calories, grams and meals — calculated like a vet would.', img: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=900&h=1100&fit=crop', href: '/nutrition' },
+  { tag: 'Safety', title: 'Know what’s safe', desc: 'Check any food or plant against our toxicity database in a tap.', img: 'https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=900&h=1100&fit=crop', href: '/food-safety' },
+  { tag: 'Vets', title: 'Help, right nearby', desc: 'A live map of trusted vets the moment you need one.', img: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=900&h=1100&fit=crop', href: '/vet-finder' },
+  { tag: 'Wellness', title: 'A happier, healthier pet', desc: 'Track weight, mood and milestones — and never miss a date.', img: 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=900&h=1100&fit=crop', href: '/wellness' },
+  { tag: 'Community', title: 'Never parent alone', desc: 'Swap stories and advice with thousands of fellow pet parents.', img: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=900&h=1100&fit=crop', href: '/wall' },
+]
+
+function Slider3D() {
+  const [active, setActive] = useState(0)
+  const n = SHOWCASE.length
+
+  useEffect(() => {
+    const id = setInterval(() => setActive(a => (a + 1) % n), 4500)
+    return () => clearInterval(id)
+  }, [n])
+
+  function offsetOf(i: number) {
+    let d = i - active
+    if (d > n / 2) d -= n
+    if (d < -n / 2) d += n
+    return d
+  }
+
+  return (
+    <section className="relative py-28 overflow-hidden">
       <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
       <div className="relative max-w-7xl mx-auto px-6">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
-          <h2 className="text-4xl md:text-5xl font-semibold leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
-            <span className="text-gradient-soft">The faces</span> <span className="text-gradient-aurora">behind the data.</span>
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
+          <Badge className="mb-5 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono"><PawPrint className="w-3 h-3 mr-1.5" /> HOW IT HELPS</Badge>
+          <h2 className="text-4xl md:text-6xl font-semibold leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+            <span className="text-gradient-soft">Five ways PawPal</span> <span className="text-gradient-aurora">has your back.</span>
           </h2>
         </motion.div>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 items-center">
-          {GALLERY.map((g, i) => (
-            <motion.div key={i} style={{ y: ys[i] }} className={`relative ${g.h} rounded-3xl overflow-hidden border border-white/8 ${i === 2 ? 'md:scale-110 z-10' : ''}`}>
-              <Image src={g.src} alt="A happy pet" fill className="object-cover" sizes="(max-width:768px) 50vw, 20vw" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A0A]/60 via-transparent to-transparent" />
-              <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-3xl" />
-            </motion.div>
-          ))}
+
+        {/* 3D stage */}
+        <div className="relative h-[460px] sm:h-[560px] [perspective:1800px]" aria-roledescription="carousel">
+          <div className="absolute inset-0 [transform-style:preserve-3d]">
+            {SHOWCASE.map((s, i) => {
+              const off = offsetOf(i)
+              const abs = Math.abs(off)
+              const isCenter = off === 0
+              return (
+                <motion.div
+                  key={i}
+                  className="absolute top-1/2 left-1/2 w-[78vw] sm:w-[360px] aspect-[3/4] -mt-[39vh] sm:-mt-[280px] -ml-[39vw] sm:-ml-[180px] rounded-[2rem] overflow-hidden border border-white/10 cursor-pointer"
+                  animate={{
+                    x: off * (typeof window !== 'undefined' && window.innerWidth < 640 ? 120 : 260),
+                    scale: isCenter ? 1 : 0.82 - abs * 0.05,
+                    rotateY: off * -32,
+                    z: -abs * 240,
+                    opacity: abs > 2 ? 0 : 1 - abs * 0.18,
+                    zIndex: 20 - abs,
+                    filter: isCenter ? 'brightness(1)' : 'brightness(0.55)',
+                  }}
+                  transition={{ type: 'spring', stiffness: 110, damping: 20 }}
+                  onClick={() => setActive(i)}
+                  style={{ pointerEvents: abs > 2 ? 'none' : 'auto' }}
+                >
+                  <Image src={s.img} alt={s.title} fill className="object-cover" sizes="360px" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A0A] via-[#0C0A0A]/20 to-transparent" />
+                  <div className="absolute top-5 left-6 text-5xl font-semibold text-white/15 tabular-nums" style={{ fontFamily: 'var(--font-display)' }}>0{i + 1}</div>
+                  <AnimatePresence>
+                    {isCenter && (
+                      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="absolute bottom-0 left-0 right-0 p-7">
+                        <Badge className="mb-3 bg-[#FF7A6B]/15 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono text-[10px]">{s.tag}</Badge>
+                        <h3 className="text-2xl font-semibold mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>{s.title}</h3>
+                        <p className="text-zinc-300 text-sm leading-relaxed mb-4">{s.desc}</p>
+                        <Link href={s.href} className="inline-flex items-center gap-1.5 text-sm text-[#FF7A6B] font-medium" onClick={e => e.stopPropagation()}>Explore <ArrowUpRight className="w-4 h-4" /></Link>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Controls */}
+        <div className="flex items-center justify-center gap-5 mt-10">
+          <button onClick={() => setActive(a => (a - 1 + n) % n)} className="w-11 h-11 rounded-full glass-card flex items-center justify-center hover:border-[#FF7A6B]/40 transition-colors" aria-label="Previous"><ChevronLeft className="w-5 h-5" /></button>
+          <div className="flex items-center gap-2">
+            {SHOWCASE.map((_, i) => (
+              <button key={i} onClick={() => setActive(i)} aria-label={`Go to slide ${i + 1}`}
+                className={`h-2 rounded-full transition-all ${i === active ? 'w-8 bg-[#FF7A6B]' : 'w-2 bg-white/15 hover:bg-white/30'}`} />
+            ))}
+          </div>
+          <button onClick={() => setActive(a => (a + 1) % n)} className="w-11 h-11 rounded-full glass-card flex items-center justify-center hover:border-[#FF7A6B]/40 transition-colors" aria-label="Next"><ChevronRight className="w-5 h-5" /></button>
         </div>
       </div>
     </section>
   )
 }
 
-// ─────────── Pinned Horizontal Showcase ───────────
-const SHOWCASE = [
-  { tag: 'Nutrition', title: 'Feed them exactly right', desc: 'Precise calories, grams and meals — calculated like a vet would.', img: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=900&h=900&fit=crop', href: '/nutrition' },
-  { tag: 'Safety', title: 'Know what’s safe', desc: 'Check any food or plant against our toxicity database in a tap.', img: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=900&h=900&fit=crop', href: '/food-safety' },
-  { tag: 'Vets', title: 'Help, right nearby', desc: 'A live map of trusted vets the moment you need one.', img: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=900&h=900&fit=crop', href: '/vet-finder' },
-  { tag: 'Wellness', title: 'A happier, healthier pet', desc: 'Track weight, mood and milestones — and never miss a date.', img: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=900&h=900&fit=crop', href: '/wellness' },
+// ═══════════ Exploding Stats — burst-to-reveal ═══════════
+const EXPLODE = [
+  { icon: Apple, label: 'Nutrition plans', value: '2.4M', x: -240, y: -120, c: '#FF7A6B' },
+  { icon: ShieldCheck, label: 'Foods checked', value: '890k', x: 240, y: -130, c: '#2DD4BF' },
+  { icon: MapPin, label: 'Vets mapped', value: '12k', x: -270, y: 90, c: '#FFB84D' },
+  { icon: Heart, label: 'Wellness checks', value: '640k', x: 250, y: 110, c: '#FF7A6B' },
+  { icon: Activity, label: 'Weigh-ins logged', value: '5.1M', x: -120, y: 180, c: '#2DD4BF' },
+  { icon: Stethoscope, label: 'Vet bookings', value: '210k', x: 130, y: 190, c: '#FFB84D' },
 ]
 
-function PinnedShowcase() {
+function ExplodeStats() {
+  const [boom, setBoom] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
-  // Translate the track exactly so the last card lands flush on the right — no overshoot, no black gap.
-  const x = useTransform(scrollYProgress, [0, 1], ['0vw', '-30vw'])
 
   return (
-    <section ref={ref} className="relative h-[260vh]">
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden bg-[#0C0A0A]">
-        <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
-        <div className="relative max-w-7xl mx-auto px-6 w-full mb-8 shrink-0">
-          <Badge className="mb-4 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono"><PawPrint className="w-3 h-3 mr-1.5" /> HOW IT HELPS</Badge>
-          <h2 className="text-4xl md:text-6xl font-semibold leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
-            <span className="text-gradient-soft">Four ways PawPal</span> <span className="text-gradient-aurora">has your back.</span>
-          </h2>
-        </div>
-        <motion.div style={{ x }} className="relative flex gap-6 pl-6 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] will-change-transform">
-          {SHOWCASE.map((s, i) => (
-            <Link key={i} href={s.href} className="relative shrink-0 w-[80vw] sm:w-[46vw] lg:w-[30vw] aspect-[5/6] rounded-[2rem] overflow-hidden border border-white/10 group">
-              <Image src={s.img} alt={s.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width:1024px) 80vw, 30vw" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A0A] via-[#0C0A0A]/30 to-transparent" />
-              <div className="absolute top-5 left-5">
-                <span className="text-5xl font-semibold text-white/15 tabular-nums" style={{ fontFamily: 'var(--font-display)' }}>0{i + 1}</span>
+    <section className="relative py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
+      <div className="relative max-w-5xl mx-auto px-6">
+        <motion.div
+          ref={ref}
+          onViewportEnter={() => setBoom(true)}
+          viewport={{ once: true, amount: 0.6 }}
+          className="relative h-[460px] sm:h-[520px] flex items-center justify-center"
+        >
+          {/* Pulsing rings */}
+          <div className="absolute w-40 h-40 rounded-full border border-[#FF7A6B]/20 animate-pulse-ring" />
+          <div className="absolute w-40 h-40 rounded-full border border-[#FF7A6B]/20 animate-pulse-ring" style={{ animationDelay: '0.8s' }} />
+
+          {/* Core paw — click to re-explode */}
+          <button
+            onClick={() => { setBoom(false); requestAnimationFrame(() => requestAnimationFrame(() => setBoom(true))) }}
+            className="relative z-10 w-28 h-28 rounded-3xl bg-gradient-to-br from-[#FF7A6B] to-[#F2604F] flex items-center justify-center shadow-[0_12px_50px_rgba(255,122,107,0.5)] hover:scale-105 transition-transform"
+            aria-label="Replay animation"
+          >
+            <PawPrint className="w-12 h-12 text-[#2A0E0A]" />
+          </button>
+
+          {/* Exploding info chips */}
+          {EXPLODE.map((e, i) => (
+            <motion.div
+              key={i}
+              initial={{ x: 0, y: 0, scale: 0, opacity: 0, rotate: -20 }}
+              animate={boom ? { x: e.x, y: e.y, scale: 1, opacity: 1, rotate: 0 } : { x: 0, y: 0, scale: 0, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 120, damping: 14, delay: boom ? 0.05 + i * 0.06 : 0 }}
+              className="absolute z-20 glass-card rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl"
+            >
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${e.c}1F`, border: `1px solid ${e.c}40` }}>
+                <e.icon className="w-4.5 h-4.5" style={{ color: e.c }} />
               </div>
-              <div className="absolute bottom-0 left-0 right-0 p-7">
-                <Badge className="mb-3 bg-[#FF7A6B]/15 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono text-[10px]">{s.tag}</Badge>
-                <h3 className="text-2xl font-semibold mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>{s.title}</h3>
-                <p className="text-zinc-300 text-sm leading-relaxed">{s.desc}</p>
-                <span className="inline-flex items-center gap-1.5 mt-4 text-sm text-[#FF7A6B] font-medium">Explore <ArrowUpRight className="w-4 h-4" /></span>
+              <div>
+                <div className="text-lg font-semibold tabular-nums leading-none" style={{ fontFamily: 'var(--font-display)' }}>{e.value}</div>
+                <div className="text-[11px] text-zinc-400 mt-0.5">{e.label}</div>
               </div>
-            </Link>
+            </motion.div>
           ))}
         </motion.div>
-        <div className="relative max-w-7xl mx-auto px-6 w-full mt-8 shrink-0">
-          <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
-            <motion.div style={{ scaleX: scrollYProgress }} className="h-full bg-[#FF7A6B] origin-left rounded-full" />
-          </div>
+
+        <div className="text-center -mt-4">
+          <h2 className="text-3xl md:text-5xl font-semibold leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+            <span className="text-gradient-soft">A whole platform,</span> <span className="text-gradient-aurora">working for them.</span>
+          </h2>
+          <p className="text-zinc-500 text-sm mt-3">Tap the paw to replay</p>
         </div>
       </div>
     </section>
@@ -351,11 +454,14 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* ─── PARALLAX GALLERY ─── */}
-      <ParallaxGallery />
+      {/* ─── IMMERSIVE REVEAL ─── */}
+      <ImmersiveReveal />
 
-      {/* ─── PINNED HORIZONTAL SHOWCASE ─── */}
-      <PinnedShowcase />
+      {/* ─── 3D SLIDER ─── */}
+      <Slider3D />
+
+      {/* ─── EXPLODING STATS ─── */}
+      <ExplodeStats />
 
       {/* ─── BENTO FEATURES ─── */}
       <section className="py-32 px-6 max-w-7xl mx-auto">
