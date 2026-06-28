@@ -32,14 +32,6 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
     return () => { active = false }
   }, [pathname])
 
-  if (status === 'loading') {
-    return (
-      <div className="min-h-screen bg-[#0C0A0A] flex items-center justify-center">
-        <div className="w-10 h-10 rounded-full border-2 border-[#FF7A6B]/30 border-t-[#FF7A6B] animate-spin" />
-      </div>
-    )
-  }
-
   if (status === 'in') {
     return (
       <div className="flex min-h-screen bg-[#0C0A0A] text-zinc-100">

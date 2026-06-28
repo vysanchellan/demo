@@ -40,31 +40,46 @@ function LogoMark({ size = 38, glow = false, className }: { size?: number; glow?
     >
       <svg viewBox="0 0 48 48" width={size} height={size} className="relative z-10">
         <defs>
-          <linearGradient id={`${id}-tile`} x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#FF9485" />
-            <stop offset="55%" stopColor="#FF7A6B" />
-            <stop offset="100%" stopColor="#F2604F" />
+          <linearGradient id={`${id}-tile`} x1="6" y1="2" x2="42" y2="46" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#FFA694" />
+            <stop offset="50%" stopColor="#FF7A6B" />
+            <stop offset="100%" stopColor="#EC5440" />
           </linearGradient>
+          {/* Soft inner shadow for depth on the beans */}
+          <radialGradient id={`${id}-bean`} cx="38%" cy="32%" r="75%">
+            <stop offset="0%" stopColor="#3A140C" />
+            <stop offset="100%" stopColor="#220A06" />
+          </radialGradient>
+          <filter id={`${id}-sh`} x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="0.5" stdDeviation="0.5" floodColor="#1A0703" floodOpacity="0.45" />
+          </filter>
         </defs>
 
         {/* Tile */}
-        <rect x="0" y="0" width="48" height="48" rx="13.5" fill={`url(#${id}-tile)`} />
-        {/* Top sheen */}
-        <rect x="0" y="0" width="48" height="22" rx="13.5" fill="#FFFFFF" opacity="0.16" />
+        <rect x="0" y="0" width="48" height="48" rx="14" fill={`url(#${id}-tile)`} />
+        {/* Top sheen + bottom shade for dimensionality */}
+        <rect x="0" y="0" width="48" height="20" rx="14" fill="#FFFFFF" opacity="0.18" />
+        <rect x="0" y="30" width="48" height="18" rx="14" fill="#000000" opacity="0.08" />
 
-        {/* Paw — dark on emerald */}
-        <g fill="#2A0E0A">
-          {/* main pad */}
-          <path d="M24 38.5c-4.6 0-8.2-2.7-8.2-6.3 0-3 2.7-4.9 4.9-6.6 1.4-1.1 2.2-2.4 3.3-2.4s1.9 1.3 3.3 2.4c2.2 1.7 4.9 3.6 4.9 6.6 0 3.6-3.6 6.3-8.2 6.3z" />
-          {/* toe beans */}
-          <ellipse cx="14.5" cy="22.5" rx="3.3" ry="4.2" transform="rotate(-18 14.5 22.5)" />
-          <ellipse cx="20.5" cy="16" rx="3.3" ry="4.4" />
-          <ellipse cx="27.5" cy="16" rx="3.3" ry="4.4" />
-          <ellipse cx="33.5" cy="22.5" rx="3.3" ry="4.2" transform="rotate(18 33.5 22.5)" />
+        {/* Realistic paw — rounded organic pads with soft shadow */}
+        <g fill={`url(#${id}-bean)`} filter={`url(#${id}-sh)`}>
+          {/* main pad — heart-ish, rounded */}
+          <path d="M24 39c-3.4 0-6.5-1.4-7.6-3.9-1-2.3.2-4.6 2.1-6.2 1.6-1.3 2.6-2.6 3.1-3.7.6-1.2 1.4-1.9 2.4-1.9s1.8.7 2.4 1.9c.5 1.1 1.5 2.4 3.1 3.7 1.9 1.6 3.1 3.9 2.1 6.2C30.5 37.6 27.4 39 24 39z" />
+          {/* four toe beans — graduated sizes, splayed naturally */}
+          <ellipse cx="13.8" cy="24" rx="3" ry="3.9" transform="rotate(-24 13.8 24)" />
+          <ellipse cx="19.8" cy="16.6" rx="3.1" ry="4.2" transform="rotate(-8 19.8 16.6)" />
+          <ellipse cx="28.2" cy="16.6" rx="3.1" ry="4.2" transform="rotate(8 28.2 16.6)" />
+          <ellipse cx="34.2" cy="24" rx="3" ry="3.9" transform="rotate(24 34.2 24)" />
+        </g>
+        {/* tiny highlights on beans for a soft, real sheen */}
+        <g fill="#FF7A6B" opacity="0.35">
+          <ellipse cx="19" cy="15" rx="1" ry="1.4" />
+          <ellipse cx="27.4" cy="15" rx="1" ry="1.4" />
+          <ellipse cx="22.5" cy="29" rx="1.6" ry="1.1" />
         </g>
 
         {/* Crisp border */}
-        <rect x="0.6" y="0.6" width="46.8" height="46.8" rx="13" fill="none" stroke="#FFFFFF" strokeOpacity="0.18" strokeWidth="1.2" />
+        <rect x="0.6" y="0.6" width="46.8" height="46.8" rx="13.5" fill="none" stroke="#FFFFFF" strokeOpacity="0.2" strokeWidth="1.1" />
       </svg>
     </div>
   )

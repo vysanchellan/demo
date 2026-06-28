@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Space_Grotesk, Inter, Instrument_Serif } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "sonner"
+import SiteEffects from "@/components/SiteEffects"
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-[#0C0A0A] text-[#F6F1EE]">
+        <SiteEffects />
         {children}
         <Toaster
           position="top-right"

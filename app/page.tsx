@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useScroll, useTransform, AnimatePresence, useInView } from 'framer-motion'
+import { motion, useScroll, useTransform, AnimatePresence, useInView, useSpring, useMotionValue } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -65,6 +65,29 @@ const TREND_DATA = [
 ]
 
 // ─────────── Animated Counter ───────────
+// 3D tilt-on-hover wrapper that tracks the cursor
+function Tilt({ children, className }: { children: React.ReactNode; className?: string }) {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const rx = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), { stiffness: 180, damping: 16 })
+  const ry = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), { stiffness: 180, damping: 16 })
+  function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = e.currentTarget.getBoundingClientRect()
+    x.set((e.clientX - r.left) / r.width - 0.5)
+    y.set((e.clientY - r.top) / r.height - 0.5)
+  }
+  function reset() { x.set(0); y.set(0) }
+  return (
+    <motion.div
+      onMouseMove={onMove} onMouseLeave={reset}
+      style={{ rotateX: rx, rotateY: ry, transformPerspective: 900, transformStyle: 'preserve-3d' }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 function Counter({ to, suffix = '', prefix = '' }: { to: number; suffix?: string; prefix?: string }) {
   const [val, setVal] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
@@ -354,17 +377,17 @@ const EXPLODE = [
 ]
 
 function ExplodeStats() {
-  const [boom, setBoom] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
+  // `cycle` increments to remount the chips → reliably re-runs the explosion every tap.
+  const [cycle, setCycle] = useState(0)
+  const [armed, setArmed] = useState(false)
 
   return (
     <section className="relative py-32 overflow-hidden">
       <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
       <div className="relative max-w-5xl mx-auto px-6">
         <motion.div
-          ref={ref}
-          onViewportEnter={() => setBoom(true)}
-          viewport={{ once: true, amount: 0.6 }}
+          onViewportEnter={() => setArmed(true)}
+          viewport={{ once: true, amount: 0.5 }}
           className="relative h-[460px] sm:h-[520px] flex items-center justify-center"
         >
           {/* Pulsing rings */}
@@ -372,21 +395,24 @@ function ExplodeStats() {
           <div className="absolute w-40 h-40 rounded-full border border-[#FF7A6B]/20 animate-pulse-ring" style={{ animationDelay: '0.8s' }} />
 
           {/* Core paw — click to re-explode */}
-          <button
-            onClick={() => { setBoom(false); requestAnimationFrame(() => requestAnimationFrame(() => setBoom(true))) }}
-            className="relative z-10 w-28 h-28 rounded-3xl bg-gradient-to-br from-[#FF7A6B] to-[#F2604F] flex items-center justify-center shadow-[0_12px_50px_rgba(255,122,107,0.5)] hover:scale-105 transition-transform"
+          <motion.button
+            onClick={() => setCycle(c => c + 1)}
+            whileTap={{ scale: 0.9 }}
+            animate={{ rotate: cycle * 360 }}
+            transition={{ type: 'spring', stiffness: 140, damping: 12 }}
+            className="relative z-10 w-28 h-28 rounded-[1.75rem] bg-gradient-to-br from-[#FF9485] to-[#EC5440] flex items-center justify-center shadow-[0_12px_50px_rgba(255,122,107,0.5)] hover:scale-105 transition-transform"
             aria-label="Replay animation"
           >
-            <PawPrint className="w-12 h-12 text-[#2A0E0A]" />
-          </button>
+            <Logo size={64} />
+          </motion.button>
 
-          {/* Exploding info chips */}
-          {EXPLODE.map((e, i) => (
+          {/* Exploding info chips — keyed on cycle so each tap replays */}
+          {armed && EXPLODE.map((e, i) => (
             <motion.div
-              key={i}
-              initial={{ x: 0, y: 0, scale: 0, opacity: 0, rotate: -20 }}
-              animate={boom ? { x: e.x, y: e.y, scale: 1, opacity: 1, rotate: 0 } : { x: 0, y: 0, scale: 0, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 120, damping: 14, delay: boom ? 0.05 + i * 0.06 : 0 }}
+              key={`${cycle}-${i}`}
+              initial={{ x: 0, y: 0, scale: 0, opacity: 0, rotate: -25 }}
+              animate={{ x: e.x, y: e.y, scale: 1, opacity: 1, rotate: 0 }}
+              transition={{ type: 'spring', stiffness: 120, damping: 14, delay: 0.05 + i * 0.07 }}
               className="absolute z-20 glass-card rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl"
             >
               <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${e.c}1F`, border: `1px solid ${e.c}40` }}>
@@ -481,18 +507,20 @@ export default function LandingPage() {
         <div className="grid lg:grid-cols-3 gap-5">
           {FEATURES_BENTO.map((f, i) => (
             <motion.div key={f.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}
-              className={`group relative p-7 rounded-3xl glass-card surface-hover overflow-hidden ${f.span}`}>
-              <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-[0.12] group-hover:opacity-25 transition-opacity duration-500" style={{ background: 'radial-gradient(circle, #FF7A6B, transparent 70%)' }} />
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center backdrop-blur-sm bg-[#FF7A6B]/12 border border-[#FF7A6B]/20">
-                    <f.icon className="w-5 h-5 text-[#FF7A6B]" />
+              className={f.span}>
+              <Tilt className="group relative h-full p-7 rounded-3xl glass-card surface-hover overflow-hidden">
+                <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-[0.12] group-hover:opacity-30 transition-opacity duration-500" style={{ background: 'radial-gradient(circle, #FF7A6B, transparent 70%)' }} />
+                <div className="relative" style={{ transform: 'translateZ(40px)' }}>
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center backdrop-blur-sm bg-[#FF7A6B]/12 border border-[#FF7A6B]/20">
+                      <f.icon className="w-5 h-5 text-[#FF7A6B]" />
+                    </div>
+                    <Badge className="text-[10px] font-mono uppercase bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/25">{f.tag}</Badge>
                   </div>
-                  <Badge className="text-[10px] font-mono uppercase bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/25">{f.tag}</Badge>
+                  <h3 className="text-xl font-semibold mb-2.5 tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{f.title}</h3>
+                  <p className="text-zinc-400 text-sm leading-relaxed">{f.desc}</p>
                 </div>
-                <h3 className="text-xl font-semibold mb-2.5 tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{f.title}</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">{f.desc}</p>
-              </div>
+              </Tilt>
             </motion.div>
           ))}
         </div>
