@@ -228,6 +228,16 @@
 .animate-marquee-x { display: flex; animation: marquee-x 50s linear infinite; }
 .animate-marquee-fast { display: flex; animation: marquee-x 28s linear infinite; }
 
+/* Vertical marquee columns (Higgsfield-style media wall) */
+@keyframes marquee-y-up { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+@keyframes marquee-y-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+.marquee-col-up { animation: marquee-y-up linear infinite; }
+.marquee-col-down { animation: marquee-y-down linear infinite; }
+.mask-fade-y {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+}
+
 @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 .animate-shimmer {
   background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.09) 50%, transparent 70%);

@@ -12,11 +12,10 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import AuroraBackground from '@/components/public/AuroraBackground'
-import HeroCanvas from '@/components/public/HeroCanvas'
 import Navbar from '@/components/public/Navbar'
 import Logo from '@/components/public/Logo'
 import IntroExperience from '@/components/public/IntroExperience'
+import HeroPawPal from '@/components/public/HeroPawPal'
 import {
   AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid
 } from 'recharts'
@@ -269,23 +268,27 @@ const SHOWCASE = [
 function PinnedShowcase() {
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
-  const x = useTransform(scrollYProgress, [0, 1], ['2%', '-72%'])
+  // Translate the track exactly so the last card lands flush on the right — no overshoot, no black gap.
+  const x = useTransform(scrollYProgress, [0, 1], ['0vw', '-30vw'])
 
   return (
-    <section ref={ref} className="relative h-[320vh]">
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+    <section ref={ref} className="relative h-[260vh]">
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden bg-[#0C0A0A]">
         <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
-        <div className="relative max-w-7xl mx-auto px-6 w-full mb-10">
+        <div className="relative max-w-7xl mx-auto px-6 w-full mb-8 shrink-0">
           <Badge className="mb-4 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono"><PawPrint className="w-3 h-3 mr-1.5" /> HOW IT HELPS</Badge>
           <h2 className="text-4xl md:text-6xl font-semibold leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
             <span className="text-gradient-soft">Four ways PawPal</span> <span className="text-gradient-aurora">has your back.</span>
           </h2>
         </div>
-        <motion.div style={{ x }} className="relative flex gap-6 px-6 will-change-transform">
+        <motion.div style={{ x }} className="relative flex gap-6 pl-6 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] will-change-transform">
           {SHOWCASE.map((s, i) => (
-            <Link key={i} href={s.href} className="relative shrink-0 w-[78vw] sm:w-[42vw] lg:w-[30vw] aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 group">
-              <Image src={s.img} alt={s.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="40vw" />
+            <Link key={i} href={s.href} className="relative shrink-0 w-[80vw] sm:w-[46vw] lg:w-[30vw] aspect-[5/6] rounded-[2rem] overflow-hidden border border-white/10 group">
+              <Image src={s.img} alt={s.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width:1024px) 80vw, 30vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A0A] via-[#0C0A0A]/30 to-transparent" />
+              <div className="absolute top-5 left-5">
+                <span className="text-5xl font-semibold text-white/15 tabular-nums" style={{ fontFamily: 'var(--font-display)' }}>0{i + 1}</span>
+              </div>
               <div className="absolute bottom-0 left-0 right-0 p-7">
                 <Badge className="mb-3 bg-[#FF7A6B]/15 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono text-[10px]">{s.tag}</Badge>
                 <h3 className="text-2xl font-semibold mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>{s.title}</h3>
@@ -295,7 +298,7 @@ function PinnedShowcase() {
             </Link>
           ))}
         </motion.div>
-        <div className="relative max-w-7xl mx-auto px-6 w-full mt-8">
+        <div className="relative max-w-7xl mx-auto px-6 w-full mt-8 shrink-0">
           <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
             <motion.div style={{ scaleX: scrollYProgress }} className="h-full bg-[#FF7A6B] origin-left rounded-full" />
           </div>
@@ -307,79 +310,13 @@ function PinnedShowcase() {
 
 // ─────────── MAIN ───────────
 export default function LandingPage() {
-  const heroRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
-  const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.96])
-
   return (
     <div className="min-h-screen bg-[#0C0A0A] text-zinc-100 overflow-x-hidden">
       <IntroExperience />
       <Navbar />
 
       {/* ─── HERO ─── */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden grain">
-        <AuroraBackground />
-        <HeroCanvas />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[760px] pointer-events-none animate-glow-pulse" aria-hidden="true"
-          style={{ background: 'radial-gradient(ellipse, rgba(255,122,107,0.16) 0%, transparent 62%)' }} />
-        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF7A6B]/40 to-transparent animate-scan pointer-events-none" aria-hidden="true" />
-
-        <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 px-6 max-w-6xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border-gradient bg-white/[0.04] backdrop-blur-xl text-xs text-zinc-200 mb-8">
-            <PawPrint className="w-3.5 h-3.5 text-[#FF7A6B]" />
-            <span className="font-medium">Loved by 120,000+ pet parents</span>
-          </motion.div>
-
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-6xl md:text-8xl lg:text-[9rem] font-semibold leading-[0.92] tracking-[-0.04em] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
-            <span className="block bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #F6F1EE 0%, #C8D0CD 55%, #5B6562 100%)' }}>
-              Everything your pet
-            </span>
-            <span className="block">
-              <span style={{ fontFamily: 'var(--font-serif)' }} className="italic font-normal text-[#FF7A6B]">needs</span>
-              <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #F6F1EE 0%, #C8D0CD 55%, #5B6562 100%)' }}> — in one place.</span>
-            </span>
-          </motion.h1>
-
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-            className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed mb-10">
-            Nutrition plans, food-safety checks, health tracking, a wellness quiz, and trusted vets near you.
-            PawPal is the all-in-one companion for people who love their animals.
-          </motion.p>
-
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16">
-            <Link href="/auth/signup">
-              <Button size="lg" className="btn-glass-emerald text-base px-7 py-6 gap-2 group rounded-2xl">
-                <PawPrint className="w-5 h-5" /> Add Your Pet
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </Button>
-            </Link>
-            <Link href="/nutrition">
-              <Button size="lg" className="btn-glass text-white text-base px-7 py-6 gap-2 group rounded-2xl">
-                <Apple className="w-5 h-5" /> Try the Nutrition Planner
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </Button>
-            </Link>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
-            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-zinc-400">
-            <div className="flex items-center gap-1.5"><Apple className="w-3.5 h-3.5 text-[#FF7A6B]" /> Vet-backed nutrition</div>
-            <div className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#FF7A6B]" /> Food-safety database</div>
-            <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-[#FF7A6B]" /> Vets near you</div>
-            <div className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-[#FF7A6B]" /> 4.9/5 (8,400 reviews)</div>
-          </motion.div>
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-500">
-          <span className="text-[10px] uppercase tracking-widest">Scroll</span>
-          <motion.div animate={{ y: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}><ChevronDown className="w-4 h-4" /></motion.div>
-        </motion.div>
-      </section>
+      <HeroPawPal />
 
       {/* ─── STATS ─── */}
       <section className="relative py-24 border-y border-white/5">
