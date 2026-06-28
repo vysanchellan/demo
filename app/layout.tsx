@@ -32,15 +32,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} ${instrumentSerif.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#050708] text-[#F2F6F5]">
+      <body className="min-h-full flex flex-col bg-[#0C0A0A] text-[#F6F1EE]">
         {children}
         <Toaster
           position="top-right"
           toastOptions={{
             style: {
-              background: "#0E1316",
+              background: "#1A1516",
               border: "1px solid rgba(255,255,255,0.1)",
-              color: "#F2F6F5",
+              color: "#F6F1EE",
             },
           }}
         />

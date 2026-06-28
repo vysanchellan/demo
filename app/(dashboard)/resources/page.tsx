@@ -27,9 +27,9 @@ export default function ResourcesPage() {
       <div className="absolute inset-0 bg-mesh-soft pointer-events-none" />
       <div className="relative p-6 lg:p-8 max-w-5xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <Badge className="mb-4 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono text-[10px]"><BookOpen className="w-3 h-3 mr-1.5" /> CARE GUIDES</Badge>
+          <Badge className="mb-4 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono text-[10px]"><BookOpen className="w-3 h-3 mr-1.5" /> CARE GUIDES</Badge>
           <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight mb-2" style={{ fontFamily: 'var(--font-display)' }}>
-            Care <span className="text-[#00E599]">Guides</span>
+            Care <span className="text-[#FF7A6B]">Guides</span>
           </h1>
           <p className="text-zinc-400 max-w-xl">Vet-reviewed, plain-English guides for every stage of your pet&rsquo;s life.</p>
         </motion.div>
@@ -37,7 +37,7 @@ export default function ResourcesPage() {
         <div className="flex gap-2 flex-wrap mb-8">
           {TAGS.map(t => (
             <button key={t} onClick={() => setFilter(t)}
-              className={`px-4 py-1.5 rounded-full text-sm border transition-all ${filter === t ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]' : 'bg-[#0A0D0F] border-white/10 text-zinc-400 hover:text-white'}`}>
+              className={`px-4 py-1.5 rounded-full text-sm border transition-all ${filter === t ? 'bg-[#FF7A6B]/15 border-[#FF7A6B]/40 text-[#FF7A6B]' : 'bg-[#161213] border-white/10 text-zinc-400 hover:text-white'}`}>
               {t}
             </button>
           ))}
@@ -48,14 +48,14 @@ export default function ResourcesPage() {
             <motion.div key={g.title} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
               className="glass-card rounded-2xl p-5 surface-hover group cursor-pointer">
               <div className="flex items-start justify-between mb-4">
-                <div className="w-10 h-10 rounded-xl bg-[#00E599]/12 border border-[#00E599]/20 flex items-center justify-center"><g.icon className="w-5 h-5 text-[#00E599]" /></div>
+                <div className="w-10 h-10 rounded-xl bg-[#FF7A6B]/12 border border-[#FF7A6B]/20 flex items-center justify-center"><g.icon className="w-5 h-5 text-[#FF7A6B]" /></div>
                 <Badge className="bg-white/5 text-zinc-400 border-white/10 text-[10px]">{g.tag}</Badge>
               </div>
               <h3 className="font-semibold mb-2" style={{ fontFamily: 'var(--font-display)' }}>{g.title}</h3>
               <p className="text-zinc-400 text-sm leading-relaxed mb-4">{g.desc}</p>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-zinc-500">{g.read} read</span>
-                <span className="flex items-center gap-1 text-[#00E599] opacity-0 group-hover:opacity-100 transition-opacity">Read <ArrowUpRight className="w-3 h-3" /></span>
+                <span className="flex items-center gap-1 text-[#FF7A6B] opacity-0 group-hover:opacity-100 transition-opacity">Read <ArrowUpRight className="w-3 h-3" /></span>
               </div>
             </motion.div>
           ))}

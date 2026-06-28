@@ -18,7 +18,7 @@ export default function Logo({ className, size = 38, glow = false, variant = 'ma
       <div className={cn('flex items-center gap-2.5', className)}>
         <LogoMark size={size} glow={glow} />
         <span className="text-lg font-bold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-          Paw<span className="text-[#00E599]">Pal</span>
+          Paw<span className="text-[#FF7A6B]">Pal</span>
         </span>
       </div>
     )
@@ -32,7 +32,7 @@ function LogoMark({ size = 38, glow = false, className }: { size?: number; glow?
     <div
       className={cn(
         'relative inline-flex items-center justify-center shrink-0',
-        glow && 'shadow-[0_6px_28px_rgba(0,229,153,0.45)]',
+        glow && 'shadow-[0_6px_28px_rgba(255,122,107,0.45)]',
         className
       )}
       style={{ width: size, height: size, borderRadius: size * 0.28 }}
@@ -41,9 +41,9 @@ function LogoMark({ size = 38, glow = false, className }: { size?: number; glow?
       <svg viewBox="0 0 48 48" width={size} height={size} className="relative z-10">
         <defs>
           <linearGradient id={`${id}-tile`} x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#00FFAB" />
-            <stop offset="55%" stopColor="#00E599" />
-            <stop offset="100%" stopColor="#00B47A" />
+            <stop offset="0%" stopColor="#FF9485" />
+            <stop offset="55%" stopColor="#FF7A6B" />
+            <stop offset="100%" stopColor="#F2604F" />
           </linearGradient>
         </defs>
 
@@ -53,7 +53,7 @@ function LogoMark({ size = 38, glow = false, className }: { size?: number; glow?
         <rect x="0" y="0" width="48" height="22" rx="13.5" fill="#FFFFFF" opacity="0.16" />
 
         {/* Paw — dark on emerald */}
-        <g fill="#04130D">
+        <g fill="#2A0E0A">
           {/* main pad */}
           <path d="M24 38.5c-4.6 0-8.2-2.7-8.2-6.3 0-3 2.7-4.9 4.9-6.6 1.4-1.1 2.2-2.4 3.3-2.4s1.9 1.3 3.3 2.4c2.2 1.7 4.9 3.6 4.9 6.6 0 3.6-3.6 6.3-8.2 6.3z" />
           {/* toe beans */}

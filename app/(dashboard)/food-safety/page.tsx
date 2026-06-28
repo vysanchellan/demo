@@ -37,8 +37,8 @@ const DB: FoodItem[] = [
 ]
 
 const STYLE: Record<Level, { color: string; icon: any; label: string }> = {
-  safe: { color: '#00E599', icon: ShieldCheck, label: 'SAFE' },
-  caution: { color: '#5EEAD4', icon: ShieldAlert, label: 'IN MODERATION' },
+  safe: { color: '#FF7A6B', icon: ShieldCheck, label: 'SAFE' },
+  caution: { color: '#FFB84D', icon: ShieldAlert, label: 'IN MODERATION' },
   toxic: { color: '#FF5A5F', icon: ShieldX, label: 'DO NOT FEED' },
 }
 
@@ -59,11 +59,11 @@ export default function FoodSafetyPage() {
       <div className="absolute inset-0 bg-mesh-soft pointer-events-none" />
       <div className="relative p-6 lg:p-8 max-w-3xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <Badge className="mb-4 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono text-[10px]">
+          <Badge className="mb-4 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono text-[10px]">
             <Sparkles className="w-3 h-3 mr-1.5" /> LIFESAVER
           </Badge>
           <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight mb-2" style={{ fontFamily: 'var(--font-display)' }}>
-            Food Safety <span className="text-[#00E599]">Checker</span>
+            Food Safety <span className="text-[#FF7A6B]">Checker</span>
           </h1>
           <p className="text-zinc-400 max-w-xl">Can your pet eat that? Type any food, plant or household item to check instantly.</p>
         </motion.div>
@@ -74,7 +74,7 @@ export default function FoodSafetyPage() {
             <Input
               value={query} onChange={e => setQuery(e.target.value)}
               placeholder="e.g. chocolate, grapes, chicken…" autoFocus
-              className="pl-12 h-14 text-lg bg-[#070A0C] border-white/8 focus:border-[#00E599]/40 rounded-xl"
+              className="pl-12 h-14 text-lg bg-[#100D0E] border-white/8 focus:border-[#FF7A6B]/40 rounded-xl"
             />
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
@@ -116,7 +116,7 @@ export default function FoodSafetyPage() {
           {result === 'unknown' && (
             <motion.div key="unknown" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="glass-card rounded-2xl p-8 text-center text-zinc-400">
-              <ShieldAlert className="w-10 h-10 mx-auto mb-3 text-[#5EEAD4] opacity-60" />
+              <ShieldAlert className="w-10 h-10 mx-auto mb-3 text-[#FFB84D] opacity-60" />
               <p className="text-sm">We don&rsquo;t have <span className="text-white capitalize">&ldquo;{query.trim()}&rdquo;</span> in our database yet.</p>
               <p className="text-xs text-zinc-500 mt-1">When in doubt, don&rsquo;t feed it — and ask your vet.</p>
             </motion.div>

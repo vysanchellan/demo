@@ -74,7 +74,7 @@ export default function IntroExperience() {
         if (d.y < 0) d.y = h; if (d.y > h) d.y = 0
         ctx.beginPath()
         ctx.arc(d.x, d.y, d.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(0,229,153,${0.1 + d.size * 0.1})`
+        ctx.fillStyle = `rgba(255,122,107,${0.1 + d.size * 0.1})`
         ctx.fill()
       }
       raf = requestAnimationFrame(tick)
@@ -104,7 +104,7 @@ export default function IntroExperience() {
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" aria-hidden="true" />
           <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] pointer-events-none animate-glow-pulse" aria-hidden="true"
-            style={{ background: 'radial-gradient(ellipse, rgba(0,229,153,0.1) 0%, transparent 65%)' }} />
+            style={{ background: 'radial-gradient(ellipse, rgba(255,122,107,0.1) 0%, transparent 65%)' }} />
           <div className="absolute inset-0 grain" aria-hidden="true" />
           {/* Vignette */}
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
@@ -127,10 +127,10 @@ export default function IntroExperience() {
                     key={`bar-${index}`}
                     initial={{ width: '0%' }} animate={{ width: '100%' }}
                     transition={{ duration: HOLD / 1000, ease: 'linear' }}
-                    className="h-full bg-[#00E599]"
+                    className="h-full bg-[#FF7A6B]"
                   />
                 )}
-                {i < index && <div className="h-full w-full bg-[#00E599]/40" />}
+                {i < index && <div className="h-full w-full bg-[#FF7A6B]/40" />}
               </div>
             ))}
           </div>

@@ -108,7 +108,7 @@ function NutritionDemo() {
           <div className="grid grid-cols-2 gap-2">
             {([['dog', 'Dog', Dog], ['cat', 'Cat', Cat]] as const).map(([k, label, Icon]) => (
               <button key={k} onClick={() => setSpecies(k)} aria-pressed={species === k}
-                className={`flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${species === k ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
+                className={`flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${species === k ? 'bg-[#FF7A6B]/15 border-[#FF7A6B]/40 text-[#FF7A6B]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
                 <Icon className="w-4 h-4" /> {label}
               </button>
             ))}
@@ -117,16 +117,16 @@ function NutritionDemo() {
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Weight</label>
-            <span className="font-mono text-sm text-[#00E599] font-semibold">{weight} kg</span>
+            <span className="font-mono text-sm text-[#FF7A6B] font-semibold">{weight} kg</span>
           </div>
-          <input type="range" min={1} max={60} value={weight} onChange={e => setWeight(+e.target.value)} className="w-full accent-[#00E599]" aria-label="Weight" />
+          <input type="range" min={1} max={60} value={weight} onChange={e => setWeight(+e.target.value)} className="w-full accent-[#FF7A6B]" aria-label="Weight" />
         </div>
         <div>
           <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Life stage</label>
           <div className="grid grid-cols-3 gap-2">
             {(['puppy', 'adult', 'senior'] as const).map(s => (
               <button key={s} onClick={() => setLifeStage(s)} aria-pressed={lifeStage === s}
-                className={`px-2 py-2 rounded-xl border text-xs capitalize transition-all ${lifeStage === s ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
+                className={`px-2 py-2 rounded-xl border text-xs capitalize transition-all ${lifeStage === s ? 'bg-[#FF7A6B]/15 border-[#FF7A6B]/40 text-[#FF7A6B]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
                 {s === 'puppy' ? (species === 'cat' ? 'Kitten' : 'Puppy') : s}
               </button>
             ))}
@@ -137,7 +137,7 @@ function NutritionDemo() {
           <div className="grid grid-cols-3 gap-2">
             {([['Low', 1.3], ['Normal', 1.6], ['High', 2.0]] as const).map(([label, f]) => (
               <button key={label} onClick={() => setActivity(f)} aria-pressed={activity === f}
-                className={`px-2 py-2 rounded-xl border text-xs transition-all ${activity === f ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
+                className={`px-2 py-2 rounded-xl border text-xs transition-all ${activity === f ? 'bg-[#FF7A6B]/15 border-[#FF7A6B]/40 text-[#FF7A6B]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
                 {label}
               </button>
             ))}
@@ -146,10 +146,10 @@ function NutritionDemo() {
       </div>
 
       <div className="space-y-4">
-        <div className="glass-card rounded-2xl p-5" style={{ borderColor: 'rgba(0,229,153,0.3)' }}>
+        <div className="glass-card rounded-2xl p-5" style={{ borderColor: 'rgba(255,122,107,0.3)' }}>
           <div className="text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-1">Daily calories</div>
           <div className="flex items-end gap-2">
-            <span className="text-5xl font-semibold tabular-nums text-[#00E599]" style={{ fontFamily: 'var(--font-display)' }}>{mer}</span>
+            <span className="text-5xl font-semibold tabular-nums text-[#FF7A6B]" style={{ fontFamily: 'var(--font-display)' }}>{mer}</span>
             <span className="text-zinc-500 mb-2 text-sm">kcal / day</span>
           </div>
         </div>
@@ -176,10 +176,10 @@ function NutritionDemo() {
 function TestimonialCard({ t }: { t: typeof TESTIMONIALS[number] }) {
   return (
     <div className="glass-card rounded-2xl p-6 surface-hover h-full flex flex-col">
-      <Quote className="w-7 h-7 text-[#00E599]/40 mb-4" />
+      <Quote className="w-7 h-7 text-[#FF7A6B]/40 mb-4" />
       <p className="text-zinc-300 leading-relaxed mb-6 flex-1">&ldquo;{t.quote}&rdquo;</p>
-      <div className="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-xl bg-[#00E599]/10 border border-[#00E599]/20 mb-5">
-        <span className="text-2xl font-semibold tabular-nums text-[#00E599]" style={{ fontFamily: 'var(--font-display)' }}>{t.metric}</span>
+      <div className="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-xl bg-[#FF7A6B]/10 border border-[#FF7A6B]/20 mb-5">
+        <span className="text-2xl font-semibold tabular-nums text-[#FF7A6B]" style={{ fontFamily: 'var(--font-display)' }}>{t.metric}</span>
         <span className="text-[11px] text-zinc-400 leading-tight">{t.metricLabel}</span>
       </div>
       <div className="flex items-center gap-3 pt-4 border-t border-white/5">
@@ -215,6 +215,96 @@ function FaqItem({ q, a, idx }: { q: string; a: string; idx: number }) {
   )
 }
 
+// ─────────── Parallax Photo Band ───────────
+const GALLERY = [
+  { src: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=500&h=640&fit=crop', speed: -80, h: 'h-72' },
+  { src: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&h=520&fit=crop', speed: 120, h: 'h-56' },
+  { src: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=500&h=680&fit=crop', speed: -140, h: 'h-80' },
+  { src: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=500&h=520&fit=crop', speed: 90, h: 'h-56' },
+  { src: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=500&h=620&fit=crop', speed: -100, h: 'h-72' },
+]
+
+function ParallaxGallery() {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  // Hooks called unconditionally at top level (fixed count)
+  const y0 = useTransform(scrollYProgress, [0, 1], [GALLERY[0].speed, -GALLERY[0].speed])
+  const y1 = useTransform(scrollYProgress, [0, 1], [GALLERY[1].speed, -GALLERY[1].speed])
+  const y2 = useTransform(scrollYProgress, [0, 1], [GALLERY[2].speed, -GALLERY[2].speed])
+  const y3 = useTransform(scrollYProgress, [0, 1], [GALLERY[3].speed, -GALLERY[3].speed])
+  const y4 = useTransform(scrollYProgress, [0, 1], [GALLERY[4].speed, -GALLERY[4].speed])
+  const ys = [y0, y1, y2, y3, y4]
+
+  return (
+    <section ref={ref} className="relative py-24 overflow-hidden">
+      <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
+      <div className="relative max-w-7xl mx-auto px-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
+          <h2 className="text-4xl md:text-5xl font-semibold leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+            <span className="text-gradient-soft">The faces</span> <span className="text-gradient-aurora">behind the data.</span>
+          </h2>
+        </motion.div>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 items-center">
+          {GALLERY.map((g, i) => (
+            <motion.div key={i} style={{ y: ys[i] }} className={`relative ${g.h} rounded-3xl overflow-hidden border border-white/8 ${i === 2 ? 'md:scale-110 z-10' : ''}`}>
+              <Image src={g.src} alt="A happy pet" fill className="object-cover" sizes="(max-width:768px) 50vw, 20vw" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A0A]/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-3xl" />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ─────────── Pinned Horizontal Showcase ───────────
+const SHOWCASE = [
+  { tag: 'Nutrition', title: 'Feed them exactly right', desc: 'Precise calories, grams and meals — calculated like a vet would.', img: 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=900&h=900&fit=crop', href: '/nutrition' },
+  { tag: 'Safety', title: 'Know what’s safe', desc: 'Check any food or plant against our toxicity database in a tap.', img: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=900&h=900&fit=crop', href: '/food-safety' },
+  { tag: 'Vets', title: 'Help, right nearby', desc: 'A live map of trusted vets the moment you need one.', img: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=900&h=900&fit=crop', href: '/vet-finder' },
+  { tag: 'Wellness', title: 'A happier, healthier pet', desc: 'Track weight, mood and milestones — and never miss a date.', img: 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=900&h=900&fit=crop', href: '/wellness' },
+]
+
+function PinnedShowcase() {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
+  const x = useTransform(scrollYProgress, [0, 1], ['2%', '-72%'])
+
+  return (
+    <section ref={ref} className="relative h-[320vh]">
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
+        <div className="relative max-w-7xl mx-auto px-6 w-full mb-10">
+          <Badge className="mb-4 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono"><PawPrint className="w-3 h-3 mr-1.5" /> HOW IT HELPS</Badge>
+          <h2 className="text-4xl md:text-6xl font-semibold leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+            <span className="text-gradient-soft">Four ways PawPal</span> <span className="text-gradient-aurora">has your back.</span>
+          </h2>
+        </div>
+        <motion.div style={{ x }} className="relative flex gap-6 px-6 will-change-transform">
+          {SHOWCASE.map((s, i) => (
+            <Link key={i} href={s.href} className="relative shrink-0 w-[78vw] sm:w-[42vw] lg:w-[30vw] aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 group">
+              <Image src={s.img} alt={s.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="40vw" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0C0A0A] via-[#0C0A0A]/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-7">
+                <Badge className="mb-3 bg-[#FF7A6B]/15 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono text-[10px]">{s.tag}</Badge>
+                <h3 className="text-2xl font-semibold mb-1.5" style={{ fontFamily: 'var(--font-display)' }}>{s.title}</h3>
+                <p className="text-zinc-300 text-sm leading-relaxed">{s.desc}</p>
+                <span className="inline-flex items-center gap-1.5 mt-4 text-sm text-[#FF7A6B] font-medium">Explore <ArrowUpRight className="w-4 h-4" /></span>
+              </div>
+            </Link>
+          ))}
+        </motion.div>
+        <div className="relative max-w-7xl mx-auto px-6 w-full mt-8">
+          <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
+            <motion.div style={{ scaleX: scrollYProgress }} className="h-full bg-[#FF7A6B] origin-left rounded-full" />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // ─────────── MAIN ───────────
 export default function LandingPage() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -223,7 +313,7 @@ export default function LandingPage() {
   const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.96])
 
   return (
-    <div className="min-h-screen bg-[#050708] text-zinc-100 overflow-x-hidden">
+    <div className="min-h-screen bg-[#0C0A0A] text-zinc-100 overflow-x-hidden">
       <IntroExperience />
       <Navbar />
 
@@ -232,24 +322,24 @@ export default function LandingPage() {
         <AuroraBackground />
         <HeroCanvas />
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[760px] pointer-events-none animate-glow-pulse" aria-hidden="true"
-          style={{ background: 'radial-gradient(ellipse, rgba(0,229,153,0.16) 0%, transparent 62%)' }} />
-        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00E599]/40 to-transparent animate-scan pointer-events-none" aria-hidden="true" />
+          style={{ background: 'radial-gradient(ellipse, rgba(255,122,107,0.16) 0%, transparent 62%)' }} />
+        <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF7A6B]/40 to-transparent animate-scan pointer-events-none" aria-hidden="true" />
 
         <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 px-6 max-w-6xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border-gradient bg-white/[0.04] backdrop-blur-xl text-xs text-zinc-200 mb-8">
-            <PawPrint className="w-3.5 h-3.5 text-[#00E599]" />
+            <PawPrint className="w-3.5 h-3.5 text-[#FF7A6B]" />
             <span className="font-medium">Loved by 120,000+ pet parents</span>
           </motion.div>
 
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
             className="text-6xl md:text-8xl lg:text-[9rem] font-semibold leading-[0.92] tracking-[-0.04em] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
-            <span className="block bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #F2F6F5 0%, #C8D0CD 55%, #5B6562 100%)' }}>
+            <span className="block bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #F6F1EE 0%, #C8D0CD 55%, #5B6562 100%)' }}>
               Everything your pet
             </span>
             <span className="block">
-              <span style={{ fontFamily: 'var(--font-serif)' }} className="italic font-normal text-[#00E599]">needs</span>
-              <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #F2F6F5 0%, #C8D0CD 55%, #5B6562 100%)' }}> — in one place.</span>
+              <span style={{ fontFamily: 'var(--font-serif)' }} className="italic font-normal text-[#FF7A6B]">needs</span>
+              <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #F6F1EE 0%, #C8D0CD 55%, #5B6562 100%)' }}> — in one place.</span>
             </span>
           </motion.h1>
 
@@ -277,10 +367,10 @@ export default function LandingPage() {
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
             className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-zinc-400">
-            <div className="flex items-center gap-1.5"><Apple className="w-3.5 h-3.5 text-[#00E599]" /> Vet-backed nutrition</div>
-            <div className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#00E599]" /> Food-safety database</div>
-            <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-[#00E599]" /> Vets near you</div>
-            <div className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-[#00E599]" /> 4.9/5 (8,400 reviews)</div>
+            <div className="flex items-center gap-1.5"><Apple className="w-3.5 h-3.5 text-[#FF7A6B]" /> Vet-backed nutrition</div>
+            <div className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#FF7A6B]" /> Food-safety database</div>
+            <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-[#FF7A6B]" /> Vets near you</div>
+            <div className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-[#FF7A6B]" /> 4.9/5 (8,400 reviews)</div>
           </motion.div>
         </motion.div>
 
@@ -299,10 +389,10 @@ export default function LandingPage() {
             {STATS.map((s, i) => (
               <motion.div key={s.label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.6 }}
                 className="glass-card rounded-2xl p-5 surface-hover">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4 bg-[#00E599]/12 border border-[#00E599]/20">
-                  <s.icon className="w-4 h-4 text-[#00E599]" />
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4 bg-[#FF7A6B]/12 border border-[#FF7A6B]/20">
+                  <s.icon className="w-4 h-4 text-[#FF7A6B]" />
                 </div>
-                <div className="text-4xl lg:text-5xl font-semibold mb-1 tabular-nums text-[#00E599]" style={{ fontFamily: 'var(--font-display)' }}>
+                <div className="text-4xl lg:text-5xl font-semibold mb-1 tabular-nums text-[#FF7A6B]" style={{ fontFamily: 'var(--font-display)' }}>
                   <Counter to={s.value} suffix={s.suffix} />
                 </div>
                 <p className="text-zinc-300 text-sm mb-1">{s.label}</p>
@@ -314,20 +404,26 @@ export default function LandingPage() {
       </section>
 
       {/* ─── SPECIES TICKER ─── */}
-      <div className="border-b border-white/5 py-5 overflow-hidden bg-[#070A0C]">
+      <div className="border-b border-white/5 py-5 overflow-hidden bg-[#100D0E]">
         <div className="animate-marquee-x">
           {[...SPECIES_TICKER, ...SPECIES_TICKER].map((s, i) => (
             <div key={i} className="mx-6 flex items-center gap-2 whitespace-nowrap text-sm text-zinc-400">
-              <PawPrint className="w-3.5 h-3.5 text-[#00E599]" /> {s}
+              <PawPrint className="w-3.5 h-3.5 text-[#FF7A6B]" /> {s}
             </div>
           ))}
         </div>
       </div>
 
+      {/* ─── PARALLAX GALLERY ─── */}
+      <ParallaxGallery />
+
+      {/* ─── PINNED HORIZONTAL SHOWCASE ─── */}
+      <PinnedShowcase />
+
       {/* ─── BENTO FEATURES ─── */}
       <section className="py-32 px-6 max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl mb-16">
-          <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
+          <Badge className="mb-5 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono">
             <PawPrint className="w-3 h-3 mr-1.5" /> THE PLATFORM
           </Badge>
           <h2 className="text-5xl md:text-6xl font-semibold mb-6 leading-[1.05] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
@@ -343,13 +439,13 @@ export default function LandingPage() {
           {FEATURES_BENTO.map((f, i) => (
             <motion.div key={f.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}
               className={`group relative p-7 rounded-3xl glass-card surface-hover overflow-hidden ${f.span}`}>
-              <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-[0.12] group-hover:opacity-25 transition-opacity duration-500" style={{ background: 'radial-gradient(circle, #00E599, transparent 70%)' }} />
+              <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-[0.12] group-hover:opacity-25 transition-opacity duration-500" style={{ background: 'radial-gradient(circle, #FF7A6B, transparent 70%)' }} />
               <div className="relative">
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center backdrop-blur-sm bg-[#00E599]/12 border border-[#00E599]/20">
-                    <f.icon className="w-5 h-5 text-[#00E599]" />
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center backdrop-blur-sm bg-[#FF7A6B]/12 border border-[#FF7A6B]/20">
+                    <f.icon className="w-5 h-5 text-[#FF7A6B]" />
                   </div>
-                  <Badge className="text-[10px] font-mono uppercase bg-[#00E599]/10 text-[#00E599] border-[#00E599]/25">{f.tag}</Badge>
+                  <Badge className="text-[10px] font-mono uppercase bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/25">{f.tag}</Badge>
                 </div>
                 <h3 className="text-xl font-semibold mb-2.5 tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{f.title}</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">{f.desc}</p>
@@ -364,7 +460,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
         <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
           <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
+            <Badge className="mb-5 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono">
               <Apple className="w-3 h-3 mr-1.5" /> NUTRITION PLANNER
             </Badge>
             <h2 className="text-5xl md:text-6xl font-semibold mb-6 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
@@ -378,7 +474,7 @@ export default function LandingPage() {
             <ul className="space-y-3 mb-10">
               {['Vet-grade RER/MER calorie math', 'Adjusts for breed, life stage & activity', 'Exact grams, cups and meals per day', 'Re-plans automatically as they grow'].map(t => (
                 <li key={t} className="flex items-center gap-3 text-sm text-zinc-300">
-                  <CheckCircle2 className="w-5 h-5 text-[#00E599] shrink-0" /> {t}
+                  <CheckCircle2 className="w-5 h-5 text-[#FF7A6B] shrink-0" /> {t}
                 </li>
               ))}
             </ul>
@@ -389,12 +485,12 @@ export default function LandingPage() {
 
           <motion.div initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="lg:sticky lg:top-32">
             <div className="relative p-7 rounded-3xl border-gradient glass-card shadow-2xl">
-              <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-gradient-to-br from-[#00E599] to-[#14E5C8] flex items-center justify-center shadow-[0_8px_30px_rgba(0,229,153,0.5)]">
-                <Apple className="w-5 h-5 text-[#04130D]" />
+              <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-gradient-to-br from-[#FF7A6B] to-[#2DD4BF] flex items-center justify-center shadow-[0_8px_30px_rgba(255,122,107,0.5)]">
+                <Apple className="w-5 h-5 text-[#2A0E0A]" />
               </div>
               <div className="flex items-center justify-between mb-5">
                 <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Live Demo</span>
-                <div className="flex items-center gap-1.5 text-[10px] text-[#00E599]"><span className="w-1.5 h-1.5 rounded-full bg-[#00E599] animate-pulse" /> Calculating</div>
+                <div className="flex items-center gap-1.5 text-[10px] text-[#FF7A6B]"><span className="w-1.5 h-1.5 rounded-full bg-[#FF7A6B] animate-pulse" /> Calculating</div>
               </div>
               <NutritionDemo />
             </div>
@@ -405,7 +501,7 @@ export default function LandingPage() {
       {/* ─── HEALTH TRACKING ─── */}
       <section className="py-32 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-          <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
+          <Badge className="mb-5 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono">
             <Activity className="w-3 h-3 mr-1.5" /> HEALTH TRACKING
           </Badge>
           <h2 className="text-5xl font-semibold mb-5 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
@@ -418,7 +514,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-3 gap-4">
             {[{ icon: Syringe, label: 'Vaccines', v: 'On track' }, { icon: Bell, label: 'Reminders', v: '3 upcoming' }, { icon: Scale, label: 'Weight', v: '−1.4 kg' }].map(s => (
               <div key={s.label} className="glass-card rounded-xl p-4">
-                <s.icon className="w-4 h-4 text-[#00E599] mb-2" />
+                <s.icon className="w-4 h-4 text-[#FF7A6B] mb-2" />
                 <div className="text-lg font-semibold tabular-nums" style={{ fontFamily: 'var(--font-display)' }}>{s.v}</div>
                 <div className="text-[11px] text-zinc-500">{s.label}</div>
               </div>
@@ -428,22 +524,22 @@ export default function LandingPage() {
 
         <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="glass-card rounded-3xl p-6">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-semibold flex items-center gap-2"><Dog className="w-4 h-4 text-[#00E599]" /> Biscuit · weight (kg)</span>
-            <Badge className="bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 text-xs">Healthy trend</Badge>
+            <span className="text-sm font-semibold flex items-center gap-2"><Dog className="w-4 h-4 text-[#FF7A6B]" /> Biscuit · weight (kg)</span>
+            <Badge className="bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 text-xs">Healthy trend</Badge>
           </div>
           <ResponsiveContainer width="100%" height={260}>
             <AreaChart data={TREND_DATA}>
               <defs>
                 <linearGradient id="wgrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#00E599" stopOpacity={0.5} />
-                  <stop offset="100%" stopColor="#00E599" stopOpacity={0} />
+                  <stop offset="0%" stopColor="#FF7A6B" stopOpacity={0.5} />
+                  <stop offset="100%" stopColor="#FF7A6B" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-              <XAxis dataKey="week" tick={{ fill: '#71817C', fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis domain={['dataMin - 0.5', 'dataMax + 0.5']} tick={{ fill: '#71817C', fontSize: 11 }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{ background: '#0E1316', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} />
-              <Area type="monotone" dataKey="weight" stroke="#00E599" strokeWidth={2.5} fill="url(#wgrad)" />
+              <XAxis dataKey="week" tick={{ fill: '#A79F9C', fontSize: 11 }} axisLine={false} tickLine={false} />
+              <YAxis domain={['dataMin - 0.5', 'dataMax + 0.5']} tick={{ fill: '#A79F9C', fontSize: 11 }} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={{ background: '#1A1516', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} />
+              <Area type="monotone" dataKey="weight" stroke="#FF7A6B" strokeWidth={2.5} fill="url(#wgrad)" />
             </AreaChart>
           </ResponsiveContainer>
         </motion.div>
@@ -454,7 +550,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
         <div className="relative max-w-7xl mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
+            <Badge className="mb-5 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono">
               <Heart className="w-3 h-3 mr-1.5" /> HAPPY TAILS
             </Badge>
             <h2 className="text-5xl md:text-6xl font-semibold mb-5 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
@@ -513,7 +609,7 @@ export default function LandingPage() {
             <div className="md:col-span-2">
               <Link href="/" className="flex items-center gap-2.5 mb-4">
                 <Logo size={36} />
-                <span className="text-lg font-bold" style={{ fontFamily: 'var(--font-display)' }}>Paw<span className="text-[#00E599]">Pal</span></span>
+                <span className="text-lg font-bold" style={{ fontFamily: 'var(--font-display)' }}>Paw<span className="text-[#FF7A6B]">Pal</span></span>
               </Link>
               <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">
                 The all-in-one companion for pet owners — nutrition, health, safety and care, beautifully in one place.
@@ -538,7 +634,7 @@ export default function LandingPage() {
           </div>
           <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
             <p>&copy; 2026 PawPal · Made for the ones who never let you down.</p>
-            <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#00E599] animate-pulse" /> All systems operational</div>
+            <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#FF7A6B] animate-pulse" /> All systems operational</div>
           </div>
         </div>
       </footer>

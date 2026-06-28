@@ -18,10 +18,10 @@ interface Confession {
 }
 
 const MOODS = [
-  { key: 'happy', label: 'Happy', color: '#00E599' },
-  { key: 'proud', label: 'Proud', color: '#5EEAD4' },
+  { key: 'happy', label: 'Happy', color: '#FF7A6B' },
+  { key: 'proud', label: 'Proud', color: '#FFB84D' },
   { key: 'help', label: 'Need advice', color: '#FFC83D' },
-  { key: 'sad', label: 'Tough day', color: '#93A29E' },
+  { key: 'sad', label: 'Tough day', color: '#A79F9C' },
 ]
 
 const SEED: Confession[] = [
@@ -105,7 +105,7 @@ export default function WallPage() {
             <Sparkles className="w-3 h-3 mr-1.5" /> COMMUNITY
           </Badge>
           <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight mb-2" style={{ fontFamily: 'var(--font-display)' }}>
-            Owner <span className="text-[#00E599]">Community</span>
+            Owner <span className="text-[#FF7A6B]">Community</span>
           </h1>
           <p className="text-zinc-400 max-w-xl">
             Wins, worries and wisdom from fellow pet parents. Share a moment, ask for advice, cheer each other on.
@@ -145,7 +145,7 @@ export default function WallPage() {
         </motion.div>
 
         <div className="flex items-center gap-2 text-xs text-zinc-500 mb-4">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#00E599]" />
+          <ShieldCheck className="w-3.5 h-3.5 text-[#FF7A6B]" />
           Posts are anonymous. Be kind — we&rsquo;re all just trying to do right by our pets.
         </div>
 

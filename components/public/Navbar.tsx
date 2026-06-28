@@ -38,16 +38,16 @@ export default function Navbar() {
           'fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl rounded-full transition-all duration-500',
           scrolled
             ? 'glass-strong border border-white/[0.08] shadow-[0_8px_40px_rgba(0,0,0,0.5)]'
-            : 'border border-white/[0.06] bg-[#0A0D0F]/40 backdrop-blur-xl'
+            : 'border border-white/[0.06] bg-[#161213]/40 backdrop-blur-xl'
         )}
         aria-label="Primary"
       >
         <div className="flex items-center justify-between pl-3 pr-2 py-2">
           {/* Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group" aria-label="BURNOUT home">
+          <Link href="/" className="flex items-center gap-2.5 group" aria-label="PawPal home">
             <Logo size={34} className="group-hover:scale-105 transition-transform duration-300" />
             <span className="text-base font-bold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-              Paw<span className="text-[#00E599]">Pal</span>
+              Paw<span className="text-[#FF7A6B]">Pal</span>
             </span>
           </Link>
 
@@ -102,7 +102,7 @@ export default function Navbar() {
             <motion.div
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 280 }}
-              className="fixed right-0 top-0 bottom-0 z-50 w-72 bg-[#0A0D0F] border-l border-white/8 lg:hidden p-6"
+              className="fixed right-0 top-0 bottom-0 z-50 w-72 bg-[#161213] border-l border-white/8 lg:hidden p-6"
             >
               <div className="flex items-center justify-between mb-8">
                 <Logo size={32} variant="wordmark" />

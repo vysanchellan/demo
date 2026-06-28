@@ -34,15 +34,15 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
 
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-[#050708] flex items-center justify-center">
-        <div className="w-10 h-10 rounded-full border-2 border-[#00E599]/30 border-t-[#00E599] animate-spin" />
+      <div className="min-h-screen bg-[#0C0A0A] flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full border-2 border-[#FF7A6B]/30 border-t-[#FF7A6B] animate-spin" />
       </div>
     )
   }
 
   if (status === 'in') {
     return (
-      <div className="flex min-h-screen bg-[#050708] text-zinc-100">
+      <div className="flex min-h-screen bg-[#0C0A0A] text-zinc-100">
         <DashboardSidebar />
         <main className="flex-1 min-h-screen lg:pl-60">{children}</main>
       </div>
@@ -51,7 +51,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
 
   // Signed out — marketing chrome
   return (
-    <div className="min-h-screen bg-[#050708] text-zinc-100">
+    <div className="min-h-screen bg-[#0C0A0A] text-zinc-100">
       <Navbar />
       <main className="min-h-screen pt-20">{children}</main>
     </div>

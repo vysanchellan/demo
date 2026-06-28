@@ -22,20 +22,20 @@ const TABS = [
 ]
 
 const ACCENTS = [
-  { name: 'Emerald', color: '#00E599' },
-  { name: 'Teal', color: '#14E5C8' },
-  { name: 'Blue', color: '#2E8BFF' },
-  { name: 'Cyan', color: '#00D4FF' },
-  { name: 'Mint', color: '#5EEAD4' },
-  { name: 'Deep Blue', color: '#1B5BFF' },
+  { name: 'Emerald', color: '#FF7A6B' },
+  { name: 'Teal', color: '#2DD4BF' },
+  { name: 'Blue', color: '#2DD4BF' },
+  { name: 'Cyan', color: '#2DD4BF' },
+  { name: 'Mint', color: '#FFB84D' },
+  { name: 'Deep Blue', color: '#F2604F' },
 ]
 
 export default function SettingsPage() {
   const [tab, setTab] = useState('profile')
   const [email, setEmail] = useState('')
-  const [displayName, setDisplayName] = useState('Anonymous Worker')
+  const [displayName, setDisplayName] = useState('Pet Parent')
   const [bio, setBio] = useState('')
-  const [accent, setAccent] = useState('#00E599')
+  const [accent, setAccent] = useState('#FF7A6B')
 
   // Toggles
   const [toggles, setToggles] = useState({
@@ -59,7 +59,7 @@ export default function SettingsPage() {
         const { data } = await supabase.auth.getUser()
         if (data.user) {
           setEmail(data.user.email ?? '')
-          setDisplayName(data.user.user_metadata?.display_name ?? 'Anonymous Worker')
+          setDisplayName(data.user.user_metadata?.display_name ?? 'Pet Parent')
         }
       } catch {}
     }
@@ -83,7 +83,7 @@ export default function SettingsPage() {
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <div className="flex items-center gap-2 mb-1">
             <h1 className="text-4xl font-black tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>Settings</h1>
-            <Badge className="bg-[#5EEAD4]/10 text-[#5EEAD4] border-[#5EEAD4]/30 font-mono text-[10px]">DEMO MODE</Badge>
+            <Badge className="bg-[#FFB84D]/10 text-[#FFB84D] border-[#FFB84D]/30 font-mono text-[10px]">DEMO MODE</Badge>
           </div>
           <p className="text-zinc-400 text-sm">Manage your account, privacy, and preferences.</p>
         </motion.div>
@@ -97,7 +97,7 @@ export default function SettingsPage() {
                 onClick={() => setTab(t.key)}
                 className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm whitespace-nowrap transition-all ${
                   tab === t.key
-                    ? 'bg-[#00E599]/12 text-[#00E599] border border-[#00E599]/20'
+                    ? 'bg-[#FF7A6B]/12 text-[#FF7A6B] border border-[#FF7A6B]/20'
                     : 'text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent'
                 }`}
               >
@@ -118,40 +118,40 @@ export default function SettingsPage() {
               {/* ─── PROFILE ─── */}
               {tab === 'profile' && (
                 <>
-                  <Card title="Profile" desc="This information may appear on your verified reports.">
+                  <Card title="Profile" desc="This appears on your pet owner profile.">
                     {/* Avatar */}
                     <div className="flex items-center gap-5 mb-6">
                       <div className="relative">
-                        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#00E599] via-[#14E5C8] to-[#5EEAD4] flex items-center justify-center text-2xl font-black text-white" style={{ fontFamily: 'var(--font-display)' }}>
+                        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#FF7A6B] via-[#2DD4BF] to-[#FFB84D] flex items-center justify-center text-2xl font-black text-white" style={{ fontFamily: 'var(--font-display)' }}>
                           {displayName.slice(0, 2).toUpperCase()}
                         </div>
-                        <button className="absolute -bottom-1 -right-1 w-7 h-7 rounded-lg bg-[#12161A] border border-white/10 flex items-center justify-center hover:bg-[#141A1F]" aria-label="Change avatar">
+                        <button className="absolute -bottom-1 -right-1 w-7 h-7 rounded-lg bg-[#161213] border border-white/10 flex items-center justify-center hover:bg-[#1A1516]" aria-label="Change avatar">
                           <Camera className="w-3.5 h-3.5" />
                         </button>
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="font-semibold">{displayName}</span>
-                          <BadgeCheck className="w-4 h-4 text-[#00D4FF]" />
+                          <BadgeCheck className="w-4 h-4 text-[#2DD4BF]" />
                         </div>
-                        <p className="text-zinc-400 text-xs mt-0.5">Member since June 2026 · 7 reports filed</p>
+                        <p className="text-zinc-400 text-xs mt-0.5">Member since June 2026 · 2 pets</p>
                       </div>
                     </div>
 
                     <Field label="Display Name">
-                      <Input value={displayName} onChange={e => setDisplayName(e.target.value)} className="bg-[#070A0C] border-white/10 focus:border-[#00E599]/50" />
+                      <Input value={displayName} onChange={e => setDisplayName(e.target.value)} className="bg-[#100D0E] border-white/10 focus:border-[#FF7A6B]/50" />
                     </Field>
                     <Field label="Email">
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-                        <Input value={email} disabled className="pl-10 bg-[#070A0C] border-white/10 opacity-60" />
+                        <Input value={email} disabled className="pl-10 bg-[#100D0E] border-white/10 opacity-60" />
                       </div>
                     </Field>
                     <Field label="Bio (optional)">
                       <textarea
                         value={bio} onChange={e => setBio(e.target.value)}
-                        placeholder="Tell us about your work situation…" rows={3}
-                        className="w-full px-3 py-2 rounded-lg bg-[#070A0C] border border-white/10 text-sm focus:outline-none focus:border-[#00E599]/50 resize-none"
+                        placeholder="Tell us about your pets…" rows={3}
+                        className="w-full px-3 py-2 rounded-lg bg-[#100D0E] border border-white/10 text-sm focus:outline-none focus:border-[#FF7A6B]/50 resize-none"
                       />
                     </Field>
                   </Card>
@@ -163,12 +163,12 @@ export default function SettingsPage() {
               {tab === 'notifications' && (
                 <>
                   <Card title="Email Notifications" desc="Choose what lands in your inbox.">
-                    <ToggleRow icon={Mail} label="Report status updates" desc="When your report is verified or reviewed" checked={toggles.emailReports} onChange={v => set('emailReports', v)} />
-                    <ToggleRow icon={Globe} label="Weekly digest" desc="Top toxic companies and trends each week" checked={toggles.emailDigest} onChange={v => set('emailDigest', v)} />
+                    <ToggleRow icon={Mail} label="Pet health reminders" desc="Vaccines, meds and check-up alerts" checked={toggles.emailReports} onChange={v => set('emailReports', v)} />
+                    <ToggleRow icon={Globe} label="Weekly digest" desc="Care tips and pet news each week" checked={toggles.emailDigest} onChange={v => set('emailDigest', v)} />
                   </Card>
                   <Card title="Push Notifications" desc="Real-time alerts on your devices.">
-                    <ToggleRow icon={Bell} label="New reports near you" desc="Reports filed in your industry or city" checked={toggles.pushNew} onChange={v => set('pushNew', v)} />
-                    <ToggleRow icon={Smartphone} label="Replies & verifications" desc="When someone interacts with your reports" checked={toggles.pushReplies} onChange={v => set('pushReplies', v)} />
+                    <ToggleRow icon={Bell} label="New community posts" desc="Replies and likes on your posts" checked={toggles.pushNew} onChange={v => set('pushNew', v)} />
+                    <ToggleRow icon={Smartphone} label="Replies & verifications" desc="From fellow pet parents" checked={toggles.pushReplies} onChange={v => set('pushReplies', v)} />
                   </Card>
                 </>
               )}
@@ -177,9 +177,9 @@ export default function SettingsPage() {
               {tab === 'privacy' && (
                 <>
                   <Card title="Privacy" desc="You are protected by zero-knowledge encryption.">
-                    <ToggleRow icon={EyeOff} label="Anonymous mode" desc="Hide your identity on all reports" checked={toggles.anonymous} onChange={v => set('anonymous', v)} />
+                    <ToggleRow icon={EyeOff} label="Anonymous mode" desc="Hide your name on community posts" checked={toggles.anonymous} onChange={v => set('anonymous', v)} />
                     <ToggleRow icon={Eye} label="Public profile" desc="Let others see your verified contributions" checked={toggles.publicProfile} onChange={v => set('publicProfile', v)} />
-                    <ToggleRow icon={Globe} label="Anonymous data sharing" desc="Contribute to aggregated research (no PII)" checked={toggles.dataSharing} onChange={v => set('dataSharing', v)} />
+                    <ToggleRow icon={Globe} label="Anonymous data sharing" desc="Help improve PawPal with anonymised usage data" checked={toggles.dataSharing} onChange={v => set('dataSharing', v)} />
                   </Card>
                   <Card title="Security" desc="Protect your account.">
                     <ToggleRow icon={Key} label="Two-factor authentication" desc="Require a code on every login" checked={toggles.twoFactor} onChange={v => set('twoFactor', v)} />
@@ -194,9 +194,9 @@ export default function SettingsPage() {
                       <Button variant="outline" size="sm" className="border-white/15" onClick={() => toast.info('Password reset email sent (demo)')}>Update</Button>
                     </div>
                   </Card>
-                  <div className="p-4 rounded-xl bg-[#00D4FF]/5 border border-[#00D4FF]/20 flex items-start gap-3">
-                    <Shield className="w-4 h-4 text-[#00D4FF] mt-0.5 shrink-0" />
-                    <p className="text-xs text-zinc-400 leading-relaxed">Your reports are encrypted with AES-256-GCM client-side. We never log your IP address. Even our administrators cannot connect a report to your identity.</p>
+                  <div className="p-4 rounded-xl bg-[#2DD4BF]/5 border border-[#2DD4BF]/20 flex items-start gap-3">
+                    <Shield className="w-4 h-4 text-[#2DD4BF] mt-0.5 shrink-0" />
+                    <p className="text-xs text-zinc-400 leading-relaxed">Your data is encrypted and never sold. We only use it to give your pets better care.</p>
                   </div>
                 </>
               )}
@@ -204,7 +204,7 @@ export default function SettingsPage() {
               {/* ─── APPEARANCE ─── */}
               {tab === 'appearance' && (
                 <>
-                  <Card title="Accent Color" desc="Personalise your BURNOUT experience.">
+                  <Card title="Accent Color" desc="Personalise your PawPal experience.">
                     <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
                       {ACCENTS.map(a => (
                         <button
@@ -220,7 +220,7 @@ export default function SettingsPage() {
                     </div>
                   </Card>
                   <Card title="Display" desc="Adjust for comfort and accessibility.">
-                    <ToggleRow icon={Moon} label="Dark mode" desc="Always on — BURNOUT is dark by design" checked disabled onChange={() => {}} />
+                    <ToggleRow icon={Moon} label="Dark mode" desc="Always on — PawPal is dark by design" checked disabled onChange={() => {}} />
                     <ToggleRow icon={Zap} label="Reduce motion" desc="Minimise animations and transitions" checked={toggles.reduceMotion} onChange={v => set('reduceMotion', v)} />
                     <ToggleRow icon={Eye} label="High contrast" desc="Increase text and border contrast" checked={toggles.highContrast} onChange={v => set('highContrast', v)} />
                   </Card>
@@ -231,18 +231,18 @@ export default function SettingsPage() {
               {tab === 'account' && (
                 <>
                   <Card title="Plan" desc="You're on the free plan — forever.">
-                    <div className="p-5 rounded-2xl border-gradient border border-white/8 bg-gradient-to-br from-[#12161A] to-[#0A0D0F]">
+                    <div className="p-5 rounded-2xl border-gradient border border-white/8 bg-gradient-to-br from-[#161213] to-[#161213]">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#00E599] to-[#14E5C8] flex items-center justify-center">
+                          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FF7A6B] to-[#2DD4BF] flex items-center justify-center">
                             <Flame className="w-5 h-5 text-white" />
                           </div>
                           <div>
-                            <div className="font-bold flex items-center gap-2">Free Forever <Sparkles className="w-3.5 h-3.5 text-[#5EEAD4]" /></div>
-                            <div className="text-xs text-zinc-400">Unlimited reports, assessments & intelligence</div>
+                            <div className="font-bold flex items-center gap-2">Free Forever <Sparkles className="w-3.5 h-3.5 text-[#FFB84D]" /></div>
+                            <div className="text-xs text-zinc-400">Unlimited pets, plans & tools</div>
                           </div>
                         </div>
-                        <Badge className="bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/20">ACTIVE</Badge>
+                        <Badge className="bg-[#2DD4BF]/10 text-[#2DD4BF] border-[#2DD4BF]/20">ACTIVE</Badge>
                       </div>
                     </div>
                   </Card>
@@ -255,7 +255,7 @@ export default function SettingsPage() {
                           <div className="text-xs text-zinc-400">Johannesburg, ZA · Active now</div>
                         </div>
                       </div>
-                      <Badge className="bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/20 text-xs">Current</Badge>
+                      <Badge className="bg-[#2DD4BF]/10 text-[#2DD4BF] border-[#2DD4BF]/20 text-xs">Current</Badge>
                     </div>
                     <button onClick={() => toast.success('Signed out of all other sessions')} className="text-sm text-zinc-400 hover:text-white mt-3 flex items-center gap-2">
                       <LogOut className="w-4 h-4" /> Sign out of all other sessions
@@ -264,10 +264,10 @@ export default function SettingsPage() {
                   <Card title="Danger Zone" desc="Irreversible account actions." danger>
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="text-sm font-medium text-[#00E599]">Delete account</div>
+                        <div className="text-sm font-medium text-[#FF7A6B]">Delete account</div>
                         <div className="text-xs text-zinc-400">Permanently remove your account and all data</div>
                       </div>
-                      <Button variant="outline" size="sm" className="border-[#00E599]/30 text-[#00E599] hover:bg-[#00E599]/10" onClick={() => toast.error('Account deletion is disabled in demo mode')}>
+                      <Button variant="outline" size="sm" className="border-[#FF7A6B]/30 text-[#FF7A6B] hover:bg-[#FF7A6B]/10" onClick={() => toast.error('Account deletion is disabled in demo mode')}>
                         <Trash2 className="w-4 h-4 mr-1.5" /> Delete
                       </Button>
                     </div>
@@ -284,9 +284,9 @@ export default function SettingsPage() {
 
 function Card({ title, desc, children, danger }: { title: string; desc?: string; children: React.ReactNode; danger?: boolean }) {
   return (
-    <div className={`p-6 glass-card rounded-2xl ${danger ? '!border-[#00E599]/20' : ''}`}>
+    <div className={`p-6 glass-card rounded-2xl ${danger ? '!border-[#FF7A6B]/20' : ''}`}>
       <div className="mb-5">
-        <h2 className={`font-bold ${danger ? 'text-[#00E599]' : ''}`}>{title}</h2>
+        <h2 className={`font-bold ${danger ? 'text-[#FF7A6B]' : ''}`}>{title}</h2>
         {desc && <p className="text-zinc-400 text-xs mt-0.5">{desc}</p>}
       </div>
       {children}
@@ -317,7 +317,7 @@ function ToggleRow({ icon: Icon, label, desc, checked, onChange, disabled }: {
           <div className="text-xs text-zinc-400">{desc}</div>
         </div>
       </div>
-      <Switch checked={checked} onCheckedChange={onChange} disabled={disabled} className="data-[state=checked]:bg-[#00E599]" />
+      <Switch checked={checked} onCheckedChange={onChange} disabled={disabled} className="data-[state=checked]:bg-[#FF7A6B]" />
     </div>
   )
 }
@@ -326,7 +326,7 @@ function SaveBar({ onSave }: { onSave: () => void }) {
   return (
     <div className="flex justify-end gap-3">
       <Button variant="outline" className="border-white/15">Cancel</Button>
-      <Button onClick={onSave} className="bg-gradient-to-r from-[#00E599] to-[#14E5C8] hover:from-[#00C885] text-white border-0">
+      <Button onClick={onSave} className="bg-gradient-to-r from-[#FF7A6B] to-[#2DD4BF] hover:from-[#F2604F] text-white border-0">
         <Check className="w-4 h-4 mr-1.5" /> Save Changes
       </Button>
     </div>

@@ -11,8 +11,8 @@ import type { Vet } from '@/components/VetMap'
 const VetMap = dynamic(() => import('@/components/VetMap'), {
   ssr: false,
   loading: () => (
-    <div className="h-full w-full flex items-center justify-center bg-[#0A0D0F]">
-      <Loader2 className="w-6 h-6 text-[#00E599] animate-spin" />
+    <div className="h-full w-full flex items-center justify-center bg-[#161213]">
+      <Loader2 className="w-6 h-6 text-[#FF7A6B] animate-spin" />
     </div>
   ),
 })
@@ -72,11 +72,11 @@ export default function VetFinderPage() {
       <div className="absolute inset-0 bg-mesh-soft pointer-events-none" />
       <div className="relative p-6 lg:p-8 max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
-          <Badge className="mb-4 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono text-[10px]">
+          <Badge className="mb-4 bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/30 font-mono text-[10px]">
             <MapPin className="w-3 h-3 mr-1.5" /> LIVE MAP
           </Badge>
           <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight mb-2" style={{ fontFamily: 'var(--font-display)' }}>
-            Find a <span className="text-[#00E599]">Vet</span> near you
+            Find a <span className="text-[#FF7A6B]">Vet</span> near you
           </h1>
           <p className="text-zinc-400 max-w-xl">
             {status === 'locating' && 'Locating you…'}
@@ -87,7 +87,7 @@ export default function VetFinderPage() {
 
         {status === 'denied' && (
           <div className="glass-card rounded-xl p-3 mb-4 flex items-center gap-2.5 text-xs text-zinc-400">
-            <AlertCircle className="w-4 h-4 text-[#5EEAD4] shrink-0" />
+            <AlertCircle className="w-4 h-4 text-[#FFB84D] shrink-0" />
             Location access was blocked — using a default city. Allow location in your browser to see vets near you.
           </div>
         )}
@@ -105,21 +105,21 @@ export default function VetFinderPage() {
                 className="glass-card rounded-2xl p-4 surface-hover">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl bg-[#00E599]/12 border border-[#00E599]/20 flex items-center justify-center shrink-0">
-                      <Stethoscope className="w-4 h-4 text-[#00E599]" />
+                    <div className="w-9 h-9 rounded-xl bg-[#FF7A6B]/12 border border-[#FF7A6B]/20 flex items-center justify-center shrink-0">
+                      <Stethoscope className="w-4 h-4 text-[#FF7A6B]" />
                     </div>
                     <div>
                       <div className="font-semibold text-sm leading-tight">{v.name}</div>
                       <div className="flex items-center gap-2 mt-1 text-xs text-zinc-400">
-                        <span className="flex items-center gap-0.5"><Star className="w-3 h-3 text-[#5EEAD4] fill-[#5EEAD4]" /> {v.rating}</span>
+                        <span className="flex items-center gap-0.5"><Star className="w-3 h-3 text-[#FFB84D] fill-[#FFB84D]" /> {v.rating}</span>
                         <span>·</span>
                         <span className="flex items-center gap-0.5"><Navigation className="w-3 h-3" /> {v.distanceKm.toFixed(1)} km</span>
                       </div>
                     </div>
                   </div>
                   {v.emergency
-                    ? <Badge className="bg-[#5EEAD4]/15 text-[#5EEAD4] border-[#5EEAD4]/30 text-[10px] shrink-0">24/7</Badge>
-                    : <Badge className={`text-[10px] shrink-0 ${v.open ? 'bg-[#00E599]/15 text-[#00E599] border-[#00E599]/30' : 'bg-white/5 text-zinc-500 border-white/10'}`}>{v.open ? 'Open' : 'Closed'}</Badge>}
+                    ? <Badge className="bg-[#FFB84D]/15 text-[#FFB84D] border-[#FFB84D]/30 text-[10px] shrink-0">24/7</Badge>
+                    : <Badge className={`text-[10px] shrink-0 ${v.open ? 'bg-[#FF7A6B]/15 text-[#FF7A6B] border-[#FF7A6B]/30' : 'bg-white/5 text-zinc-500 border-white/10'}`}>{v.open ? 'Open' : 'Closed'}</Badge>}
                 </div>
                 <div className="flex gap-2 mt-3">
                   <Button className="btn-glass-emerald flex-1 h-8 rounded-lg text-xs gap-1.5"><Phone className="w-3 h-3" /> Call</Button>

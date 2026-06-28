@@ -35,7 +35,7 @@ export default function VetsPage() {
       <div className="relative p-6 lg:p-8 max-w-6xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
           <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight mb-2" style={{ fontFamily: 'var(--font-display)' }}>
-            Vet <span className="text-[#00E599]">Directory</span>
+            Vet <span className="text-[#FF7A6B]">Directory</span>
           </h1>
           <p className="text-zinc-400">Top-rated veterinary clinics, reviewed by pet owners.</p>
         </motion.div>
@@ -43,12 +43,12 @@ export default function VetsPage() {
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
-            <Input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search clinics…" className="pl-10 bg-[#0A0D0F] border-white/10 focus:border-[#00E599]/40" />
+            <Input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search clinics…" className="pl-10 bg-[#161213] border-white/10 focus:border-[#FF7A6B]/40" />
           </div>
           <div className="flex gap-2 flex-wrap">
             {cities.map(c => (
               <button key={c} onClick={() => setFilter(c)}
-                className={`px-3 py-1.5 rounded-lg text-sm border transition-all ${filter === c ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]' : 'bg-[#0A0D0F] border-white/10 text-zinc-400 hover:text-white'}`}>
+                className={`px-3 py-1.5 rounded-lg text-sm border transition-all ${filter === c ? 'bg-[#FF7A6B]/15 border-[#FF7A6B]/40 text-[#FF7A6B]' : 'bg-[#161213] border-white/10 text-zinc-400 hover:text-white'}`}>
                 {c}
               </button>
             ))}
@@ -61,8 +61,8 @@ export default function VetsPage() {
               className="glass-card rounded-2xl p-5 surface-hover">
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-xl bg-[#00E599]/12 border border-[#00E599]/20 flex items-center justify-center shrink-0">
-                    <Stethoscope className="w-5 h-5 text-[#00E599]" />
+                  <div className="w-11 h-11 rounded-xl bg-[#FF7A6B]/12 border border-[#FF7A6B]/20 flex items-center justify-center shrink-0">
+                    <Stethoscope className="w-5 h-5 text-[#FF7A6B]" />
                   </div>
                   <div>
                     <div className="font-semibold text-sm leading-tight">{v.name}</div>
@@ -70,11 +70,11 @@ export default function VetsPage() {
                   </div>
                 </div>
                 {v.emergency
-                  ? <Badge className="bg-[#5EEAD4]/15 text-[#5EEAD4] border-[#5EEAD4]/30 text-[10px]">24/7</Badge>
-                  : <Badge className={`text-[10px] ${v.open ? 'bg-[#00E599]/15 text-[#00E599] border-[#00E599]/30' : 'bg-white/5 text-zinc-500 border-white/10'}`}>{v.open ? 'Open' : 'Closed'}</Badge>}
+                  ? <Badge className="bg-[#FFB84D]/15 text-[#FFB84D] border-[#FFB84D]/30 text-[10px]">24/7</Badge>
+                  : <Badge className={`text-[10px] ${v.open ? 'bg-[#FF7A6B]/15 text-[#FF7A6B] border-[#FF7A6B]/30' : 'bg-white/5 text-zinc-500 border-white/10'}`}>{v.open ? 'Open' : 'Closed'}</Badge>}
               </div>
               <div className="flex items-center gap-3 text-xs text-zinc-400 mb-4">
-                <span className="flex items-center gap-1 text-[#5EEAD4]"><Star className="w-3.5 h-3.5 fill-[#5EEAD4]" /> {v.rating}</span>
+                <span className="flex items-center gap-1 text-[#FFB84D]"><Star className="w-3.5 h-3.5 fill-[#FFB84D]" /> {v.rating}</span>
                 <span className="text-zinc-600">·</span>
                 <span>{v.reviews} reviews</span>
                 <span className="text-zinc-600">·</span>
