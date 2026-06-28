@@ -5,24 +5,25 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  LayoutDashboard, FileWarning, Building2, Brain,
-  Heart, BarChart3, Settings, LogOut, Menu, X, ChevronRight,
-  Sparkles, Shield, ScanLine, MessageSquare, Footprints
+  LayoutDashboard, PawPrint, Plus, Stethoscope, MapPin,
+  Heart, Settings, LogOut, Menu, X, ChevronRight,
+  Apple, ShieldCheck, MessageSquare, ClipboardCheck, BookOpen, Shield
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Logo from '@/components/public/Logo'
 
 const NAV_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
-  { href: '/report', icon: FileWarning, label: 'New Report' },
-  { href: '/reports', icon: BarChart3, label: 'All Reports' },
-  { href: '/companies', icon: Building2, label: 'Companies' },
-  { href: '/red-flags', icon: ScanLine, label: 'Red Flag Detector' },
-  { href: '/wall', icon: MessageSquare, label: 'The Wall' },
-  { href: '/assessment', icon: Brain, label: 'Burnout Test' },
-  { href: '/predict', icon: Sparkles, label: 'Risk Predictor' },
-  { href: '/recovery', icon: Footprints, label: 'Recovery Plan' },
-  { href: '/resources', icon: Heart, label: 'Resources' },
+  { href: '/pets', icon: PawPrint, label: 'My Pets' },
+  { href: '/add-pet', icon: Plus, label: 'Add a Pet' },
+  { href: '/nutrition', icon: Apple, label: 'Nutrition Planner' },
+  { href: '/food-safety', icon: ShieldCheck, label: 'Food Safety' },
+  { href: '/wellness', icon: Heart, label: 'Wellness Check' },
+  { href: '/care-plan', icon: ClipboardCheck, label: 'Care Plan' },
+  { href: '/vets', icon: Stethoscope, label: 'Vet Directory' },
+  { href: '/vet-finder', icon: MapPin, label: 'Find a Vet' },
+  { href: '/wall', icon: MessageSquare, label: 'Community' },
+  { href: '/resources', icon: BookOpen, label: 'Care Guides' },
 ]
 
 async function handleSignOut() {
@@ -90,7 +91,7 @@ export default function DashboardSidebar() {
                 className="text-lg font-black whitespace-nowrap"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                BURN<span className="text-[#00E599]">OUT</span>
+                Paw<span className="text-[#00E599]">Pal</span>
               </motion.span>
             )}
           </Link>

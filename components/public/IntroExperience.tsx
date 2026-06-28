@@ -11,8 +11,8 @@ import { ArrowRight } from 'lucide-react'
  * No inputs — just a moment to think.
  */
 const LINES = [
-  'How many Sundays\nhave you lost to dread?',
-  'What would you say\nif it could never be traced to you?',
+  'What if caring for them\nwas this simple?',
+  'Everything your pet needs,\nin one place.',
 ]
 
 const HOLD = 3400 // ms each line is visible

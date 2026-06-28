@@ -5,14 +5,10 @@ import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
-  Flame, ArrowUpRight, ArrowRight, ChevronDown, ChevronRight,
-  Shield, Brain, Building2, BarChart3, Heart, FileWarning,
-  Sparkles, Zap, Lock, Eye, EyeOff, Clock, MapPin, AlertTriangle,
-  TrendingUp, TrendingDown, Users, CheckCircle2, Star,
-  MessageSquare, Globe, Activity, Target, Briefcase, Coffee,
-  Moon, Sun, Bell, Quote, Play, Pause, Plus, Minus,
-  Database, Cpu, Network, Layers, Gauge, LineChart as LineChartIcon,
-  ShieldCheck, LockKeyhole, FileLock, KeyRound, ScanLine, Footprints
+  ArrowUpRight, ArrowRight, ChevronDown, PawPrint, Apple,
+  ShieldCheck, Heart, Stethoscope, MapPin, MessageSquare, BookOpen,
+  ClipboardCheck, Sparkles, CheckCircle2, Star, Quote, Plus,
+  Bone, Cat, Dog, Activity, Bell, Calendar, Syringe, Scale
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -22,130 +18,51 @@ import Navbar from '@/components/public/Navbar'
 import Logo from '@/components/public/Logo'
 import IntroExperience from '@/components/public/IntroExperience'
 import {
-  AreaChart, Area, BarChart, Bar, RadarChart, Radar,
-  PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-  XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid
+  AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid
 } from 'recharts'
 
 // ─────────── Data ───────────
 const STATS = [
-  { value: 77, suffix: '%', label: 'workers experiencing burnout', sub: '+18% since 2023', icon: Flame, color: '#00E599' },
-  { value: 63, suffix: '%', label: 'employers ignoring complaints', sub: 'WHO 2025 report', icon: EyeOff, color: '#00E599' },
-  { value: 322, prefix: '$', suffix: 'B', label: 'global productivity lost yearly', sub: 'Gallup workplace study', icon: TrendingDown, color: '#00E599' },
-  { value: 51200, suffix: '+', label: 'workers protected via BURNOUT', sub: 'Live, growing daily', icon: Users, color: '#00E599' },
+  { value: 38, suffix: 'M+', label: 'households own a pet', sub: 'And counting', icon: Dog },
+  { value: 56, suffix: '%', label: 'of pets are overweight', sub: 'Mostly from wrong portions', icon: Scale },
+  { value: 70, suffix: '%', label: 'of owners miss vaccine dates', sub: 'PawPal reminds you', icon: Syringe },
+  { value: 24, suffix: '/7', label: 'food-safety & symptom help', sub: 'Whenever you need it', icon: ShieldCheck },
 ]
 
 const FEATURES_BENTO = [
-  {
-    title: 'Anonymous Encrypted Reports',
-    desc: 'AES-256 encryption. No IP logging. Zero-knowledge architecture means we couldn\'t leak your data if we wanted to.',
-    icon: ShieldCheck, color: '#00E599', span: 'lg:col-span-2', tag: 'Privacy First',
-  },
-  {
-    title: 'Red Flag Detector',
-    desc: 'Paste a job ad. We decode the toxic clichés before you apply.',
-    icon: ScanLine, color: '#00E599', span: '', tag: 'New Tool',
-  },
-  {
-    title: 'The Wall',
-    desc: 'An anonymous wall of workplace confessions. You are not alone.',
-    icon: MessageSquare, color: '#00E599', span: '', tag: 'Community',
-  },
-  {
-    title: 'AI Risk Predictor',
-    desc: 'Input your industry, role, and signals — get a personalised burnout probability with similar-case benchmarks.',
-    icon: Sparkles, color: '#00E599', span: 'lg:col-span-2', tag: 'AI',
-  },
-  {
-    title: 'Recovery Roadmap',
-    desc: 'A gentle 4-week plan to climb out of burnout, one step at a time.',
-    icon: Footprints, color: '#00E599', span: '', tag: 'New Tool',
-  },
-  {
-    title: 'Clinical Burnout Assessment',
-    desc: 'Maslach Burnout Inventory-aligned scoring across 3 dimensions.',
-    icon: Brain, color: '#00E599', span: '', tag: 'Validated',
-  },
-  {
-    title: 'Real-Time Company Intelligence',
-    desc: 'Aggregated toxicity scores across 2,340+ companies. Filter, search, compare.',
-    icon: Building2, color: '#00E599', span: 'lg:col-span-2', tag: 'Live Data',
-  },
+  { title: 'Nutrition & Portion Planner', desc: 'Tell us your pet’s species, breed, weight and activity — get an exact daily food plan, calorie target, and feeding schedule.', icon: Apple, span: 'lg:col-span-2', tag: 'Smart' },
+  { title: 'Food Safety Checker', desc: 'Is it safe to feed? Instantly check any food or plant.', icon: ShieldCheck, span: '', tag: 'Lifesaver' },
+  { title: 'Find a Vet', desc: 'A live map of trusted vets near your location.', icon: MapPin, span: '', tag: 'Live Map' },
+  { title: 'Pet Wellness Check', desc: 'A quick guided check-up of your pet’s health, weight, mood and routine — with a personalised wellbeing score.', icon: Heart, span: 'lg:col-span-2', tag: 'Quiz' },
+  { title: 'New Pet Care Plan', desc: 'A gentle week-by-week roadmap for your new puppy or kitten.', icon: ClipboardCheck, span: '', tag: 'Roadmap' },
+  { title: 'Health Records & Reminders', desc: 'Vaccines, weight, meds and vet visits — tracked and never forgotten.', icon: Activity, span: '', tag: 'Tracking' },
+  { title: 'Owner Community', desc: 'Swap stories, photos and advice with pet owners who get it.', icon: MessageSquare, span: 'lg:col-span-2', tag: 'Community' },
 ]
 
 const TESTIMONIALS = [
-  {
-    name: 'Amara Okonkwo',
-    role: 'Senior Software Engineer',
-    company: 'Tech, JHB',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop',
-    quote: 'I filed three reports about my old company in five minutes. Two weeks later, two friends saw them and avoided the job offer. BURNOUT literally saved their mental health.',
-    burnoutBefore: 84, burnoutAfter: 31,
-  },
-  {
-    name: 'Thabo Mokoena',
-    role: 'Financial Analyst',
-    company: 'Banking, CPT',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop',
-    quote: 'The assessment told me exactly what I already felt but couldn\'t name. Critical exhaustion, severe cynicism. I quit two months later. Best decision of my career.',
-    burnoutBefore: 91, burnoutAfter: 42,
-  },
-  {
-    name: 'Lerato Dube',
-    role: 'Nurse Manager',
-    company: 'Healthcare, DBN',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop',
-    quote: 'I never thought workers had a voice against giant employers. The verified reports gave us proof. Three managers were investigated after our department filed together.',
-    burnoutBefore: 78, burnoutAfter: 48,
-  },
-]
-
-const COMPANIES_LOGOS = [
-  'TechNova', 'FirstBank', 'MediaPlex', 'HealthNet', 'GovDept', 'RetailHub',
-  'BuildCo', 'LawFirm', 'EduGroup', 'AgriCorp', 'TransLogix', 'ConsultPro',
+  { name: 'Amara Okonkwo', role: 'Mum to Biscuit (Beagle)', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop', quote: 'The portion planner alone fixed Biscuit’s weight in two months. I had been overfeeding him for a year without realising.', metricLabel: 'Weight to healthy', metric: '−18%' },
+  { name: 'Thabo Mokoena', role: 'Dad to Luna (Maine Coon)', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop', quote: 'Luna ate something off the counter at 11pm. The food checker told me it was toxic and the vet finder had an emergency clinic open. PawPal saved her life.', metricLabel: 'Emergency vet found', metric: '4 min' },
+  { name: 'Lerato Dube', role: 'Mum to Max & Milo (Huskies)', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop', quote: 'Two dogs, endless vaccine dates, two diets. PawPal keeps all of it straight. I finally feel like a good pet parent.', metricLabel: 'Reminders kept', metric: '100%' },
 ]
 
 const FAQS = [
-  {
-    q: 'Is this actually anonymous?',
-    a: 'Yes. We use AES-256 encryption, never log IP addresses, and reports are stored without any user attribution by default. Even our own engineers cannot connect a report to a person.',
-  },
-  {
-    q: 'Can companies sue me for filing a report?',
-    a: 'Reports are automatically redacted to protect identifiers. We comply with whistleblower protections under the South African Companies Act and the Protected Disclosures Act. We do not share data with third parties.',
-  },
-  {
-    q: 'Is the burnout assessment medically accurate?',
-    a: 'It is based on the Maslach Burnout Inventory (MBI), the most validated burnout instrument in occupational psychology. Results are indicative — not a clinical diagnosis. We always recommend speaking with a mental health professional.',
-  },
-  {
-    q: 'How are toxicity scores calculated?',
-    a: 'Each report contributes weighted points based on severity (1-10), report type, and community verification. Scores are normalised by company size and industry, then mapped to a 0-100 toxicity scale.',
-  },
-  {
-    q: 'Is BURNOUT really free?',
-    a: 'Forever free for individuals. Filing reports, taking assessments, browsing companies — all free. We sustain the platform through anonymised, aggregated industry intelligence licenced to research institutions.',
-  },
+  { q: 'Is PawPal free?', a: 'Yes — creating pet profiles, the nutrition planner, food-safety checker, wellness check and vet finder are all free for pet owners. Forever.' },
+  { q: 'How accurate is the nutrition planner?', a: 'It uses veterinary RER/MER energy formulas (Resting and Maintenance Energy Requirements) based on your pet’s weight, species, life stage and activity level. It is guidance, not a substitute for your vet’s advice.' },
+  { q: 'How does the food-safety checker work?', a: 'We maintain a curated database of foods, plants and household items that are toxic or unsafe for dogs and cats, with severity levels and what to do. If something is dangerous, we tell you immediately and point you to the nearest vet.' },
+  { q: 'How does Find a Vet know where I am?', a: 'With your permission, your browser shares your approximate location so we can show vets near you on the map. We never store your location.' },
+  { q: 'Can I track more than one pet?', a: 'Absolutely. Add as many pets as you like — each with their own profile, diet, weight history, vaccine schedule and reminders.' },
 ]
 
-const TICKER_INDUSTRIES = [
-  { name: 'Technology', score: 88, change: '+5.2' },
-  { name: 'Finance', score: 72, change: '+2.1' },
-  { name: 'Healthcare', score: 81, change: '+8.4' },
-  { name: 'Media', score: 76, change: '-1.2' },
-  { name: 'Retail', score: 64, change: '+3.0' },
-  { name: 'Government', score: 79, change: '+6.5' },
-  { name: 'Legal', score: 68, change: '-0.4' },
-  { name: 'Construction', score: 83, change: '+4.1' },
-  { name: 'Education', score: 71, change: '+2.8' },
-  { name: 'Manufacturing', score: 66, change: '+1.0' },
+const SPECIES_TICKER = [
+  'Dogs', 'Cats', 'Rabbits', 'Birds', 'Hamsters', 'Guinea Pigs',
+  'Ferrets', 'Reptiles', 'Fish', 'Horses', 'Tortoises', 'Parrots',
 ]
 
 const TREND_DATA = [
-  { week: 'W1', reports: 420 }, { week: 'W2', reports: 540 },
-  { week: 'W3', reports: 480 }, { week: 'W4', reports: 720 },
-  { week: 'W5', reports: 890 }, { week: 'W6', reports: 1020 },
-  { week: 'W7', reports: 1150 }, { week: 'W8', reports: 1380 },
+  { week: 'Mon', weight: 32.1 }, { week: 'Tue', weight: 31.8 },
+  { week: 'Wed', weight: 31.9 }, { week: 'Thu', weight: 31.5 },
+  { week: 'Fri', weight: 31.2 }, { week: 'Sat', weight: 31.0 },
+  { week: 'Sun', weight: 30.7 },
 ]
 
 // ─────────── Animated Counter ───────────
@@ -153,12 +70,10 @@ function Counter({ to, suffix = '', prefix = '' }: { to: number; suffix?: string
   const [val, setVal] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.5 })
-
   useEffect(() => {
     if (!inView) return
     let start = 0
-    const duration = 1800
-    const step = to / (duration / 16)
+    const step = to / (1800 / 16)
     const timer = setInterval(() => {
       start += step
       if (start >= to) { setVal(to); clearInterval(timer) }
@@ -166,238 +81,132 @@ function Counter({ to, suffix = '', prefix = '' }: { to: number; suffix?: string
     }, 16)
     return () => clearInterval(timer)
   }, [inView, to])
-
-  const formatted = val.toLocaleString()
-  return <span ref={ref}>{prefix}{formatted}{suffix}</span>
+  return <span ref={ref}>{prefix}{val.toLocaleString()}{suffix}</span>
 }
 
-// ─────────── Risk Predictor Card ───────────
-function RiskPredictor() {
-  const [industry, setIndustry] = useState('Technology')
-  const [hours, setHours] = useState(50)
-  const [signals, setSignals] = useState<string[]>(['micromanagement'])
+// ─────────── Nutrition Planner (inline live demo) ───────────
+function NutritionDemo() {
+  const [species, setSpecies] = useState<'dog' | 'cat'>('dog')
+  const [weight, setWeight] = useState(12)
+  const [activity, setActivity] = useState(1.6)
+  const [lifeStage, setLifeStage] = useState<'puppy' | 'adult' | 'senior'>('adult')
 
-  const SIGNAL_OPTIONS = [
-    { key: 'micromanagement', label: 'Micromanagement' },
-    { key: 'overwork', label: 'Chronic overtime' },
-    { key: 'unclear_goals', label: 'Unclear goals' },
-    { key: 'low_recognition', label: 'Low recognition' },
-    { key: 'toxic_peers', label: 'Toxic peers' },
-    { key: 'no_growth', label: 'No growth path' },
-  ]
-
-  const INDUSTRY_MULT: Record<string, number> = {
-    Technology: 1.15, Finance: 1.1, Healthcare: 1.3, Media: 1.05,
-    Retail: 0.9, Government: 1.0, Legal: 1.15, Construction: 1.1,
-  }
-
-  const risk = Math.min(100, Math.round(
-    (hours - 35) * 1.4 + signals.length * 8 + 22 * (INDUSTRY_MULT[industry] ?? 1)
-  ))
-  const riskLevel = risk >= 75 ? 'CRITICAL' : risk >= 55 ? 'HIGH' : risk >= 35 ? 'MEDIUM' : 'LOW'
-  const riskColor = risk >= 75 ? '#00E599' : risk >= 55 ? '#00E599' : risk >= 35 ? '#00E599' : '#00C885'
-
-  const radarData = [
-    { axis: 'Exhaustion', value: Math.min(100, hours * 1.6 + (signals.includes('overwork') ? 20 : 0)) },
-    { axis: 'Cynicism', value: Math.min(100, signals.length * 14 + 20) },
-    { axis: 'Inefficacy', value: Math.min(100, (signals.includes('low_recognition') ? 35 : 10) + (signals.includes('unclear_goals') ? 25 : 5) + 25) },
-    { axis: 'Isolation', value: Math.min(100, (signals.includes('toxic_peers') ? 50 : 15) + 25) },
-    { axis: 'Stagnation', value: Math.min(100, (signals.includes('no_growth') ? 55 : 20) + 20) },
-    { axis: 'Pressure', value: Math.min(100, hours * 1.2 + (signals.includes('micromanagement') ? 28 : 8)) },
-  ]
-
-  function toggleSignal(k: string) {
-    setSignals(prev => prev.includes(k) ? prev.filter(s => s !== k) : [...prev, k])
-  }
+  // Veterinary energy formula: RER = 70 * (kg^0.75); MER = RER * factor
+  const rer = 70 * Math.pow(weight, 0.75)
+  const stageFactor = lifeStage === 'puppy' ? 2.0 : lifeStage === 'senior' ? 1.1 : 1.0
+  const speciesFactor = species === 'cat' ? 0.9 : 1.0
+  const mer = Math.round(rer * activity * stageFactor * speciesFactor)
+  const grams = Math.round(mer / 3.5) // ~3.5 kcal/g dry food
+  const cups = (grams / 110).toFixed(1) // ~110g per cup
+  const meals = lifeStage === 'puppy' ? 3 : 2
 
   return (
-    <div className="grid lg:grid-cols-2 gap-6">
-      {/* Inputs */}
+    <div className="grid sm:grid-cols-2 gap-5">
       <div className="space-y-5">
         <div>
-          <label htmlFor="industry-select" className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">
-            Your Industry
-          </label>
+          <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Species</label>
           <div className="grid grid-cols-2 gap-2">
-            {Object.keys(INDUSTRY_MULT).slice(0, 6).map(ind => (
-              <button
-                key={ind}
-                onClick={() => setIndustry(ind)}
-                aria-pressed={industry === ind}
-                className={`px-3 py-2 text-sm rounded-lg border transition-all ${
-                  industry === ind
-                    ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]'
-                    : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20 hover:text-white'
-                }`}
-              >
-                {ind}
+            {([['dog', 'Dog', Dog], ['cat', 'Cat', Cat]] as const).map(([k, label, Icon]) => (
+              <button key={k} onClick={() => setSpecies(k)} aria-pressed={species === k}
+                className={`flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${species === k ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
+                <Icon className="w-4 h-4" /> {label}
               </button>
             ))}
           </div>
         </div>
-
         <div>
           <div className="flex items-center justify-between mb-2">
-            <label htmlFor="hours-slider" className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-              Weekly Hours
-            </label>
-            <span className="font-mono text-sm text-[#00E599] font-semibold">{hours}h</span>
+            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Weight</label>
+            <span className="font-mono text-sm text-[#00E599] font-semibold">{weight} kg</span>
           </div>
-          <input
-            id="hours-slider"
-            type="range" min={30} max={90} value={hours}
-            onChange={e => setHours(parseInt(e.target.value))}
-            className="w-full accent-[#00E599]"
-            aria-label="Weekly hours worked"
-          />
-          <div className="flex justify-between text-[10px] text-zinc-500 mt-1">
-            <span>30h</span><span>60h</span><span>90h</span>
+          <input type="range" min={1} max={60} value={weight} onChange={e => setWeight(+e.target.value)} className="w-full accent-[#00E599]" aria-label="Weight" />
+        </div>
+        <div>
+          <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Life stage</label>
+          <div className="grid grid-cols-3 gap-2">
+            {(['puppy', 'adult', 'senior'] as const).map(s => (
+              <button key={s} onClick={() => setLifeStage(s)} aria-pressed={lifeStage === s}
+                className={`px-2 py-2 rounded-xl border text-xs capitalize transition-all ${lifeStage === s ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
+                {s === 'puppy' ? (species === 'cat' ? 'Kitten' : 'Puppy') : s}
+              </button>
+            ))}
           </div>
         </div>
-
         <div>
-          <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">
-            Active Signals ({signals.length})
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {SIGNAL_OPTIONS.map(s => (
-              <button
-                key={s.key}
-                onClick={() => toggleSignal(s.key)}
-                aria-pressed={signals.includes(s.key)}
-                className={`px-3 py-1.5 text-xs rounded-full border transition-all ${
-                  signals.includes(s.key)
-                    ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]'
-                    : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20 hover:text-white'
-                }`}
-              >
-                {signals.includes(s.key) && '✓ '}{s.label}
+          <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Activity</label>
+          <div className="grid grid-cols-3 gap-2">
+            {([['Low', 1.3], ['Normal', 1.6], ['High', 2.0]] as const).map(([label, f]) => (
+              <button key={label} onClick={() => setActivity(f)} aria-pressed={activity === f}
+                className={`px-2 py-2 rounded-xl border text-xs transition-all ${activity === f ? 'bg-[#00E599]/15 border-[#00E599]/40 text-[#00E599]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
+                {label}
               </button>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Result + Radar */}
       <div className="space-y-4">
-        <div className="relative p-5 rounded-2xl border bg-gradient-to-br from-[#12161A] to-[#0A0D0F]"
-          style={{ borderColor: `${riskColor}40` }}
-          role="status" aria-live="polite"
-        >
-          <div className="flex items-center justify-between mb-3">
-            <div className="text-xs uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-2">
-              <Activity className="w-3.5 h-3.5" />
-              Risk Score
-            </div>
-            <Badge
-              className="text-[10px] font-mono"
-              style={{ background: `${riskColor}20`, color: riskColor, borderColor: `${riskColor}40` }}
-            >
-              {riskLevel}
-            </Badge>
-          </div>
-          <div className="flex items-end justify-between">
-            <div className="text-6xl font-black tabular-nums" style={{ color: riskColor, fontFamily: 'var(--font-display)' }}>
-              {risk}
-            </div>
-            <div className="text-xs text-zinc-400 mb-2 text-right max-w-[150px]">
-              {risk >= 75 ? 'Severe burnout likely within 6 months.' :
-               risk >= 55 ? 'Significant risk. Intervention recommended.' :
-               risk >= 35 ? 'Moderate risk. Monitor patterns.' :
-               'Low risk. Maintain current habits.'}
-            </div>
-          </div>
-          <div className="mt-4 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-            <motion.div
-              animate={{ width: `${risk}%` }}
-              transition={{ duration: 0.6 }}
-              className="h-full rounded-full"
-              style={{ background: `linear-gradient(90deg, #00E599, ${riskColor})` }}
-            />
+        <div className="glass-card rounded-2xl p-5" style={{ borderColor: 'rgba(0,229,153,0.3)' }}>
+          <div className="text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-1">Daily calories</div>
+          <div className="flex items-end gap-2">
+            <span className="text-5xl font-semibold tabular-nums text-[#00E599]" style={{ fontFamily: 'var(--font-display)' }}>{mer}</span>
+            <span className="text-zinc-500 mb-2 text-sm">kcal / day</span>
           </div>
         </div>
-
-        <div className="p-3 rounded-2xl border border-white/8 bg-[#0A0D0F] h-[210px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <RadarChart data={radarData}>
-              <PolarGrid stroke="rgba(255,255,255,0.08)" />
-              <PolarAngleAxis dataKey="axis" tick={{ fill: '#A1A1AA', fontSize: 10 }} />
-              <Radar dataKey="value" stroke={riskColor} fill={riskColor} fillOpacity={0.3} strokeWidth={2} />
-            </RadarChart>
-          </ResponsiveContainer>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="glass-card rounded-2xl p-4">
+            <div className="text-xs text-zinc-400 mb-1">Dry food</div>
+            <div className="text-2xl font-semibold tabular-nums" style={{ fontFamily: 'var(--font-display)' }}>{grams}g</div>
+            <div className="text-[11px] text-zinc-500">≈ {cups} cups</div>
+          </div>
+          <div className="glass-card rounded-2xl p-4">
+            <div className="text-xs text-zinc-400 mb-1">Meals / day</div>
+            <div className="text-2xl font-semibold tabular-nums" style={{ fontFamily: 'var(--font-display)' }}>{meals}</div>
+            <div className="text-[11px] text-zinc-500">≈ {Math.round(grams / meals)}g each</div>
+          </div>
         </div>
+        <p className="text-[11px] text-zinc-500 leading-relaxed">
+          Based on veterinary RER/MER energy formulas. Always confirm with your vet for medical diets.
+        </p>
       </div>
     </div>
   )
 }
 
-// ─────────── Testimonial Card ───────────
 function TestimonialCard({ t }: { t: typeof TESTIMONIALS[number] }) {
   return (
-    <div className="p-6 rounded-2xl border border-white/8 bg-gradient-to-br from-[#12161A] to-[#0A0D0F] surface-hover h-full flex flex-col">
+    <div className="glass-card rounded-2xl p-6 surface-hover h-full flex flex-col">
       <Quote className="w-7 h-7 text-[#00E599]/40 mb-4" />
       <p className="text-zinc-300 leading-relaxed mb-6 flex-1">&ldquo;{t.quote}&rdquo;</p>
-
-      {/* Before/after */}
-      <div className="grid grid-cols-2 gap-3 mb-5">
-        <div className="p-3 rounded-xl bg-[#00E599]/10 border border-[#00E599]/20">
-          <div className="text-[10px] uppercase tracking-wider text-zinc-400 mb-1">Before BURNOUT</div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-black tabular-nums" style={{ color: '#00E599', fontFamily: 'var(--font-display)' }}>{t.burnoutBefore}</span>
-            <span className="text-xs text-zinc-500">/100</span>
-          </div>
-        </div>
-        <div className="p-3 rounded-xl bg-[#00E599]/10 border border-[#00E599]/20">
-          <div className="text-[10px] uppercase tracking-wider text-zinc-400 mb-1">After 90 days</div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-black tabular-nums" style={{ color: '#00E599', fontFamily: 'var(--font-display)' }}>{t.burnoutAfter}</span>
-            <span className="text-xs text-zinc-500">/100</span>
-          </div>
-        </div>
+      <div className="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-xl bg-[#00E599]/10 border border-[#00E599]/20 mb-5">
+        <span className="text-2xl font-semibold tabular-nums text-[#00E599]" style={{ fontFamily: 'var(--font-display)' }}>{t.metric}</span>
+        <span className="text-[11px] text-zinc-400 leading-tight">{t.metricLabel}</span>
       </div>
-
       <div className="flex items-center gap-3 pt-4 border-t border-white/5">
         <div className="relative w-11 h-11 rounded-full overflow-hidden border border-white/10">
-          <Image src={t.avatar} alt={`${t.name} avatar`} fill className="object-cover" sizes="44px" />
+          <Image src={t.avatar} alt={t.name} fill className="object-cover" sizes="44px" />
         </div>
         <div>
           <div className="font-semibold text-sm">{t.name}</div>
-          <div className="text-xs text-zinc-400">{t.role} · {t.company}</div>
+          <div className="text-xs text-zinc-400">{t.role}</div>
         </div>
       </div>
     </div>
   )
 }
 
-// ─────────── FAQ Item ───────────
 function FaqItem({ q, a, idx }: { q: string; a: string; idx: number }) {
   const [open, setOpen] = useState(idx === 0)
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: idx * 0.04 }}
-      className="border border-white/8 rounded-xl bg-[#0A0D0F] overflow-hidden"
-    >
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between p-5 text-left hover:bg-white/[0.02] transition-colors"
-        aria-expanded={open}
-      >
+    <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.04 }}
+      className="glass-card rounded-xl overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-5 text-left hover:bg-white/[0.02] transition-colors" aria-expanded={open}>
         <span className="font-semibold text-sm">{q}</span>
-        <motion.div animate={{ rotate: open ? 45 : 0 }} transition={{ duration: 0.3 }}>
-          <Plus className="w-4 h-4 text-zinc-400" />
-        </motion.div>
+        <motion.div animate={{ rotate: open ? 45 : 0 }} transition={{ duration: 0.3 }}><Plus className="w-4 h-4 text-zinc-400" /></motion.div>
       </button>
       <AnimatePresence initial={false}>
         {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}>
             <div className="px-5 pb-5 text-sm text-zinc-400 leading-relaxed">{a}</div>
           </motion.div>
         )}
@@ -411,13 +220,7 @@ export default function LandingPage() {
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
-  const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.95])
-
-  const [activeT, setActiveT] = useState(0)
-  useEffect(() => {
-    const id = setInterval(() => setActiveT(p => (p + 1) % TESTIMONIALS.length), 6000)
-    return () => clearInterval(id)
-  }, [])
+  const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.96])
 
   return (
     <div className="min-h-screen bg-[#050708] text-zinc-100 overflow-x-hidden">
@@ -428,97 +231,63 @@ export default function LandingPage() {
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden grain">
         <AuroraBackground />
         <HeroCanvas />
-
-        {/* Layered radial glows */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[760px] pointer-events-none animate-glow-pulse" aria-hidden="true"
           style={{ background: 'radial-gradient(ellipse, rgba(0,229,153,0.16) 0%, transparent 62%)' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] pointer-events-none" aria-hidden="true"
-          style={{ background: 'radial-gradient(ellipse, rgba(46,139,255,0.1) 0%, transparent 60%)' }} />
-
         <div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00E599]/40 to-transparent animate-scan pointer-events-none" aria-hidden="true" />
 
         <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="relative z-10 px-6 max-w-6xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border-gradient bg-white/[0.04] backdrop-blur-xl text-xs text-zinc-200 mb-8 shadow-[0_4px_24px_rgba(0,229,153,0.2)]"
-          >
-            <span className="relative flex w-2 h-2">
-              <span className="absolute inset-0 rounded-full bg-[#00E599] animate-ping opacity-75" />
-              <span className="relative rounded-full w-2 h-2 bg-[#00E599]" />
-            </span>
-            <span className="font-medium">14,891 reports this month</span>
-            <span className="text-zinc-600">·</span>
-            <span className="text-zinc-400">2,340 companies tracked</span>
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border-gradient bg-white/[0.04] backdrop-blur-xl text-xs text-zinc-200 mb-8">
+            <PawPrint className="w-3.5 h-3.5 text-[#00E599]" />
+            <span className="font-medium">Loved by 120,000+ pet parents</span>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-6xl md:text-8xl lg:text-[9rem] font-semibold leading-[0.92] tracking-[-0.04em] mb-6"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            <span
-              className="block bg-clip-text text-transparent"
-              style={{ backgroundImage: 'linear-gradient(180deg, #F2F6F5 0%, #C8D0CD 55%, #5B6562 100%)' }}
-            >
-              The workplace won&apos;t
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-6xl md:text-8xl lg:text-[9rem] font-semibold leading-[0.92] tracking-[-0.04em] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
+            <span className="block bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #F2F6F5 0%, #C8D0CD 55%, #5B6562 100%)' }}>
+              Everything your pet
             </span>
             <span className="block">
-              <span style={{ fontFamily: 'var(--font-serif)' }} className="italic font-normal text-[#00E599]">name</span>
-              <span
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: 'linear-gradient(180deg, #F2F6F5 0%, #C8D0CD 55%, #5B6562 100%)' }}
-              > itself.</span>
+              <span style={{ fontFamily: 'var(--font-serif)' }} className="italic font-normal text-[#00E599]">needs</span>
+              <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(180deg, #F2F6F5 0%, #C8D0CD 55%, #5B6562 100%)' }}> — in one place.</span>
             </span>
           </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-            className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed mb-10"
-          >
-            An open, anonymous, encrypted platform for workers to expose toxic employers,
-            measure their burnout, and find the data they need to leave.
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+            className="text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed mb-10">
+            Nutrition plans, food-safety checks, health tracking, a wellness quiz, and trusted vets near you.
+            PawPal is the all-in-one companion for people who love their animals.
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16"
-          >
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16">
             <Link href="/auth/signup">
               <Button size="lg" className="btn-glass-emerald text-base px-7 py-6 gap-2 group rounded-2xl">
-                <FileWarning className="w-5 h-5" />
-                File a Report
+                <PawPrint className="w-5 h-5" /> Add Your Pet
                 <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Button>
             </Link>
-            <Link href="/assessment">
+            <Link href="/nutrition">
               <Button size="lg" className="btn-glass text-white text-base px-7 py-6 gap-2 group rounded-2xl">
-                <Brain className="w-5 h-5" />
-                Free Burnout Test
+                <Apple className="w-5 h-5" /> Try the Nutrition Planner
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </Button>
             </Link>
           </motion.div>
 
-          {/* Trust indicators */}
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
-            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-zinc-400"
-          >
-            <div className="flex items-center gap-1.5"><LockKeyhole className="w-3.5 h-3.5 text-[#00E599]" /> AES-256 encrypted</div>
-            <div className="flex items-center gap-1.5"><EyeOff className="w-3.5 h-3.5 text-[#00E599]" /> Zero IP logging</div>
-            <div className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#00E599]" /> POPIA compliant</div>
-            <div className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-[#00E599]" /> 4.9/5 (3,201 reviews)</div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
+            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-zinc-400">
+            <div className="flex items-center gap-1.5"><Apple className="w-3.5 h-3.5 text-[#00E599]" /> Vet-backed nutrition</div>
+            <div className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-[#00E599]" /> Food-safety database</div>
+            <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-[#00E599]" /> Vets near you</div>
+            <div className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-[#00E599]" /> 4.9/5 (8,400 reviews)</div>
           </motion.div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-500"
-        >
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-500">
           <span className="text-[10px] uppercase tracking-widest">Scroll</span>
-          <motion.div animate={{ y: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-            <ChevronDown className="w-4 h-4" />
-          </motion.div>
+          <motion.div animate={{ y: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}><ChevronDown className="w-4 h-4" /></motion.div>
         </motion.div>
       </section>
 
@@ -528,23 +297,15 @@ export default function LandingPage() {
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {STATS.map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="p-5 rounded-2xl border border-white/8 bg-[#0A0D0F]/60 backdrop-blur-sm surface-hover"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: `${s.color}18` }}>
-                    <s.icon className="w-4.5 h-4.5" style={{ color: s.color }} />
-                  </div>
+              <motion.div key={s.label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.6 }}
+                className="glass-card rounded-2xl p-5 surface-hover">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-4 bg-[#00E599]/12 border border-[#00E599]/20">
+                  <s.icon className="w-4 h-4 text-[#00E599]" />
                 </div>
-                <div className="text-4xl lg:text-5xl font-black mb-1 tabular-nums" style={{ color: s.color, fontFamily: 'var(--font-display)' }}>
-                  <Counter to={s.value} suffix={s.suffix} prefix={s.prefix} />
+                <div className="text-4xl lg:text-5xl font-semibold mb-1 tabular-nums text-[#00E599]" style={{ fontFamily: 'var(--font-display)' }}>
+                  <Counter to={s.value} suffix={s.suffix} />
                 </div>
-                <p className="text-zinc-400 text-sm mb-1">{s.label}</p>
+                <p className="text-zinc-300 text-sm mb-1">{s.label}</p>
                 <p className="text-zinc-500 text-xs">{s.sub}</p>
               </motion.div>
             ))}
@@ -552,65 +313,43 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ─── INDUSTRY TICKER ─── */}
+      {/* ─── SPECIES TICKER ─── */}
       <div className="border-b border-white/5 py-5 overflow-hidden bg-[#070A0C]">
         <div className="animate-marquee-x">
-          {[...TICKER_INDUSTRIES, ...TICKER_INDUSTRIES].map((t, i) => {
-            const isPositive = t.change.startsWith('+')
-            return (
-              <div key={i} className="mx-6 flex items-center gap-3 whitespace-nowrap text-sm">
-                <span className="text-zinc-300 font-medium">{t.name}</span>
-                <span className="font-mono text-zinc-100 font-bold tabular-nums">{t.score}</span>
-                <span className={`font-mono text-xs flex items-center gap-0.5 ${isPositive ? 'text-[#00E599]' : 'text-[#00E599]'}`}>
-                  {isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                  {t.change}
-                </span>
-                <span className="text-zinc-700">·</span>
-              </div>
-            )
-          })}
+          {[...SPECIES_TICKER, ...SPECIES_TICKER].map((s, i) => (
+            <div key={i} className="mx-6 flex items-center gap-2 whitespace-nowrap text-sm text-zinc-400">
+              <PawPrint className="w-3.5 h-3.5 text-[#00E599]" /> {s}
+            </div>
+          ))}
         </div>
       </div>
 
       {/* ─── BENTO FEATURES ─── */}
       <section className="py-32 px-6 max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="max-w-3xl mb-16"
-        >
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl mb-16">
           <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
-            <Layers className="w-3 h-3 mr-1.5" />
-            PLATFORM
+            <PawPrint className="w-3 h-3 mr-1.5" /> THE PLATFORM
           </Badge>
-          <h2 className="text-5xl md:text-6xl font-black mb-6 leading-[1.05] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-            <span className="text-gradient-soft">Tools built for</span>
-            <br />
-            <span className="text-gradient-aurora">people who&apos;ve had enough.</span>
+          <h2 className="text-5xl md:text-6xl font-semibold mb-6 leading-[1.05] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
+            <span className="text-gradient-soft">One app for every</span><br />
+            <span className="text-gradient-aurora">wag, purr and paw.</span>
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed">
-            Every feature is designed to give workers the leverage that companies have always denied them.
+            From the first meal to the next vet visit — everything a pet parent needs, beautifully organised.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-5">
           {FEATURES_BENTO.map((f, i) => (
-            <motion.div
-              key={f.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
-              className={`group relative p-7 rounded-3xl glass-card surface-hover overflow-hidden ${f.span}`}
-            >
-              <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-[0.12] group-hover:opacity-25 transition-opacity duration-500" style={{ background: `radial-gradient(circle, ${f.color}, transparent 70%)` }} />
+            <motion.div key={f.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}
+              className={`group relative p-7 rounded-3xl glass-card surface-hover overflow-hidden ${f.span}`}>
+              <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full opacity-[0.12] group-hover:opacity-25 transition-opacity duration-500" style={{ background: 'radial-gradient(circle, #00E599, transparent 70%)' }} />
               <div className="relative">
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center backdrop-blur-sm" style={{ background: `${f.color}14`, border: `1px solid ${f.color}2E` }}>
-                    <f.icon className="w-5 h-5" style={{ color: f.color }} />
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center backdrop-blur-sm bg-[#00E599]/12 border border-[#00E599]/20">
+                    <f.icon className="w-5 h-5 text-[#00E599]" />
                   </div>
-                  <Badge className="text-[10px] font-mono uppercase backdrop-blur-sm" style={{ background: `${f.color}12`, color: f.color, borderColor: `${f.color}28` }}>
-                    {f.tag}
-                  </Badge>
+                  <Badge className="text-[10px] font-mono uppercase bg-[#00E599]/10 text-[#00E599] border-[#00E599]/25">{f.tag}</Badge>
                 </div>
                 <h3 className="text-xl font-semibold mb-2.5 tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>{f.title}</h3>
                 <p className="text-zinc-400 text-sm leading-relaxed">{f.desc}</p>
@@ -620,149 +359,93 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ─── COMPLEX FEATURE: AI RISK PREDICTOR ─── */}
+      {/* ─── NUTRITION PLANNER DEMO ─── */}
       <section className="relative py-32 border-y border-white/5 overflow-hidden">
         <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            <motion.div
-              initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            >
-              <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
-                <Sparkles className="w-3 h-3 mr-1.5" />
-                AI-POWERED
-              </Badge>
-              <h2 className="text-5xl md:text-6xl font-black mb-6 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
-                Personal burnout
-                <br />
-                <span className="text-gradient-aurora">risk predictor.</span>
-              </h2>
-              <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
-                Our model weighs 60+ workplace signals — industry baselines, role intensity, hour patterns,
-                managerial behaviour, recognition deficits — and projects your 6-month burnout probability.
-                Calibrated against 14,000+ verified reports.
-              </p>
-
-              <ul className="space-y-3 mb-10">
-                {[
-                  { icon: Database, t: 'Trained on 14,891 anonymised reports across 12 industries' },
-                  { icon: Cpu, t: 'Multi-axis radar — exhaustion, cynicism, isolation, stagnation' },
-                  { icon: Network, t: 'Benchmarks against 2,340 tracked companies' },
-                  { icon: Target, t: 'Outputs verified weekly against new clinical assessments' },
-                ].map(item => (
-                  <li key={item.t} className="flex items-start gap-3 text-sm text-zinc-300">
-                    <div className="w-8 h-8 shrink-0 rounded-lg bg-white/[0.04] border border-white/8 flex items-center justify-center">
-                      <item.icon className="w-4 h-4 text-[#00E599]" />
-                    </div>
-                    <span className="pt-1.5">{item.t}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Link href="/predict">
-                <Button size="lg" className="btn-glass-emerald gap-2 rounded-2xl px-7">
-                  Try the Risk Predictor
-                  <ArrowUpRight className="w-4 h-4" />
-                </Button>
-              </Link>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-              className="lg:sticky lg:top-32"
-            >
-              <div className="relative p-7 rounded-3xl border-gradient border border-white/8 bg-[#0A0D0F]/80 backdrop-blur-md shadow-2xl">
-                <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-gradient-to-br from-[#00E599] to-[#00E599] flex items-center justify-center shadow-[0_8px_30px_rgba(0,229,153,0.5)]">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
-                <div className="flex items-center justify-between mb-5">
-                  <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Live Demo</span>
-                  <div className="flex items-center gap-1.5 text-[10px] text-[#00E599]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00E599] animate-pulse" />
-                    Calculating
-                  </div>
-                </div>
-                <RiskPredictor />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── TRUSTED BY (Companies marquee) ─── */}
-      <section className="py-20 border-b border-white/5 bg-[#070A0C]">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-xs uppercase tracking-widest text-zinc-500 mb-8 font-mono">
-            Reports filed against employees of
-          </p>
-          <div className="overflow-hidden">
-            <div className="animate-marquee-x flex gap-12 items-center">
-              {[...COMPANIES_LOGOS, ...COMPANIES_LOGOS].map((c, i) => (
-                <div key={i} className="text-3xl font-black text-zinc-700 hover:text-zinc-400 transition-colors whitespace-nowrap" style={{ fontFamily: 'var(--font-display)' }}>
-                  {c}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── TREND CHART ─── */}
-      <section className="py-32 px-6 max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="grid lg:grid-cols-2 gap-12 items-center"
-        >
-          <div>
+        <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
+          <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
-              <LineChartIcon className="w-3 h-3 mr-1.5" />
-              LIVE INTELLIGENCE
+              <Apple className="w-3 h-3 mr-1.5" /> NUTRITION PLANNER
             </Badge>
-            <h2 className="text-5xl font-black mb-5 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
-              Reports are
-              <br />
-              <span className="text-gradient-aurora">accelerating.</span>
+            <h2 className="text-5xl md:text-6xl font-semibold mb-6 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+              Feed them<br /><span className="text-gradient-aurora">exactly right.</span>
             </h2>
-            <p className="text-zinc-400 text-lg leading-relaxed mb-8">
-              Weekly report volume has tripled since launch. Workers are talking.
-              Companies are being named. The data is becoming impossible to ignore.
+            <p className="text-zinc-400 text-lg mb-8 leading-relaxed">
+              Over half of pets are overweight — almost always from guesswork at the food bowl.
+              PawPal calculates your pet&rsquo;s precise daily calories, food weight, and meal schedule
+              using the same energy formulas vets use.
             </p>
-            <div className="grid grid-cols-3 gap-4">
-              {[
-                { label: 'This week', value: '1,380', change: '+19.6%' },
-                { label: 'Verified', value: '78%', change: '+4.2%' },
-                { label: 'Avg severity', value: '7.4/10', change: '+0.3' },
-              ].map(stat => (
-                <div key={stat.label} className="p-4 rounded-xl border border-white/8 bg-[#0A0D0F]">
-                  <div className="text-[10px] uppercase tracking-wider text-zinc-500 mb-1">{stat.label}</div>
-                  <div className="text-2xl font-black tabular-nums mb-0.5" style={{ fontFamily: 'var(--font-display)' }}>{stat.value}</div>
-                  <div className="text-xs text-[#00E599]">{stat.change}</div>
-                </div>
+            <ul className="space-y-3 mb-10">
+              {['Vet-grade RER/MER calorie math', 'Adjusts for breed, life stage & activity', 'Exact grams, cups and meals per day', 'Re-plans automatically as they grow'].map(t => (
+                <li key={t} className="flex items-center gap-3 text-sm text-zinc-300">
+                  <CheckCircle2 className="w-5 h-5 text-[#00E599] shrink-0" /> {t}
+                </li>
               ))}
-            </div>
-          </div>
+            </ul>
+            <Link href="/nutrition">
+              <Button size="lg" className="btn-glass-emerald gap-2 rounded-2xl px-7">Open the full planner <ArrowUpRight className="w-4 h-4" /></Button>
+            </Link>
+          </motion.div>
 
-          <div className="p-6 rounded-3xl border border-white/8 bg-gradient-to-br from-[#12161A] to-[#0A0D0F]">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-semibold">Weekly reports filed</span>
-              <Badge className="bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 text-xs">Live</Badge>
+          <motion.div initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="lg:sticky lg:top-32">
+            <div className="relative p-7 rounded-3xl border-gradient glass-card shadow-2xl">
+              <div className="absolute -top-3 -right-3 w-12 h-12 rounded-full bg-gradient-to-br from-[#00E599] to-[#14E5C8] flex items-center justify-center shadow-[0_8px_30px_rgba(0,229,153,0.5)]">
+                <Apple className="w-5 h-5 text-[#04130D]" />
+              </div>
+              <div className="flex items-center justify-between mb-5">
+                <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Live Demo</span>
+                <div className="flex items-center gap-1.5 text-[10px] text-[#00E599]"><span className="w-1.5 h-1.5 rounded-full bg-[#00E599] animate-pulse" /> Calculating</div>
+              </div>
+              <NutritionDemo />
             </div>
-            <ResponsiveContainer width="100%" height={280}>
-              <AreaChart data={TREND_DATA}>
-                <defs>
-                  <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#00E599" stopOpacity={0.5} />
-                    <stop offset="100%" stopColor="#00E599" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
-                <XAxis dataKey="week" tick={{ fill: '#71717A', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: '#71717A', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ background: '#12161A', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} />
-                <Area type="monotone" dataKey="reports" stroke="#00E599" strokeWidth={2.5} fill="url(#trendGrad)" />
-              </AreaChart>
-            </ResponsiveContainer>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── HEALTH TRACKING ─── */}
+      <section className="py-32 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
+            <Activity className="w-3 h-3 mr-1.5" /> HEALTH TRACKING
+          </Badge>
+          <h2 className="text-5xl font-semibold mb-5 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+            Every milestone,<br /><span className="text-gradient-aurora">remembered.</span>
+          </h2>
+          <p className="text-zinc-400 text-lg leading-relaxed mb-8">
+            Weight trends, vaccine dates, medications and vet visits — all in one timeline,
+            with gentle reminders so nothing slips.
+          </p>
+          <div className="grid grid-cols-3 gap-4">
+            {[{ icon: Syringe, label: 'Vaccines', v: 'On track' }, { icon: Bell, label: 'Reminders', v: '3 upcoming' }, { icon: Scale, label: 'Weight', v: '−1.4 kg' }].map(s => (
+              <div key={s.label} className="glass-card rounded-xl p-4">
+                <s.icon className="w-4 h-4 text-[#00E599] mb-2" />
+                <div className="text-lg font-semibold tabular-nums" style={{ fontFamily: 'var(--font-display)' }}>{s.v}</div>
+                <div className="text-[11px] text-zinc-500">{s.label}</div>
+              </div>
+            ))}
           </div>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="glass-card rounded-3xl p-6">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-sm font-semibold flex items-center gap-2"><Dog className="w-4 h-4 text-[#00E599]" /> Biscuit · weight (kg)</span>
+            <Badge className="bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 text-xs">Healthy trend</Badge>
+          </div>
+          <ResponsiveContainer width="100%" height={260}>
+            <AreaChart data={TREND_DATA}>
+              <defs>
+                <linearGradient id="wgrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#00E599" stopOpacity={0.5} />
+                  <stop offset="100%" stopColor="#00E599" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <XAxis dataKey="week" tick={{ fill: '#71817C', fontSize: 11 }} axisLine={false} tickLine={false} />
+              <YAxis domain={['dataMin - 0.5', 'dataMax + 0.5']} tick={{ fill: '#71817C', fontSize: 11 }} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={{ background: '#0E1316', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 12 }} />
+              <Area type="monotone" dataKey="weight" stroke="#00E599" strokeWidth={2.5} fill="url(#wgrad)" />
+            </AreaChart>
+          </ResponsiveContainer>
         </motion.div>
       </section>
 
@@ -770,33 +453,17 @@ export default function LandingPage() {
       <section className="relative py-32 border-y border-white/5">
         <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
         <div className="relative max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
             <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
-              <MessageSquare className="w-3 h-3 mr-1.5" />
-              REAL STORIES
+              <Heart className="w-3 h-3 mr-1.5" /> HAPPY TAILS
             </Badge>
-            <h2 className="text-5xl md:text-6xl font-black mb-5 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
-              <span className="text-gradient-soft">Workers who</span>
-              <br />
-              <span className="text-gradient-aurora">named names.</span>
+            <h2 className="text-5xl md:text-6xl font-semibold mb-5 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+              <span className="text-gradient-soft">Pet parents</span><br /><span className="text-gradient-aurora">who rest easier.</span>
             </h2>
-            <p className="text-zinc-400 text-lg max-w-xl mx-auto">
-              Anonymised testimonials. Real outcomes. Real burnout scores before and after intervention.
-            </p>
           </motion.div>
-
           <div className="grid md:grid-cols-3 gap-5">
             {TESTIMONIALS.map((t, i) => (
-              <motion.div
-                key={t.name}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
+              <motion.div key={t.name} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <TestimonialCard t={t} />
               </motion.div>
             ))}
@@ -804,128 +471,36 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ─── PRIVACY ─── */}
-      <section className="py-32 px-6 max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="relative aspect-square rounded-3xl overflow-hidden border border-white/8 glow-emerald">
-              <Image
-                src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=900&h=900&fit=crop"
-                alt="Calm misty forest at dawn"
-                fill className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#00E599]/25 via-transparent to-transparent mix-blend-soft-light" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050708] via-[#050708]/20 to-transparent" />
-              <div className="absolute inset-0 bg-dots opacity-30 mix-blend-overlay" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="flex items-center gap-3 p-3.5 rounded-2xl glass">
-                  <div className="w-9 h-9 rounded-xl bg-[#00E599]/15 border border-[#00E599]/30 flex items-center justify-center shrink-0">
-                    <LockKeyhole className="w-4.5 h-4.5 text-[#00E599]" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-mono text-[#00E599]">aes-256-gcm</div>
-                    <div className="text-[10px] text-zinc-400">Authenticated client-side encryption</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-          >
-            <Badge className="mb-5 bg-[#00E599]/10 text-[#00E599] border-[#00E599]/30 font-mono">
-              <ShieldCheck className="w-3 h-3 mr-1.5" />
-              ZERO-KNOWLEDGE
-            </Badge>
-            <h2 className="text-5xl font-black mb-5 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
-              We can&apos;t betray
-              <br />
-              <span className="text-gradient-aurora">what we can&apos;t see.</span>
-            </h2>
-            <p className="text-zinc-400 text-lg leading-relaxed mb-8">
-              Reports are encrypted client-side before they touch our servers.
-              We do not log IP addresses. Even our administrators cannot connect a report to a person.
-            </p>
-            <div className="space-y-4">
-              {[
-                { icon: KeyRound, t: 'Client-side AES-256-GCM encryption', d: 'Plaintext never leaves your browser' },
-                { icon: EyeOff, t: 'No IP logging, no fingerprinting', d: 'Sessions are stateless' },
-                { icon: FileLock, t: 'POPIA, GDPR, and CCPA compliant', d: 'Audit reports available on request' },
-                { icon: Shield, t: 'Open-source verification', d: 'Codebase available on GitHub' },
-              ].map(p => (
-                <div key={p.t} className="flex gap-4 p-4 rounded-xl border border-white/8 bg-[#0A0D0F]">
-                  <div className="w-10 h-10 shrink-0 rounded-xl bg-[#00E599]/10 border border-[#00E599]/20 flex items-center justify-center">
-                    <p.icon className="w-4.5 h-4.5 text-[#00E599]" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-sm mb-0.5">{p.t}</div>
-                    <div className="text-xs text-zinc-400">{p.d}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* ─── FAQ ─── */}
       <section className="py-32 px-6 max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <Badge className="mb-5 bg-white/[0.06] text-zinc-300 border-white/10 font-mono">
-            FAQ
-          </Badge>
-          <h2 className="text-5xl font-black leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
-            Questions you <span className="text-gradient-aurora">should be asking.</span>
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+          <Badge className="mb-5 bg-white/[0.06] text-zinc-300 border-white/10 font-mono">FAQ</Badge>
+          <h2 className="text-5xl font-semibold leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+            Good questions, <span className="text-gradient-aurora">honest answers.</span>
           </h2>
         </motion.div>
-
         <div className="space-y-3">
-          {FAQS.map((f, i) => (
-            <FaqItem key={f.q} q={f.q} a={f.a} idx={i} />
-          ))}
+          {FAQS.map((f, i) => <FaqItem key={f.q} q={f.q} a={f.a} idx={i} />)}
         </div>
       </section>
 
       {/* ─── CTA ─── */}
       <section className="relative py-32 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-mesh" aria-hidden="true" />
-        <motion.div
-          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="relative max-w-3xl mx-auto text-center p-12 rounded-3xl border-gradient border border-white/8 bg-[#0A0D0F]/80 backdrop-blur-xl"
-        >
-          <div className="absolute -top-12 left-1/2 -translate-x-1/2 animate-float-medium">
-            <Logo size={80} glow />
-          </div>
+        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          className="relative max-w-3xl mx-auto text-center p-12 rounded-3xl border-gradient glass-card">
+          <div className="absolute -top-12 left-1/2 -translate-x-1/2 animate-float-medium"><Logo size={80} glow /></div>
           <div className="pt-10">
-            <h2 className="text-5xl md:text-6xl font-black mb-6 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
-              <span className="text-gradient-soft">Silence is what</span>
-              <br />
-              <span className="text-gradient-aurora">they bank on.</span>
+            <h2 className="text-5xl md:text-6xl font-semibold mb-6 leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
+              <span className="text-gradient-soft">They give you everything.</span><br />
+              <span className="text-gradient-aurora">Give them PawPal.</span>
             </h2>
             <p className="text-zinc-400 text-lg max-w-md mx-auto mb-8 leading-relaxed">
-              Every report you file is data the next worker uses to choose a better job.
-              Break the silence — anonymously, encrypted, free forever.
+              Set up your pet&rsquo;s profile in under a minute. Free forever, for every pet you love.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link href="/auth/signup">
-                <Button size="lg" className="btn-glass-emerald gap-2 rounded-2xl px-7">
-                  Join Free
-                  <ArrowUpRight className="w-4 h-4" />
-                </Button>
-              </Link>
-              <Link href="/assessment">
-                <Button size="lg" className="btn-glass text-white gap-2 rounded-2xl px-7">
-                  Take Assessment
-                </Button>
-              </Link>
+              <Link href="/auth/signup"><Button size="lg" className="btn-glass-emerald gap-2 rounded-2xl px-7">Add Your Pet <ArrowUpRight className="w-4 h-4" /></Button></Link>
+              <Link href="/wellness"><Button size="lg" className="btn-glass text-white gap-2 rounded-2xl px-7">Try the Wellness Check</Button></Link>
             </div>
           </div>
         </motion.div>
@@ -938,48 +513,32 @@ export default function LandingPage() {
             <div className="md:col-span-2">
               <Link href="/" className="flex items-center gap-2.5 mb-4">
                 <Logo size={36} />
-                <span className="text-lg font-black" style={{ fontFamily: 'var(--font-display)' }}>
-                  BURN<span className="text-[#00E599]">OUT</span>
-                </span>
+                <span className="text-lg font-bold" style={{ fontFamily: 'var(--font-display)' }}>Paw<span className="text-[#00E599]">Pal</span></span>
               </Link>
               <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">
-                The open intelligence platform for workplace mental health.
-                Anonymous, encrypted, free forever.
+                The all-in-one companion for pet owners — nutrition, health, safety and care, beautifully in one place.
               </p>
             </div>
-
             <div>
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4">Platform</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4">Tools</h4>
               <ul className="space-y-2.5 text-sm text-zinc-400">
-                {[
-                  { label: 'Reports', href: '/reports' },
-                  { label: 'Companies', href: '/companies' },
-                  { label: 'Assessment', href: '/assessment' },
-                  { label: 'Risk Predictor', href: '/predict' },
-                  { label: 'Resources', href: '/resources' },
-                ].map(l => (
-                  <li key={l.label}><Link href={l.href} className="hover:text-white transition-colors">{l.label}</Link></li>
+                {[['Nutrition Planner', '/nutrition'], ['Food Safety', '/food-safety'], ['Find a Vet', '/vet-finder'], ['Wellness Check', '/wellness'], ['Care Guides', '/resources']].map(([l, h]) => (
+                  <li key={l}><Link href={h} className="hover:text-white transition-colors">{l}</Link></li>
                 ))}
               </ul>
             </div>
-
             <div>
               <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4">Account</h4>
               <ul className="space-y-2.5 text-sm text-zinc-400">
                 <li><Link href="/auth/login" className="hover:text-white transition-colors">Sign In</Link></li>
                 <li><Link href="/auth/signup" className="hover:text-white transition-colors">Create Account</Link></li>
                 <li><Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link></li>
-                <li><Link href="/admin" className="hover:text-white transition-colors">Admin</Link></li>
               </ul>
             </div>
           </div>
-
           <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
-            <p>&copy; 2026 BURNOUT Platform · Built for workers, by workers.</p>
-            <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00E599] animate-pulse" />
-              All systems operational
-            </div>
+            <p>&copy; 2026 PawPal · Made for the ones who never let you down.</p>
+            <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#00E599] animate-pulse" /> All systems operational</div>
           </div>
         </div>
       </footer>

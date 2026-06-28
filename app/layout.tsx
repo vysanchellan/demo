@@ -22,8 +22,8 @@ const instrumentSerif = Instrument_Serif({
 })
 
 export const metadata: Metadata = {
-  title: "BURNOUT — Corporate Toxicity Intelligence Platform",
-  description: "Anonymously expose workplace toxicity. Know your burnout risk. Find your way out.",
+  title: "PawPal — Everything Your Pet Needs, In One Place",
+  description: "Nutrition plans, health tracking, food-safety checks, a wellness quiz, and vets near you. The all-in-one companion for pet owners.",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Send, Heart, MessageCircle, Sparkles, Flame, ShieldCheck } from 'lucide-react'
+import { Send, Heart, MessageCircle, Sparkles, PawPrint, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
@@ -18,25 +18,25 @@ interface Confession {
 }
 
 const MOODS = [
-  { key: 'drained', label: 'Drained', color: '#FFC83D' },
-  { key: 'angry', label: 'Angry', color: '#FF5A5F' },
-  { key: 'numb', label: 'Numb', color: '#93A29E' },
-  { key: 'hopeful', label: 'Hopeful', color: '#00E599' },
+  { key: 'happy', label: 'Happy', color: '#00E599' },
+  { key: 'proud', label: 'Proud', color: '#5EEAD4' },
+  { key: 'help', label: 'Need advice', color: '#FFC83D' },
+  { key: 'sad', label: 'Tough day', color: '#93A29E' },
 ]
 
 const SEED: Confession[] = [
-  { id: 1, text: 'My manager scheduled a "quick sync" at 6pm on a Friday to tell me I "lack urgency". I have worked every weekend this month.', mood: 'angry', hearts: 248, time: '12m ago' },
-  { id: 2, text: 'I cried in the bathroom today and then smiled in the next stand-up. Nobody noticed. That is the part that scares me.', mood: 'numb', hearts: 519, time: '38m ago' },
-  { id: 3, text: 'Handed in my notice this morning after reading three reports about my company here. Best decision in two years. Thank you all.', mood: 'hopeful', hearts: 871, time: '1h ago' },
-  { id: 4, text: 'They call it "passion" when they want free overtime and "unprofessional" when I ask about my contract.', mood: 'drained', hearts: 333, time: '2h ago' },
-  { id: 5, text: 'Took my burnout score here. 84. I thought I was just lazy. Turns out I was running on empty for a year.', mood: 'drained', hearts: 402, time: '3h ago' },
-  { id: 6, text: "My 'work family' didn't message once while I was on sick leave. The silence said everything.", mood: 'numb', hearts: 287, time: '5h ago' },
+  { id: 1, text: 'Biscuit finally learned to sit AND stay today. Three weeks of patience and so many treats. Proud dog dad moment! 🐶', mood: 'proud', hearts: 248, time: '12m ago' },
+  { id: 2, text: 'Used the food checker before giving Luna a bit of my dinner — turns out onions are toxic to cats! Probably saved her a vet trip.', mood: 'happy', hearts: 519, time: '38m ago' },
+  { id: 3, text: 'Adopted a senior rescue beagle this weekend. He sleeps 18 hours a day and I have never been happier. 🥰', mood: 'happy', hearts: 871, time: '1h ago' },
+  { id: 4, text: 'Any tips for a puppy that cries at night? Week two and I am running on no sleep but I love the little guy.', mood: 'help', hearts: 333, time: '2h ago' },
+  { id: 5, text: 'The nutrition planner said I was overfeeding by almost double. Two months later my cat is at a healthy weight and so playful again.', mood: 'proud', hearts: 402, time: '3h ago' },
+  { id: 6, text: 'Said goodbye to my 16-year-old girl today. Hug your pets a little tighter tonight. ❤️', mood: 'sad', hearts: 1287, time: '5h ago' },
 ]
 
 export default function WallPage() {
   const [posts, setPosts] = useState<Confession[]>(SEED)
   const [draft, setDraft] = useState('')
-  const [mood, setMood] = useState('drained')
+  const [mood, setMood] = useState('happy')
   const [posting, setPosting] = useState(false)
 
   // Load real confessions; fall back to seed if unavailable/empty
@@ -102,13 +102,13 @@ export default function WallPage() {
       <div className="relative p-6 lg:p-8 max-w-3xl mx-auto">
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <Badge className="mb-4 btn-glass-emerald border-0 font-mono text-[10px]">
-            <Sparkles className="w-3 h-3 mr-1.5" /> NEW
+            <Sparkles className="w-3 h-3 mr-1.5" /> COMMUNITY
           </Badge>
           <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight mb-2" style={{ fontFamily: 'var(--font-display)' }}>
-            The <span className="text-[#00E599]">Wall</span>
+            Owner <span className="text-[#00E599]">Community</span>
           </h1>
           <p className="text-zinc-400 max-w-xl">
-            An anonymous wall of workplace confessions. No names, no judgement — just workers telling the truth out loud.
+            Wins, worries and wisdom from fellow pet parents. Share a moment, ask for advice, cheer each other on.
           </p>
         </motion.div>
 
@@ -117,7 +117,7 @@ export default function WallPage() {
           <textarea
             value={draft}
             onChange={e => setDraft(e.target.value)}
-            placeholder="Get it off your chest. Anonymously."
+            placeholder="Share a win, ask for advice, or just say hi to fellow pet parents…"
             rows={3}
             maxLength={280}
             className="w-full bg-transparent text-sm leading-relaxed resize-none focus:outline-none placeholder:text-zinc-600"
@@ -146,7 +146,7 @@ export default function WallPage() {
 
         <div className="flex items-center gap-2 text-xs text-zinc-500 mb-4">
           <ShieldCheck className="w-3.5 h-3.5 text-[#00E599]" />
-          Every post is anonymous and encrypted. Be kind.
+          Posts are anonymous. Be kind — we&rsquo;re all just trying to do right by our pets.
         </div>
 
         {/* Feed */}
@@ -166,7 +166,7 @@ export default function WallPage() {
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center">
-                      <Flame className="w-3.5 h-3.5 text-zinc-500" />
+                      <PawPrint className="w-3.5 h-3.5 text-zinc-500" />
                     </div>
                     <span className="text-xs text-zinc-500">Anonymous</span>
                     <span className="w-1 h-1 rounded-full bg-zinc-700" />

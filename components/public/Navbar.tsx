@@ -9,12 +9,12 @@ import { cn } from '@/lib/utils'
 import Logo from '@/components/public/Logo'
 
 const NAV = [
-  { label: 'Reports', href: '/reports' },
-  { label: 'Companies', href: '/companies' },
-  { label: 'Red Flags', href: '/red-flags' },
-  { label: 'The Wall', href: '/wall' },
-  { label: 'Assessment', href: '/assessment' },
-  { label: 'Resources', href: '/resources' },
+  { label: 'Nutrition', href: '/nutrition' },
+  { label: 'Food Safety', href: '/food-safety' },
+  { label: 'Find a Vet', href: '/vet-finder' },
+  { label: 'Wellness', href: '/wellness' },
+  { label: 'Community', href: '/wall' },
+  { label: 'Guides', href: '/resources' },
 ]
 
 export default function Navbar() {
@@ -47,7 +47,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-2.5 group" aria-label="BURNOUT home">
             <Logo size={34} className="group-hover:scale-105 transition-transform duration-300" />
             <span className="text-base font-bold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-              BURN<span className="text-[#00E599]">OUT</span>
+              Paw<span className="text-[#00E599]">Pal</span>
             </span>
           </Link>
 
@@ -77,7 +77,7 @@ export default function Navbar() {
                 size="sm"
                 className="btn-glass-emerald font-semibold gap-1.5 h-9 px-4 rounded-full text-[13px]"
               >
-                Report Now <ArrowRight className="w-3.5 h-3.5" />
+                Add Your Pet <ArrowRight className="w-3.5 h-3.5" />
               </Button>
             </Link>
             <button

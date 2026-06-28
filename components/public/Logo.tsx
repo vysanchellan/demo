@@ -10,8 +10,7 @@ interface LogoProps {
 }
 
 /**
- * BURNOUT logo — a crisp, high-contrast ember mark.
- * Solid emerald tile, bold dark flame, hot inner core.
+ * PawPal logo — a crisp, high-contrast paw mark on an emerald tile.
  */
 export default function Logo({ className, size = 38, glow = false, variant = 'mark' }: LogoProps) {
   if (variant === 'wordmark') {
@@ -19,7 +18,7 @@ export default function Logo({ className, size = 38, glow = false, variant = 'ma
       <div className={cn('flex items-center gap-2.5', className)}>
         <LogoMark size={size} glow={glow} />
         <span className="text-lg font-bold tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-          BURN<span className="text-[#00E599]">OUT</span>
+          Paw<span className="text-[#00E599]">Pal</span>
         </span>
       </div>
     )
@@ -28,7 +27,7 @@ export default function Logo({ className, size = 38, glow = false, variant = 'ma
 }
 
 function LogoMark({ size = 38, glow = false, className }: { size?: number; glow?: boolean; className?: string }) {
-  const id = 'lg' + Math.round(size)
+  const id = 'pp' + Math.round(size)
   return (
     <div
       className={cn(
@@ -37,7 +36,7 @@ function LogoMark({ size = 38, glow = false, className }: { size?: number; glow?
         className
       )}
       style={{ width: size, height: size, borderRadius: size * 0.28 }}
-      aria-label="BURNOUT logo"
+      aria-label="PawPal logo"
     >
       <svg viewBox="0 0 48 48" width={size} height={size} className="relative z-10">
         <defs>
@@ -46,10 +45,6 @@ function LogoMark({ size = 38, glow = false, className }: { size?: number; glow?
             <stop offset="55%" stopColor="#00E599" />
             <stop offset="100%" stopColor="#00B47A" />
           </linearGradient>
-          <linearGradient id={`${id}-spark`} x1="24" y1="14" x2="24" y2="36" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#063626" />
-            <stop offset="100%" stopColor="#04130D" />
-          </linearGradient>
         </defs>
 
         {/* Tile */}
@@ -57,26 +52,16 @@ function LogoMark({ size = 38, glow = false, className }: { size?: number; glow?
         {/* Top sheen */}
         <rect x="0" y="0" width="48" height="22" rx="13.5" fill="#FFFFFF" opacity="0.16" />
 
-        {/* Bold flame in dark negative space */}
-        <path
-          d="M24 9
-             C 27 16, 33 18, 33 26.5
-             C 33 33, 28.5 38, 24 38
-             C 19.5 38, 15 33.5, 15 27
-             C 15 23, 17 21.5, 18.5 19.5
-             C 19.2 22, 20.8 23, 22 22.5
-             C 23.6 21.8, 22.5 17, 24 9 Z"
-          fill={`url(#${id}-spark)`}
-        />
-        {/* Inner hot core */}
-        <path
-          d="M24 22
-             C 26 25.5, 27.5 27.5, 27.5 30
-             C 27.5 33.2, 25.9 35, 24 35
-             C 22.1 35, 20.5 33.2, 20.5 30.2
-             C 20.5 27.8, 22 25.6, 24 22 Z"
-          fill="#00FFAB"
-        />
+        {/* Paw — dark on emerald */}
+        <g fill="#04130D">
+          {/* main pad */}
+          <path d="M24 38.5c-4.6 0-8.2-2.7-8.2-6.3 0-3 2.7-4.9 4.9-6.6 1.4-1.1 2.2-2.4 3.3-2.4s1.9 1.3 3.3 2.4c2.2 1.7 4.9 3.6 4.9 6.6 0 3.6-3.6 6.3-8.2 6.3z" />
+          {/* toe beans */}
+          <ellipse cx="14.5" cy="22.5" rx="3.3" ry="4.2" transform="rotate(-18 14.5 22.5)" />
+          <ellipse cx="20.5" cy="16" rx="3.3" ry="4.4" />
+          <ellipse cx="27.5" cy="16" rx="3.3" ry="4.4" />
+          <ellipse cx="33.5" cy="22.5" rx="3.3" ry="4.2" transform="rotate(18 33.5 22.5)" />
+        </g>
 
         {/* Crisp border */}
         <rect x="0.6" y="0.6" width="46.8" height="46.8" rx="13" fill="none" stroke="#FFFFFF" strokeOpacity="0.18" strokeWidth="1.2" />
