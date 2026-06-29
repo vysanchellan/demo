@@ -4,13 +4,10 @@
 --  workplace text and a mood constraint that blocks pet posts).
 -- ════════════════════════════════════════════════════════════════
 
--- 1. Replace the old mood CHECK constraint with the pet moods
+-- 1. Drop the old constraint FIRST so we can clean up freely
 alter table confessions drop constraint if exists confessions_mood_check;
-alter table confessions alter column mood set default 'happy';
-alter table confessions add constraint confessions_mood_check
-  check (mood in ('happy','proud','help','sad'));
 
--- 2. Remove the old workplace seed rows
+-- 2. Remove the old workplace seed rows (do this BEFORE adding the new constraint)
 delete from confessions
 where mood in ('angry','numb','hopeful','drained')
    or text ilike '%manager%'
@@ -18,7 +15,13 @@ where mood in ('angry','numb','hopeful','drained')
    or text ilike '%notice%'
    or text ilike '%stand-up%';
 
--- 3. Seed friendly pet posts (only if the wall is now empty)
+-- 3. Map any remaining stray moods to a valid pet mood, then add the new constraint
+update confessions set mood = 'happy' where mood not in ('happy','proud','help','sad');
+alter table confessions alter column mood set default 'happy';
+alter table confessions add constraint confessions_mood_check
+  check (mood in ('happy','proud','help','sad'));
+
+-- 4. Seed friendly pet posts (only if the wall is now empty)
 insert into confessions (text, mood, hearts)
 select * from (values
   ('Biscuit finally learned to sit AND stay today. Three weeks of patience and so many treats. Proud dog dad moment!', 'proud', 248),
