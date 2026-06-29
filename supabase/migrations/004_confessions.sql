@@ -1,12 +1,12 @@
 -- ════════════════════════════════════════════════════════════════
---  BURNOUT — The Wall (anonymous confessions) + assessment reads
+--  PawPal — Community Wall (anonymous pet posts)
 --  Run this once in your Supabase SQL editor.
 -- ════════════════════════════════════════════════════════════════
 
 create table if not exists confessions (
   id uuid primary key default gen_random_uuid(),
   text text not null check (char_length(text) between 10 and 280),
-  mood text not null default 'drained' check (mood in ('drained','angry','numb','hopeful')),
+  mood text not null default 'happy' check (mood in ('happy','proud','help','sad')),
   hearts int default 0,
   created_at timestamptz default now()
 );
@@ -33,10 +33,10 @@ $$;
 
 -- Seed a few so the wall is never empty
 insert into confessions (text, mood, hearts) values
-  ('My manager scheduled a "quick sync" at 6pm on a Friday to tell me I "lack urgency". I have worked every weekend this month.', 'angry', 248),
-  ('I cried in the bathroom today and then smiled in the next stand-up. Nobody noticed. That is the part that scares me.', 'numb', 519),
-  ('Handed in my notice this morning after reading three reports about my company here. Best decision in two years.', 'hopeful', 871),
-  ('They call it "passion" when they want free overtime and "unprofessional" when I ask about my contract.', 'drained', 333)
+  ('Biscuit finally learned to sit AND stay today. Three weeks of patience and so many treats. Proud dog dad moment!', 'proud', 248),
+  ('Used the food checker before giving Luna a bit of my dinner — turns out onions are toxic to cats! Probably saved her a vet trip.', 'happy', 519),
+  ('Adopted a senior rescue beagle this weekend. He sleeps 18 hours a day and I have never been happier.', 'happy', 871),
+  ('Any tips for a puppy that cries at night? Week two and I am running on no sleep but I love the little guy.', 'help', 333)
 on conflict do nothing;
 
 -- Allow public read of ALL reports for the public feed (demo-friendly)
