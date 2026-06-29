@@ -16,20 +16,6 @@ export default function SiteEffects() {
   const [pointer, setPointer] = useState(false)
 
   // Lenis smooth scroll
-  useEffect(() => {
-    let lenis: any
-    let raf = 0
-    let cancelled = false
-    ;(async () => {
-      const Lenis = (await import('lenis')).default
-      if (cancelled) return
-      lenis = new Lenis({ duration: 1.1, easing: (t: number) => 1 - Math.pow(1 - t, 3), smoothWheel: true })
-      function loop(time: number) { lenis.raf(time); raf = requestAnimationFrame(loop) }
-      raf = requestAnimationFrame(loop)
-    })()
-    return () => { cancelled = true; cancelAnimationFrame(raf); lenis?.destroy?.() }
-  }, [])
-
   // Cursor glow
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return
