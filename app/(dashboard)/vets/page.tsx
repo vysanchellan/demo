@@ -7,6 +7,7 @@ import { Search, Stethoscope, Star, MapPin, ChevronRight } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
 
 const VETS = [
   { id: 1, name: 'Greenpaw Veterinary Clinic', city: 'Johannesburg', rating: 4.9, reviews: 412, specialty: 'General & Surgery', open: true, emergency: false },
@@ -81,7 +82,7 @@ export default function VetsPage() {
                 <span>{v.specialty}</span>
               </div>
               <div className="flex gap-2">
-                <Button className="btn-glass-emerald flex-1 h-9 rounded-lg text-xs">Book visit</Button>
+                <Button onClick={() => toast.success(`Booking request sent to ${v.name}`, { description: 'They’ll confirm your appointment by email.' })} className="btn-glass-emerald flex-1 h-9 rounded-lg text-xs">Book visit</Button>
                 <Link href="/vet-finder" className="flex-1"><Button className="btn-glass w-full text-white h-9 rounded-lg text-xs gap-1">View on map <ChevronRight className="w-3 h-3" /></Button></Link>
               </div>
             </motion.div>

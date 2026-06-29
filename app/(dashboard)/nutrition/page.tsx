@@ -3,34 +3,52 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import {
-  Apple, Dog, Cat, Bone, Flame, Droplets, Beef, Wheat, Info, Sparkles
+  Apple, Dog, Cat, Rabbit, Bird, Turtle, Rat, Bone, Flame, Droplets, Beef, Wheat, Info, Sparkles
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer
 } from 'recharts'
 
+type SpeciesKey = 'dog' | 'cat' | 'rabbit' | 'bird' | 'reptile' | 'small'
+
+const SPECIES_CFG: Record<SpeciesKey, {
+  label: string; icon: any; factor: number; youngLabel: string; maxKg: number; foodLabel: string;
+  note: string; macros: { axis: string; value: number }[]
+}> = {
+  dog: { label: 'Dog', icon: Dog, factor: 1.0, youngLabel: 'Puppy', maxKg: 70, foodLabel: 'Dry food',
+    note: 'Based on canine RER/MER energy formulas.', macros: [{ axis: 'Protein', value: 75 }, { axis: 'Fat', value: 60 }, { axis: 'Carbs', value: 50 }, { axis: 'Fibre', value: 55 }, { axis: 'Moisture', value: 60 }] },
+  cat: { label: 'Cat', icon: Cat, factor: 0.9, youngLabel: 'Kitten', maxKg: 12, foodLabel: 'Dry food',
+    note: 'Cats are obligate carnivores — protein-rich diets only.', macros: [{ axis: 'Protein', value: 90 }, { axis: 'Fat', value: 70 }, { axis: 'Carbs', value: 25 }, { axis: 'Fibre', value: 40 }, { axis: 'Moisture', value: 80 }] },
+  rabbit: { label: 'Rabbit', icon: Rabbit, factor: 0.7, youngLabel: 'Kit', maxKg: 8, foodLabel: 'Pellets',
+    note: 'Rabbits need unlimited hay + a small portion of pellets and greens.', macros: [{ axis: 'Protein', value: 40 }, { axis: 'Fat', value: 18 }, { axis: 'Carbs', value: 45 }, { axis: 'Fibre', value: 95 }, { axis: 'Moisture', value: 65 }] },
+  bird: { label: 'Bird', icon: Bird, factor: 1.3, youngLabel: 'Chick', maxKg: 2, foodLabel: 'Seed / pellets',
+    note: 'Birds have fast metabolisms — fresh pellets, seed and veg daily.', macros: [{ axis: 'Protein', value: 65 }, { axis: 'Fat', value: 45 }, { axis: 'Carbs', value: 70 }, { axis: 'Fibre', value: 50 }, { axis: 'Moisture', value: 55 }] },
+  reptile: { label: 'Reptile', icon: Turtle, factor: 0.35, youngLabel: 'Juvenile', maxKg: 15, foodLabel: 'Food',
+    note: 'Reptiles are ectotherms — feeding frequency varies hugely by species.', macros: [{ axis: 'Protein', value: 70 }, { axis: 'Fat', value: 40 }, { axis: 'Carbs', value: 35 }, { axis: 'Fibre', value: 60 }, { axis: 'Moisture', value: 70 }] },
+  small: { label: 'Small pet', icon: Rat, factor: 1.1, youngLabel: 'Young', maxKg: 3, foodLabel: 'Pellets / mix',
+    note: 'Hamsters, rats & guinea pigs — small frequent portions plus fresh veg.', macros: [{ axis: 'Protein', value: 60 }, { axis: 'Fat', value: 40 }, { axis: 'Carbs', value: 65 }, { axis: 'Fibre', value: 70 }, { axis: 'Moisture', value: 55 }] },
+}
+
 export default function NutritionPage() {
-  const [species, setSpecies] = useState<'dog' | 'cat'>('dog')
+  const [species, setSpecies] = useState<SpeciesKey>('dog')
   const [weight, setWeight] = useState(12)
   const [activity, setActivity] = useState(1.6)
   const [lifeStage, setLifeStage] = useState<'puppy' | 'adult' | 'senior'>('adult')
   const [bodyCondition, setBodyCondition] = useState(3)
 
+  const cfg = SPECIES_CFG[species]
   const rer = 70 * Math.pow(weight, 0.75)
   const stageFactor = lifeStage === 'puppy' ? 2.0 : lifeStage === 'senior' ? 1.1 : 1.0
-  const speciesFactor = species === 'cat' ? 0.9 : 1.0
   const bcFactor = bodyCondition >= 4 ? 0.85 : bodyCondition <= 2 ? 1.15 : 1.0
-  const mer = Math.round(rer * activity * stageFactor * speciesFactor * bcFactor)
+  const mer = Math.round(rer * activity * stageFactor * cfg.factor * bcFactor)
 
   const dryG = Math.round(mer / 3.5)
   const wetG = Math.round(mer / 1.2)
   const meals = lifeStage === 'puppy' ? 3 : 2
   const waterMl = Math.round(weight * 55)
 
-  const macros = species === 'cat'
-    ? [{ axis: 'Protein', value: 90 }, { axis: 'Fat', value: 70 }, { axis: 'Carbs', value: 25 }, { axis: 'Fibre', value: 40 }, { axis: 'Moisture', value: 80 }]
-    : [{ axis: 'Protein', value: 75 }, { axis: 'Fat', value: 60 }, { axis: 'Carbs', value: 50 }, { axis: 'Fibre', value: 55 }, { axis: 'Moisture', value: 60 }]
+  const macros = cfg.macros
 
   return (
     <div className="relative min-h-screen">
@@ -50,13 +68,16 @@ export default function NutritionPage() {
           <motion.div initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} className="glass-card rounded-2xl p-6 space-y-6">
             <div>
               <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Species</label>
-              <div className="grid grid-cols-2 gap-2">
-                {([['dog', 'Dog', Dog], ['cat', 'Cat', Cat]] as const).map(([k, label, Icon]) => (
-                  <button key={k} onClick={() => setSpecies(k)} aria-pressed={species === k}
-                    className={`flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border text-sm transition-all ${species === k ? 'bg-[#FF7A6B]/15 border-[#FF7A6B]/40 text-[#FF7A6B]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
-                    <Icon className="w-4 h-4" /> {label}
-                  </button>
-                ))}
+              <div className="grid grid-cols-3 gap-2">
+                {(Object.keys(SPECIES_CFG) as SpeciesKey[]).map(k => {
+                  const Icon = SPECIES_CFG[k].icon
+                  return (
+                    <button key={k} onClick={() => { setSpecies(k); setWeight(w => Math.min(w, SPECIES_CFG[k].maxKg)) }} aria-pressed={species === k}
+                      className={`flex flex-col items-center gap-1 px-2 py-2.5 rounded-xl border text-xs transition-all ${species === k ? 'bg-[#FF7A6B]/15 border-[#FF7A6B]/40 text-[#FF7A6B]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
+                      <Icon className="w-4 h-4" /> {SPECIES_CFG[k].label}
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
@@ -65,7 +86,7 @@ export default function NutritionPage() {
                 <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Weight</label>
                 <span className="font-mono text-sm text-[#FF7A6B] font-semibold">{weight} kg</span>
               </div>
-              <input type="range" min={1} max={70} value={weight} onChange={e => setWeight(+e.target.value)} className="w-full accent-[#FF7A6B]" aria-label="Weight" />
+              <input type="range" min={0.5} max={cfg.maxKg} step={cfg.maxKg <= 3 ? 0.1 : 0.5} value={Math.min(weight, cfg.maxKg)} onChange={e => setWeight(+e.target.value)} className="w-full accent-[#FF7A6B]" aria-label="Weight" />
             </div>
 
             <div>
@@ -74,7 +95,7 @@ export default function NutritionPage() {
                 {(['puppy', 'adult', 'senior'] as const).map(s => (
                   <button key={s} onClick={() => setLifeStage(s)} aria-pressed={lifeStage === s}
                     className={`px-2 py-2 rounded-xl border text-xs capitalize transition-all ${lifeStage === s ? 'bg-[#FF7A6B]/15 border-[#FF7A6B]/40 text-[#FF7A6B]' : 'bg-white/[0.03] border-white/8 text-zinc-400 hover:border-white/20'}`}>
-                    {s === 'puppy' ? (species === 'cat' ? 'Kitten' : 'Puppy') : s}
+                    {s === 'puppy' ? cfg.youngLabel : s}
                   </button>
                 ))}
               </div>
@@ -114,8 +135,8 @@ export default function NutritionPage() {
 
             <div className="grid grid-cols-2 gap-3">
               {[
-                { icon: Bone, label: 'Dry food', v: `${dryG}g`, sub: `≈ ${(dryG / 110).toFixed(1)} cups` },
-                { icon: Beef, label: 'Or wet food', v: `${wetG}g`, sub: 'per day' },
+                { icon: Bone, label: cfg.foodLabel, v: `${dryG}g`, sub: `≈ ${(dryG / 110).toFixed(1)} cups` },
+                { icon: Beef, label: 'Or wet/fresh', v: `${wetG}g`, sub: 'per day' },
                 { icon: Wheat, label: 'Meals', v: `${meals}×`, sub: `≈ ${Math.round(dryG / meals)}g each` },
                 { icon: Droplets, label: 'Water', v: `${waterMl}ml`, sub: 'min daily' },
               ].map(s => (
@@ -143,8 +164,8 @@ export default function NutritionPage() {
         <div className="glass-card rounded-xl p-4 mt-6 flex items-start gap-3">
           <Info className="w-4 h-4 text-[#FFB84D] mt-0.5 shrink-0" />
           <p className="text-xs text-zinc-400 leading-relaxed">
-            Calculated using veterinary RER (70 × weight^0.75) and MER multipliers for life stage, activity and body condition.
-            This is guidance — confirm with your vet for prescription or medical diets.
+            {cfg.note} Calculated using RER (70 × weight^0.75) and MER multipliers for life stage, activity and body condition.
+            This is guidance — confirm with your vet for prescription or medical diets, especially for exotic species.
           </p>
         </div>
       </div>

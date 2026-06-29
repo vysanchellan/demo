@@ -122,8 +122,8 @@ export default function VetFinderPage() {
                     : <Badge className={`text-[10px] shrink-0 ${v.open ? 'bg-[#FF7A6B]/15 text-[#FF7A6B] border-[#FF7A6B]/30' : 'bg-white/5 text-zinc-500 border-white/10'}`}>{v.open ? 'Open' : 'Closed'}</Badge>}
                 </div>
                 <div className="flex gap-2 mt-3">
-                  <Button className="btn-glass-emerald flex-1 h-8 rounded-lg text-xs gap-1.5"><Phone className="w-3 h-3" /> Call</Button>
-                  <Button className="btn-glass flex-1 h-8 rounded-lg text-xs text-white gap-1.5"><Navigation className="w-3 h-3" /> Directions</Button>
+                  <a href="tel:0800738435" className="flex-1"><Button className="btn-glass-emerald w-full h-8 rounded-lg text-xs gap-1.5"><Phone className="w-3 h-3" /> Call</Button></a>
+                  <a href={`https://www.openstreetmap.org/?mlat=${v.lat}&mlon=${v.lng}#map=16/${v.lat}/${v.lng}`} target="_blank" rel="noopener noreferrer" className="flex-1"><Button className="btn-glass w-full h-8 rounded-lg text-xs text-white gap-1.5"><Navigation className="w-3 h-3" /> Directions</Button></a>
                 </div>
               </motion.div>
             ))}
