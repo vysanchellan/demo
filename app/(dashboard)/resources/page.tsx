@@ -143,6 +143,7 @@ export default function ResourcesPage() {
               initial={{ y: 40, opacity: 0, scale: 0.98 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 40, opacity: 0 }}
               transition={{ type: 'spring', damping: 28, stiffness: 280 }}
               onClick={e => e.stopPropagation()}
+              data-lenis-prevent
               className="relative w-full sm:max-w-2xl max-h-[88vh] overflow-y-auto glass-strong border border-white/10 rounded-t-3xl sm:rounded-3xl p-7 sm:p-9"
             >
               <button onClick={() => setOpen(null)} className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10" aria-label="Close">

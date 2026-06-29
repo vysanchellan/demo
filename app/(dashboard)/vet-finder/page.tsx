@@ -99,7 +99,7 @@ export default function VetFinderPage() {
           </motion.div>
 
           {/* List */}
-          <div className="space-y-3 lg:h-[620px] lg:overflow-y-auto no-scrollbar pr-1">
+          <div className="space-y-3 lg:h-[620px] lg:overflow-y-auto no-scrollbar pr-1" data-lenis-prevent>
             {vets.map((v, i) => (
               <motion.div key={v.id} initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
                 className="glass-card rounded-2xl p-4 surface-hover">

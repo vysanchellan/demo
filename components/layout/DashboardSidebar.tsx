@@ -111,7 +111,7 @@ export default function DashboardSidebar() {
           </button>
         </div>
 
-        <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+        <nav className="flex-1 p-3 space-y-1 overflow-y-auto" data-lenis-prevent>
           {!collapsed && (
             <p className="text-[10px] font-semibold text-zinc-500 uppercase tracking-widest px-3 py-2">Main</p>
           )}
