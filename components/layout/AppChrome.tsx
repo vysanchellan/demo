@@ -6,19 +6,15 @@ import DashboardSidebar from '@/components/layout/DashboardSidebar'
 import Navbar from '@/components/public/Navbar'
 
 /**
- * Chrome chooser.
- *  - Public tool pages (nutrition, food-safety, wellness, vets, vet-finder,
- *    community, guides, care-plan) ALWAYS use the marketing navbar — visitors
- *    should never feel like they've entered an "account" by clicking a tool.
- *  - Account pages (dashboard, pets, add-pet, settings, admin) use the app
- *    sidebar when signed in.
+ * Auth-aware chrome — consistent within a session:
+ *  - Signed in  → the app sidebar on EVERY page, so navigating between tools
+ *    keeps you inside your profile (no jarring drop to the public layout).
+ *  - Signed out → the public marketing navbar, so a visitor clicking a tool
+ *    from the landing page never feels like they entered an account.
  */
-const ACCOUNT_ROUTES = ['/dashboard', '/pets', '/add-pet', '/settings', '/admin']
-
 export default function AppChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isAccount = ACCOUNT_ROUTES.some(r => pathname === r || pathname.startsWith(r + '/'))
-  const [signedIn, setSignedIn] = useState(false)
+  const [status, setStatus] = useState<'loading' | 'in' | 'out'>('loading')
 
   useEffect(() => {
     let active = true
@@ -27,17 +23,16 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
         const { createClient } = await import('@/lib/supabase/client')
         const supabase = createClient()
         const { data } = await supabase.auth.getUser()
-        if (active) setSignedIn(!!data.user)
+        if (active) setStatus(data.user ? 'in' : 'out')
       } catch {
-        if (active) setSignedIn(false)
+        if (active) setStatus('out')
       }
     }
     check()
     return () => { active = false }
   }, [pathname])
 
-  // Account pages, signed in → app sidebar
-  if (isAccount && signedIn) {
+  if (status === 'in') {
     return (
       <div className="flex min-h-screen bg-[#0C0A0A] text-zinc-100">
         <DashboardSidebar />
@@ -46,7 +41,7 @@ export default function AppChrome({ children }: { children: React.ReactNode }) {
     )
   }
 
-  // Everything else → public marketing chrome
+  // Signed out (or still confirming) → public marketing chrome
   return (
     <div className="min-h-screen bg-[#0C0A0A] text-zinc-100">
       <Navbar />
