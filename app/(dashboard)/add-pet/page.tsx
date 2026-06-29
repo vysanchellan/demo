@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
-import { Dog, Cat, Bird, Rabbit, Fish, PawPrint, Check, Camera } from 'lucide-react'
+import { Dog, Cat, Bird, Rabbit, Fish, Turtle, Rat, Snail, PawPrint, Check, Camera } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { toast } from 'sonner'
@@ -14,7 +14,9 @@ const SPECIES = [
   { key: 'bird', label: 'Bird', icon: Bird },
   { key: 'rabbit', label: 'Rabbit', icon: Rabbit },
   { key: 'fish', label: 'Fish', icon: Fish },
-  { key: 'other', label: 'Other', icon: PawPrint },
+  { key: 'reptile', label: 'Reptile', icon: Turtle },
+  { key: 'small', label: 'Small pet', icon: Rat },
+  { key: 'invert', label: 'Other', icon: Snail },
 ]
 
 export default function AddPetPage() {

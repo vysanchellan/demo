@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Check, Circle, Home, Syringe, GraduationCap, Heart, Trophy, PawPrint, Dog, Cat } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
@@ -20,11 +20,20 @@ export default function CarePlanPage() {
   const total = WEEKS.reduce((s, w) => s + w.steps.length, 0)
   const pct = Math.round((done.size / total) * 100)
 
+  // Restore + persist progress
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('pawpal_careplan')
+      if (saved) setDone(new Set(JSON.parse(saved)))
+    } catch {}
+  }, [])
+
   function toggle(id: string) {
     setDone(prev => {
       const next = new Set(prev)
       if (next.has(id)) next.delete(id)
       else { next.add(id); toast.success('Nice — one step closer! 🐾') }
+      try { localStorage.setItem('pawpal_careplan', JSON.stringify([...next])) } catch {}
       return next
     })
   }

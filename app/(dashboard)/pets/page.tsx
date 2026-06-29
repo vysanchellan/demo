@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Dog, Cat, Bird, Rabbit, Fish, PawPrint, Plus, Scale, Apple, Syringe, ChevronRight } from 'lucide-react'
+import { Dog, Cat, Bird, Rabbit, Fish, Turtle, Rat, Snail, PawPrint, Plus, Scale, Apple, Syringe, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
-const ICONS: Record<string, any> = { dog: Dog, cat: Cat, bird: Bird, rabbit: Rabbit, fish: Fish, other: PawPrint }
+const ICONS: Record<string, any> = { dog: Dog, cat: Cat, bird: Bird, rabbit: Rabbit, fish: Fish, reptile: Turtle, small: Rat, invert: Snail, other: PawPrint }
 
 const SEED = [
   { id: 's1', name: 'Biscuit', species: 'dog', breed: 'Beagle', age: '3 years', weight: 12.4, sex: 'male' },

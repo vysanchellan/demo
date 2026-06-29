@@ -6,15 +6,18 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
   PawPrint, Plus, Apple, Syringe, Bell, Scale, Calendar,
-  Dog, Cat, ArrowUpRight, Stethoscope, ShieldCheck, Heart
+  Dog, Cat, Bird, Rabbit, Fish, Turtle, Rat, Snail, ArrowUpRight, Stethoscope, ShieldCheck, Heart
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
-const PETS = [
-  { name: 'Biscuit', kind: 'Beagle', icon: Dog, age: '3 yrs', weight: '12.4 kg', next: 'Vaccine in 9 days' },
-  { name: 'Luna', kind: 'Maine Coon', icon: Cat, age: '2 yrs', weight: '5.1 kg', next: 'Deworming in 3 days' },
+const ICONS: Record<string, any> = { dog: Dog, cat: Cat, bird: Bird, rabbit: Rabbit, fish: Fish, reptile: Turtle, small: Rat, invert: Snail, other: PawPrint }
+
+interface DashPet { name: string; kind: string; species: string; age: string; weight: string; next: string }
+const SEED_PETS: DashPet[] = [
+  { name: 'Biscuit', kind: 'Beagle', species: 'dog', age: '3 yrs', weight: '12.4 kg', next: 'Vaccine in 9 days' },
+  { name: 'Luna', kind: 'Maine Coon', species: 'cat', age: '2 yrs', weight: '5.1 kg', next: 'Deworming in 3 days' },
 ]
 
 const REMINDERS = [
@@ -40,6 +43,7 @@ export default function DashboardPage() {
   const router = useRouter()
   const [user, setUser] = useState<{ email?: string } | null>(null)
   const [checking, setChecking] = useState(true)
+  const [pets, setPets] = useState<DashPet[]>(SEED_PETS)
 
   useEffect(() => {
     async function init() {
@@ -49,6 +53,19 @@ export default function DashboardPage() {
       const { data } = await supabase.auth.getUser()
       setUser(data.user)
       if (data.user && (await isUserAdmin(data.user))) { router.replace('/admin'); return }
+      try {
+        const { data: rows } = await supabase.from('pets').select('*').order('created_at', { ascending: false })
+        if (rows && rows.length > 0) {
+          setPets(rows.map((r: any) => ({
+            name: r.name,
+            kind: r.breed || r.species,
+            species: r.species,
+            age: r.age || '—',
+            weight: r.weight ? `${r.weight} kg` : '—',
+            next: 'All up to date',
+          })))
+        }
+      } catch {}
       setChecking(false)
     }
     init()
@@ -78,12 +95,14 @@ export default function DashboardPage() {
 
         {/* Pets */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          {PETS.map((p, i) => (
-            <motion.div key={p.name} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
+          {pets.map((p, i) => {
+            const Icon = ICONS[p.species] ?? PawPrint
+            return (
+            <motion.div key={p.name + i} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
               className="glass-card rounded-2xl p-5 surface-hover">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#FF7A6B] to-[#2DD4BF] flex items-center justify-center">
-                  <p.icon className="w-6 h-6 text-[#2A0E0A]" />
+                  <Icon className="w-6 h-6 text-[#2A0E0A]" />
                 </div>
                 <div>
                   <div className="font-semibold" style={{ fontFamily: 'var(--font-display)' }}>{p.name}</div>
@@ -95,7 +114,8 @@ export default function DashboardPage() {
                 <Badge className="bg-[#FF7A6B]/10 text-[#FF7A6B] border-[#FF7A6B]/25 text-[10px]">{p.next}</Badge>
               </div>
             </motion.div>
-          ))}
+            )
+          })}
           <Link href="/add-pet">
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }}
               className="glass-card rounded-2xl p-5 h-full flex flex-col items-center justify-center text-center border-dashed border-white/15 hover:border-[#FF7A6B]/40 transition-all min-h-[120px] cursor-pointer">

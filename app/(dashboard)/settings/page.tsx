@@ -66,13 +66,35 @@ export default function SettingsPage() {
     load()
   }, [])
 
+  // Restore saved preferences
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('pawpal_prefs')
+      if (saved) setToggles(p => ({ ...p, ...JSON.parse(saved) }))
+      const a = localStorage.getItem('pawpal_accent')
+      if (a) setAccent(a)
+    } catch {}
+  }, [])
+
   function set(key: keyof typeof toggles, val: boolean) {
-    setToggles(p => ({ ...p, [key]: val }))
-    toast.success('Preference updated')
+    setToggles(p => {
+      const next = { ...p, [key]: val }
+      try { localStorage.setItem('pawpal_prefs', JSON.stringify(next)) } catch {}
+      return next
+    })
+    toast.success('Preference saved')
   }
 
-  function save() {
-    toast.success('Settings saved', { description: 'Your changes have been applied (demo mode).' })
+  async function save() {
+    try {
+      localStorage.setItem('pawpal_accent', accent)
+      const { createClient } = await import('@/lib/supabase/client')
+      const supabase = createClient()
+      await supabase.auth.updateUser({ data: { display_name: displayName } })
+      toast.success('Profile saved', { description: 'Your changes have been applied.' })
+    } catch {
+      toast.success('Saved locally')
+    }
   }
 
   return (
@@ -83,7 +105,7 @@ export default function SettingsPage() {
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <div className="flex items-center gap-2 mb-1">
             <h1 className="text-4xl font-black tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>Settings</h1>
-            <Badge className="bg-[#FFB84D]/10 text-[#FFB84D] border-[#FFB84D]/30 font-mono text-[10px]">DEMO MODE</Badge>
+            <Badge className="bg-[#2DD4BF]/10 text-[#2DD4BF] border-[#2DD4BF]/30 font-mono text-[10px]">LIVE</Badge>
           </div>
           <p className="text-zinc-400 text-sm">Manage your account, privacy, and preferences.</p>
         </motion.div>

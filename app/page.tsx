@@ -282,12 +282,19 @@ const SHOWCASE = [
 
 function Slider3D() {
   const [active, setActive] = useState(0)
+  const [vw, setVw] = useState(1200)
   const n = SHOWCASE.length
 
   useEffect(() => {
+    const onResize = () => setVw(window.innerWidth)
+    onResize()
+    window.addEventListener('resize', onResize)
     const id = setInterval(() => setActive(a => (a + 1) % n), 4500)
-    return () => clearInterval(id)
+    return () => { clearInterval(id); window.removeEventListener('resize', onResize) }
   }, [n])
+
+  const isMobile = vw < 640
+  const spread = isMobile ? 140 : 280
 
   function offsetOf(i: number) {
     let d = i - active
@@ -317,9 +324,9 @@ function Slider3D() {
               return (
                 <motion.div
                   key={i}
-                  className="absolute top-1/2 left-1/2 w-[78vw] sm:w-[360px] aspect-[3/4] -mt-[39vh] sm:-mt-[280px] -ml-[39vw] sm:-ml-[180px] rounded-[2rem] overflow-hidden border border-white/10 cursor-pointer"
+                  className="absolute top-1/2 left-1/2 w-[260px] h-[380px] sm:w-[340px] sm:h-[460px] -ml-[130px] -mt-[190px] sm:-ml-[170px] sm:-mt-[230px] rounded-[2rem] overflow-hidden border border-white/10 cursor-pointer"
                   animate={{
-                    x: off * (typeof window !== 'undefined' && window.innerWidth < 640 ? 120 : 260),
+                    x: off * spread,
                     scale: isCenter ? 1 : 0.82 - abs * 0.05,
                     rotateY: off * -32,
                     z: -abs * 240,
@@ -380,19 +387,29 @@ function ExplodeStats() {
   // `cycle` increments to remount the chips → reliably re-runs the explosion every tap.
   const [cycle, setCycle] = useState(0)
   const [armed, setArmed] = useState(false)
+  const [vw, setVw] = useState(1200)
+
+  useEffect(() => {
+    const onResize = () => setVw(window.innerWidth)
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const f = vw < 480 ? 0.46 : vw < 768 ? 0.66 : 1 // responsive explosion radius
 
   return (
-    <section className="relative py-32 overflow-hidden">
+    <section className="relative py-24 sm:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-mesh-soft" aria-hidden="true" />
       <div className="relative max-w-5xl mx-auto px-6">
         <motion.div
           onViewportEnter={() => setArmed(true)}
-          viewport={{ once: true, amount: 0.5 }}
-          className="relative h-[460px] sm:h-[520px] flex items-center justify-center"
+          viewport={{ once: true, amount: 0.4 }}
+          className="relative h-[400px] sm:h-[520px] flex items-center justify-center"
         >
           {/* Pulsing rings */}
-          <div className="absolute w-40 h-40 rounded-full border border-[#FF7A6B]/20 animate-pulse-ring" />
-          <div className="absolute w-40 h-40 rounded-full border border-[#FF7A6B]/20 animate-pulse-ring" style={{ animationDelay: '0.8s' }} />
+          <div className="absolute w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-[#FF7A6B]/20 animate-pulse-ring" />
+          <div className="absolute w-32 h-32 sm:w-40 sm:h-40 rounded-full border border-[#FF7A6B]/20 animate-pulse-ring" style={{ animationDelay: '0.8s' }} />
 
           {/* Core paw — click to re-explode */}
           <motion.button
@@ -400,10 +417,10 @@ function ExplodeStats() {
             whileTap={{ scale: 0.9 }}
             animate={{ rotate: cycle * 360 }}
             transition={{ type: 'spring', stiffness: 140, damping: 12 }}
-            className="relative z-10 w-28 h-28 rounded-[1.75rem] bg-gradient-to-br from-[#FF9485] to-[#EC5440] flex items-center justify-center shadow-[0_12px_50px_rgba(255,122,107,0.5)] hover:scale-105 transition-transform"
+            className="relative z-10 w-24 h-24 sm:w-28 sm:h-28 rounded-[1.75rem] bg-gradient-to-br from-[#FF9485] to-[#EC5440] flex items-center justify-center shadow-[0_12px_50px_rgba(255,122,107,0.5)] hover:scale-105 transition-transform"
             aria-label="Replay animation"
           >
-            <Logo size={64} />
+            <Logo size={vw < 640 ? 52 : 64} />
           </motion.button>
 
           {/* Exploding info chips — keyed on cycle so each tap replays */}
@@ -411,22 +428,22 @@ function ExplodeStats() {
             <motion.div
               key={`${cycle}-${i}`}
               initial={{ x: 0, y: 0, scale: 0, opacity: 0, rotate: -25 }}
-              animate={{ x: e.x, y: e.y, scale: 1, opacity: 1, rotate: 0 }}
+              animate={{ x: e.x * f, y: e.y * f, scale: 1, opacity: 1, rotate: 0 }}
               transition={{ type: 'spring', stiffness: 120, damping: 14, delay: 0.05 + i * 0.07 }}
-              className="absolute z-20 glass-card rounded-2xl px-4 py-3 flex items-center gap-3 shadow-2xl"
+              className="absolute z-20 glass-card rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 flex items-center gap-2 sm:gap-3 shadow-2xl"
             >
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${e.c}1F`, border: `1px solid ${e.c}40` }}>
-                <e.icon className="w-4.5 h-4.5" style={{ color: e.c }} />
+              <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0" style={{ background: `${e.c}1F`, border: `1px solid ${e.c}40` }}>
+                <e.icon className="w-4 h-4 sm:w-4.5 sm:h-4.5" style={{ color: e.c }} />
               </div>
               <div>
-                <div className="text-lg font-semibold tabular-nums leading-none" style={{ fontFamily: 'var(--font-display)' }}>{e.value}</div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">{e.label}</div>
+                <div className="text-sm sm:text-lg font-semibold tabular-nums leading-none" style={{ fontFamily: 'var(--font-display)' }}>{e.value}</div>
+                <div className="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5 whitespace-nowrap">{e.label}</div>
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-        <div className="text-center -mt-4">
+        <div className="text-center mt-2 sm:-mt-4">
           <h2 className="text-3xl md:text-5xl font-semibold leading-[1.05]" style={{ fontFamily: 'var(--font-display)' }}>
             <span className="text-gradient-soft">A whole platform,</span> <span className="text-gradient-aurora">working for them.</span>
           </h2>
