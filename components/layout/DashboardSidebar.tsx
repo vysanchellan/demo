@@ -66,7 +66,7 @@ export default function DashboardSidebar() {
         {mobileOpen && (
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            onClick={() => setMobileOpen(false)}
+            onClick={() => { try { localStorage.setItem('pp_chrome', 'app') } catch {}; setMobileOpen(false) }}
             className="fixed inset-0 bg-black/70 backdrop-blur-md z-40 lg:hidden"
           />
         )}
@@ -103,7 +103,7 @@ export default function DashboardSidebar() {
             <ChevronRight className={cn('w-4 h-4 text-zinc-400 transition-transform', collapsed && 'rotate-180')} />
           </button>
           <button
-            onClick={() => setMobileOpen(false)}
+            onClick={() => { try { localStorage.setItem('pp_chrome', 'app') } catch {}; setMobileOpen(false) }}
             className="p-1.5 rounded-lg hover:bg-white/5 transition-colors lg:hidden"
             aria-label="Close sidebar"
           >
@@ -121,7 +121,7 @@ export default function DashboardSidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={() => { try { localStorage.setItem('pp_chrome', 'app') } catch {}; setMobileOpen(false) }}
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200',
                   active
@@ -146,7 +146,7 @@ export default function DashboardSidebar() {
               )}
               <Link
                 href="/admin"
-                onClick={() => setMobileOpen(false)}
+                onClick={() => { try { localStorage.setItem('pp_chrome', 'app') } catch {}; setMobileOpen(false) }}
                 className={cn(
                   'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200',
                   pathname === '/admin'

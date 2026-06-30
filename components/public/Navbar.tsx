@@ -57,6 +57,7 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => { try { localStorage.setItem('pp_chrome', 'site') } catch {} }}
                 className="relative px-3.5 py-1.5 text-[13px] font-medium text-zinc-400 hover:text-white transition-colors duration-200 rounded-full group"
               >
                 <span className="relative z-10">{item.label}</span>
@@ -112,7 +113,7 @@ export default function Navbar() {
               </div>
               <div className="flex flex-col gap-1">
                 {NAV.map(item => (
-                  <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className="flex items-center justify-between px-4 py-3 rounded-xl text-zinc-300 hover:bg-white/5 transition-colors">
+                  <Link key={item.href} href={item.href} onClick={() => { try { localStorage.setItem('pp_chrome', 'site') } catch {}; setOpen(false) }} className="flex items-center justify-between px-4 py-3 rounded-xl text-zinc-300 hover:bg-white/5 transition-colors">
                     <span>{item.label}</span>
                     <ArrowUpRight className="w-4 h-4 opacity-50" />
                   </Link>
